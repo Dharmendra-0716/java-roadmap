@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java → Software Engineer Roadmap</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#070b14;--panel:#0f172a;--panel2:#111c31;--line:#23304a;--text:#eef2ff;--muted:#94a3b8;--accent:#818cf8;--accent2:#38bdf8;--good:#34d399;--warn:#fbbf24}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 15% 0%,#17255455,transparent 35%),radial-gradient(circle at 90% 10%,#312e8150,transparent 30%),var(--bg);color:var(--text)}
+.wrap{max-width:1180px;margin:auto;padding:24px 18px 70px}
+header{background:linear-gradient(135deg,#111c3b,#251b57 60%,#102b46);padding:28px;border-radius:22px;margin-bottom:16px;border:1px solid #ffffff14;box-shadow:0 18px 55px #0008}
+.brand{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+h1{margin:0 0 8px;font-size:clamp(27px,5vw,43px);letter-spacing:-.03em}
+.sub{color:#c7d2fe;margin:0}
+.badge{padding:8px 11px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff18;color:#c4b5fd;font-size:12px;font-weight:800;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:22px}
+.stat{background:#ffffff09;border:1px solid #ffffff13;border-radius:14px;padding:14px}
+.stat b{display:block;font-size:22px;margin-bottom:3px}
+.stat span{font-size:12px;color:#aebbd1}
+.progress{height:12px;background:#ffffff14;border-radius:99px;overflow:hidden;margin-top:18px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.35s}
+.dashboard{display:grid;grid-template-columns:1.35fr .8fr;gap:14px;margin:14px 0}
+.card{background:linear-gradient(180deg,#111827,#0d1524);border:1px solid var(--line);border-radius:17px;padding:18px}
+.card h3{margin:0 0 12px;font-size:14px;color:#cbd5e1}
+.next{font-size:18px;font-weight:800;margin-bottom:5px}
+.muted{color:var(--muted);font-size:13px}
+.controls{display:grid;grid-template-columns:1fr 170px 170px;gap:10px;margin:14px 0}
+input[type="search"],select,.note-input{width:100%;background:#0b1220;color:var(--text);border:1px solid #293753;border-radius:10px;padding:11px 12px;outline:none}
+input[type="search"]:focus,select:focus,.note-input:focus{border-color:var(--accent)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+button{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:#6366f1;color:white}
+button:hover{filter:brightness(1.1)}
+button.secondary{background:#172033;color:#e5e7eb;border:1px solid #2c3a55}
+button.good{background:#087f5b}
+.timer{font-size:28px;font-variant-numeric:tabular-nums;font-weight:900;margin:4px 0 12px}
+.dsa-row{display:flex;align-items:center;gap:10px}
+.dsa-row input{width:90px}
+.milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.milestone{padding:11px;border-radius:12px;background:#ffffff06;border:1px solid #25324a;color:#94a3b8;font-size:12px}
+.milestone.unlocked{border-color:#276749;background:#064e3b33;color:#a7f3d0}
+.milestone b{display:block;color:#e2e8f0;margin-bottom:4px}
+section{background:#0e1727;border:1px solid var(--line);border-radius:16px;margin:12px 0;overflow:hidden;transition:.2s}
+section.hidden-by-filter{display:none}
+.phase-head{padding:17px 19px;display:flex;justify-content:space-between;gap:15px;align-items:center;cursor:pointer;background:linear-gradient(90deg,#111b2d,#101827)}
+.phase-head:hover{background:#172238}
+.phase-head h2{font-size:18px;margin:0}
+.phase-head small{color:#a5b4fc;white-space:nowrap}
+.phase-mini{height:5px;background:#ffffff0d;border-radius:9px;margin-top:8px;width:150px;overflow:hidden}
+.phase-mini span{display:block;height:100%;width:0;background:var(--good)}
+.items{padding:9px 19px 18px}
+.group{margin-top:14px}
+.group h3{font-size:12px;color:#7dd3fc;margin:12px 0 7px;text-transform:uppercase;letter-spacing:.08em}
+.topic{display:block}
+.topic label{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;border-radius:8px;cursor:pointer;color:#dbe4f0}
+.topic label:hover{background:#ffffff08}
+.topic input{width:18px;height:18px;accent-color:#818cf8;margin-top:1px;flex:none}
+.topic label.done span{text-decoration:line-through;color:#64748b}
+.topic-meta{display:flex;gap:7px;align-items:center;margin:-2px 0 7px 34px}
+.pill{font-size:10px;padding:3px 7px;border-radius:99px;border:1px solid #2b3954;color:#94a3b8}
+.pill.easy{color:#86efac}.pill.medium{color:#fde68a}.pill.hard{color:#fca5a5}
+.note-input{margin:0 0 8px 34px;width:calc(100% - 34px);font-size:12px;padding:8px}
+.topic.is-filtered{display:none}
+.tip{color:#64748b;font-size:12px;margin-top:14px;text-align:center}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.dashboard{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.milestones{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.stats{grid-template-columns:1fr 1fr}.brand{flex-direction:column}.controls{grid-template-columns:1fr}.phase-head{align-items:flex-start;flex-direction:column}.items{padding-left:10px;padding-right:10px}.milestones{grid-template-columns:1fr 1fr}}
+
+.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.phase-card{background:linear-gradient(145deg,#111c30,#0d1524);border:1px solid #263653;border-radius:15px;padding:16px;cursor:pointer;transition:.2s}
+.phase-card:hover{transform:translateY(-2px);border-color:#5865d9;background:#17233b}
+.phase-card h4{margin:0 0 7px;font-size:14px;line-height:1.35}
+.phase-card .pc-meta{display:flex;justify-content:space-between;color:#94a3b8;font-size:11px;margin-bottom:8px}
+.pc-bar{height:5px;background:#ffffff0c;border-radius:99px;overflow:hidden}
+.pc-bar span{display:block;height:100%;background:linear-gradient(90deg,#818cf8,#38bdf8);width:0}
+.detail-top{display:flex;align-items:center;gap:16px;margin:14px 0}
+.detail-title{font-size:20px;font-weight:900}
+.detail-group{background:#0e1727;border:1px solid #23304a;border-radius:15px;margin:10px 0;overflow:hidden}
+.detail-group-head{padding:15px 17px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#111b2d}
+.detail-group-head h3{margin:0;color:#7dd3fc;font-size:14px}
+.detail-group-body{padding:8px 14px 14px}
+.group-progress{font-size:11px;color:#94a3b8}
+.detail-topic{display:block}
+@media(max-width:900px){.phase-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.phase-grid{grid-template-columns:1fr}.detail-top{align-items:flex-start;flex-direction:column}}
+
+.study-layout{display:grid;grid-template-columns:1.6fr .75fr;gap:14px}
+.study-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.study-tabs button{font-size:12px}
+.study-content h2,.study-main h2{margin-top:0}
+.study-main p{color:#cbd5e1;line-height:1.7}
+.study-main li{color:#cbd5e1;margin:7px 0;line-height:1.5}
+.codebox{background:#070b14;border:1px solid #263653;border-radius:12px;padding:15px;overflow:auto;color:#dbeafe;font-family:Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre}
+.notes-area{width:100%;min-height:260px;resize:vertical;background:#0b1220;color:#eef2ff;border:1px solid #293753;border-radius:10px;padding:12px;font:13px Inter,Segoe UI,sans-serif;line-height:1.5;outline:none}
+.notes-area:focus{border-color:#818cf8}
+.study-check{color:#86efac;font-weight:800}
+@media(max-width:850px){.study-layout{grid-template-columns:1fr}}
+
+.study-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}
+.study-nav-center{color:#94a3b8;font-size:12px;font-weight:700;text-align:center}.study-nav button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:600px){.study-nav{flex-wrap:wrap}.study-nav button{flex:1}.study-nav-center{width:100%;order:-1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <div>
+      <h1>🚀 Java → Software Engineer</h1>
+      <p class="sub">Personal learning dashboard • 19 phases • track your journey</p>
+    </div>
+    <div class="badge">PRO ROADMAP</div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="done">0</b><span>Topics completed</span></div>
+    <div class="stat"><b id="total">0</b><span>Total topics</span></div>
+    <div class="stat"><b id="percent">0%</b><span>Overall progress</span></div>
+    <div class="stat"><b id="phaseDone">0</b><span>Phases completed</span></div>
+    <div class="stat"><b id="streak">0 🔥</b><span>Study streak</span></div>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+</header>
+
+<div class="dashboard">
+  <div class="card">
+    <h3>🎯 NEXT MILESTONE</h3>
+    <div class="next" id="nextMilestone">Start Phase 1</div>
+    <div class="muted" id="nextInfo">Tick topics as you learn them. Your dashboard updates automatically.</div>
+  </div>
+  <div class="card">
+    <h3>⏱️ STUDY SESSION</h3>
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="actions" style="margin:0">
+      <button onclick="toggleTimer()" id="timerBtn">Start</button>
+      <button class="secondary" onclick="resetTimer()">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard">
+  <div class="card">
+    <h3>🏆 MILESTONES</h3>
+    <div class="milestones" id="milestones"></div>
+  </div>
+  <div class="card">
+    <h3>🔥 DSA PROGRESS</h3>
+    <div class="dsa-row">
+      <input id="dsaCount" type="number" min="0" max="9999" value="0" class="note-input" oninput="saveExtras()">
+      <span class="muted">problems solved</span>
+    </div>
+    <div class="muted" style="margin-top:10px">Target: 250+ quality problems</div>
+  </div>
+</div>
+
+
+<div class="card" style="margin:14px 0">
+  <h3>💾 PROGRESS BACKUP</h3>
+  <p class="muted" style="margin-top:0">Backup your ticks, notes, DSA count, streak and study timer. Import the JSON anytime to restore them.</p>
+  <div class="actions" style="margin:0">
+    <button onclick="exportProgress()">⬇ Export Progress</button>
+    <button class="secondary" onclick="document.getElementById('importProgressFile').click()">⬆ Import Progress</button>
+    <input id="importProgressFile" type="file" accept=".json,application/json" hidden onchange="importProgress(event)">
+  </div>
+</div>
+
+<div class="controls">
+  <input type="search" id="search" placeholder="🔎 Search a phase or topic..." oninput="globalSearch()">
+  <select id="statusFilter" onchange="globalSearch()">
+    <option value="all">All topics</option>
+    <option value="pending">Not completed</option>
+    <option value="done">Completed</option>
+  </select>
+  <button class="secondary" onclick="clearSearch()">Clear search</button>
+</div>
+
+<div class="actions">
+  <button onclick="expandAll()">Expand all</button>
+  <button class="secondary" onclick="collapseAll()">Collapse all</button>
+  <button class="secondary" onclick="resetProgress()">Reset progress</button>
+</div>
+
+<div id="homeView">
+  <div class="card" style="margin-bottom:14px">
+    <h3>🧭 ROADMAP PHASES</h3>
+    <div id="phaseGrid" class="phase-grid"></div>
+  </div>
+</div>
+
+<div id="phaseView" hidden>
+  <div class="detail-top">
+    <button class="secondary" onclick="showHome()">← All Phases</button>
+    <div>
+      <div id="detailTitle" class="detail-title"></div>
+      <div id="detailProgress" class="muted"></div>
+    </div>
+  </div>
+  <div id="detailGroups"></div>
+</div>
+
+<div id="studyView" hidden>
+  <div class="detail-top">
+    <button class="secondary" onclick="backToPhase()">← Back to Phase</button>
+    <div>
+      <div id="studyTitle" class="detail-title"></div>
+      <div id="studyStatus" class="muted"></div>
+    </div>
+  </div>
+  
+<div class="study-nav">
+  <button class="secondary" id="prevTopicBtn" onclick="navigateTopic(-1)">← Previous Topic</button>
+  <div class="study-nav-center">
+    <span id="topicPosition"></span>
+  </div>
+  <button id="nextTopicBtn" onclick="navigateTopic(1)">Next Topic →</button>
+</div>
+
+<div class="study-layout">
+    <div class="study-main card">
+      <div class="study-tabs">
+        <button id="tabConcept" onclick="showStudyTab('concept')">📖 Concept</button>
+        <button class="secondary" onclick="showStudyTab('code')">💻 Example</button>
+        <button class="secondary" onclick="showStudyTab('practice')">🧠 Practice</button>
+      </div>
+      <div id="studyContent"></div>
+    </div>
+    <div class="card">
+      <h3>📝 MY NOTES</h3>
+      <textarea id="topicNotes" class="notes-area" placeholder="Write your own notes here..."></textarea>
+      <button class="good" style="width:100%;margin-top:10px" onclick="saveTopicNote()">Save Notes</button>
+      <button id="studyComplete" style="width:100%;margin-top:10px" onclick="toggleStudyComplete()">Mark Complete</button>
+    </div>
+  </div>
+</div>
+
+<p class="tip">💾 Progress, notes, streak, DSA count and study data are saved automatically in this browser.</p>
+</div>
+
+<script>
+const phases = [
+["🟢 PHASE 1 — Programming Fundamentals", [
+["Java Setup",["Install JDK","Install VS Code / IntelliJ IDEA","Understand JDK","Understand JRE","Understand JVM","Understand compile vs run","Java program structure","main() method","Run your first Java program"]],
+["Java Basics",["Variables","Data types","Type casting","Arithmetic operators","Relational operators","Logical operators","Assignment operators","Increment/decrement","Bitwise operators","Input using Scanner","Output using System.out.println()","if","if-else","else-if","Nested if","switch","for loop","while loop","do-while","break","continue"]],
+["Methods",["Create methods","Parameters","Return values","void","Method overloading","Local variables","Scope","Recursion"]],
+["Arrays & Strings",["1D arrays","2D arrays","Array traversal","Searching arrays","Basic sorting","String","StringBuilder","StringBuffer","Common String methods","Character manipulation"]],
+["Projects",["Calculator","Number guessing game","Student marks calculator","ATM simulation","Pattern programs","Number problems","Array problems","String problems"]]
+]],
+["🟢 PHASE 2 — Object-Oriented Programming",[
+["Classes & Objects",["Understand class","Understand object","Fields","Methods inside classes","Create objects","Constructors","this","static","final","Access modifiers"]],
+["OOP Principles",["Encapsulation","Inheritance","Method overriding","Method overloading","Polymorphism","Abstraction","Interfaces","Abstract classes","Composition","Association","Aggregation"]],
+["Java Object Concepts",["Object class","equals()","hashCode()","toString()"]],
+["Projects",["Bank Management System","Library Management System","Student Management System"]]
+]],
+["🟡 PHASE 3 — Collections & Generics",[
+["List",["ArrayList","LinkedList"]],
+["Set",["HashSet","LinkedHashSet","TreeSet"]],
+["Map",["HashMap","LinkedHashMap","TreeMap"]],
+["Queue",["PriorityQueue","Deque"]],
+["Collection Concepts",["Choose correct collection","Time complexity","Iteration","Enhanced for loop","Iterator","Comparable","Comparator"]],
+["Generics",["Generic classes","Generic methods","Generic interfaces","Wildcards","? extends","? super"]]
+]],
+["🟡 PHASE 4 — Exception Handling",[
+["Exception Handling",["Understand exceptions","try","catch","finally","Multiple catch","throw","throws","Checked exceptions","Unchecked exceptions","Custom exceptions","Exception hierarchy","Proper exception handling"]]
+]],
+["🟡 PHASE 5 — Modern Java",[
+["Functional Programming",["Lambda expressions","Functional interfaces","Predicate","Consumer","Supplier","Function"]],
+["Stream API",["Streams","map()","filter()","reduce()","collect()","forEach()","sorted()","distinct()","limit()","findFirst()"]],
+["Modern Features",["Method references","Optional","Records","Enums","var","Date & Time API","Modern switch","Pattern matching concepts"]]
+]],
+["🟠 PHASE 6 — File Handling & I/O",[
+["File & I/O",["File handling basics","File","Path","Files","InputStream","OutputStream","Reader","Writer","BufferedReader","BufferedWriter","Read files","Write files","Serialization basics"]],
+["Project",["File-based Student Management System"]]
+]],
+["🔴 PHASE 7 — DSA",[
+["Complexity",["Big O","Big Ω","Big Θ","Time complexity","Space complexity"]],
+["Arrays & Strings",["Array problems","String problems","Prefix sum","Two pointers","Sliding window"]],
+["Searching",["Linear Search","Binary Search"]],
+["Sorting",["Bubble Sort","Selection Sort","Insertion Sort","Merge Sort","Quick Sort"]],
+["Recursion",["Recursion basics","Recursive arrays","Recursive strings","Backtracking basics"]],
+["Linked List",["Singly Linked List","Doubly Linked List","Circular Linked List","Reverse Linked List","Fast & slow pointers"]],
+["Stack & Queue",["Stack","Queue","Deque","Monotonic Stack","Priority Queue"]],
+["Hashing",["HashMap","HashSet","Frequency counting","Hashing patterns"]],
+["Trees",["Binary Tree","Tree traversal","Preorder","Inorder","Postorder","Level order","BST","BST operations"]],
+["Heap",["Min Heap","Max Heap","Heap operations","Priority Queue problems"]],
+["Graphs",["Graph representation","BFS","DFS","Shortest path","Dijkstra","Topological Sort","Union-Find / DSU"]],
+["Advanced DSA",["Greedy","Backtracking","Dynamic Programming","Memoization","Tabulation"]],
+["Practice Target",["50 problems","100 problems","150 problems","200 problems","250+ quality problems"]]
+]],
+["🔵 PHASE 8 — SQL & Databases",[
+["SQL Basics",["Database basics","Tables","Rows & columns","Primary Key","Foreign Key","Constraints","SELECT","INSERT","UPDATE","DELETE","WHERE","ORDER BY","GROUP BY","HAVING","Aggregate functions","Joins","Subqueries"]],
+["Database Concepts",["Indexes","Views","Transactions","Normalization","ACID","Query optimization","Database design"]],
+["Database",["MySQL","PostgreSQL"]]
+]],
+["🔵 PHASE 9 — Git & GitHub",[
+["Git",["Install Git","git init","git status","git add","git commit","git push","git pull","git clone","git branch","git merge","git checkout"]],
+["GitHub",["GitHub repository","Branches","Pull Requests","Merge conflicts",".gitignore","README","Build GitHub profile","Upload every serious project"]]
+]],
+["🟣 PHASE 10 — Backend Fundamentals",[
+["HTTP",["Client-server architecture","HTTP request","HTTP response","GET","POST","PUT","PATCH","DELETE","HTTP status codes","Headers","JSON"]],
+["REST",["REST API concepts","REST endpoints","CRUD","API design","Postman"]]
+]],
+["🟣 PHASE 11 — Spring Framework",[
+["Spring Core",["IoC","Dependency Injection","Beans","Application Context"]],
+["Spring Boot",["Spring Boot setup","Project structure","Controllers","Services","Repositories","Configuration","application.properties","Profiles"]],
+["Architecture",["Controller layer","Service layer","Repository layer","Database layer"]]
+]],
+["🟣 PHASE 12 — Advanced Spring Boot",[
+["Spring Boot",["REST APIs","Spring Data JPA","Hibernate","Entities","Entity relationships","One-to-One","One-to-Many","Many-to-Many","DTOs","Validation","Global exception handling","Pagination","Sorting","Logging","Configuration","Actuator"]],
+["Security",["Authentication","Authorization","Password hashing","JWT","Spring Security","Role-based authorization","Secure APIs"]]
+]],
+["🔥 PHASE 13 — REAL PROJECTS",[
+["Beginner",["Bank Management System"]],
+["Intermediate",["Library Management System","Student Management System","File-based application"]],
+["Advanced E-Commerce Backend",["User registration","Login","Products","Categories","Cart","Orders","Payment integration","Admin","Authentication","Authorization"]],
+["Final Gaming Platform Backend",["User accounts","Login","Games","Profiles","Friends","Leaderboard","Authentication","Authorization","Database","REST APIs","Admin panel"]]
+]],
+["🟤 PHASE 14 — Testing",[
+["Testing",["Unit testing","Integration testing","JUnit","Mockito","Test-driven basics","API testing","Postman","Write tests for your projects"]]
+]],
+["🟤 PHASE 15 — Docker & Deployment",[
+["Docker",["Docker basics","Images","Containers","Dockerfile","Docker Compose"]],
+["Deployment",["Environment variables","Production configuration","Production logging","Deploy Spring Boot application","Connect deployed app to database"]]
+]],
+["⚫ PHASE 16 — System Design",[
+["Fundamentals",["Client-server architecture","Monolithic architecture","Microservices","REST APIs","Load balancing","Caching","Database scaling","Replication","Sharding","Message queues"]],
+["Technologies",["Redis","Kafka","Docker","Cloud basics"]],
+["System Design Practice",["URL Shortener","Chat Application","YouTube-like system","Instagram-like system","Food Delivery System"]],
+["Core Principles",["Scalability","Reliability","Performance","Security","Availability"]]
+]],
+["🟤 PHASE 17 — Advanced Java Internals",[
+["JVM",["JVM architecture","Bytecode","Class loading","Heap","Stack","Garbage Collection","JIT compilation"]],
+["Multithreading",["Thread","Runnable","ExecutorService","Thread Pool","Synchronization","Locks","volatile","Atomic classes","Concurrent collections","CompletableFuture"]],
+["Advanced",["Race conditions","Deadlocks","Java Memory Model","Performance profiling"]]
+]],
+["🏆 PHASE 18 — Software Engineering",[
+["Software Engineering",["Clean Code","SOLID principles","Design Patterns","Refactoring","Debugging","Code reviews","Documentation","API design","Testing","Security basics","Performance optimization","Agile/Scrum basics"]],
+["Design Patterns",["Singleton","Factory","Builder","Strategy","Observer","Adapter","Repository"]]
+]],
+["💼 PHASE 19 — Placement Preparation",[
+["DSA",["LeetCode","100+ DSA problems","150+ DSA problems","200+ DSA problems","Revise common patterns"]],
+["CS Fundamentals",["OOP","DBMS","Operating Systems","Computer Networks","System Design","Software Engineering"]],
+["Portfolio",["2 strong projects","3 strong projects","GitHub profile","Good README files","Resume","Internship experience","Interview preparation","Mock interviews"]]
+]]
+];;
+
+
+const studyData={
+"Install JDK":{c:"JDK (Java Development Kit) gives you the tools needed to develop Java programs. It includes the compiler and the runtime components.",code:"java --version\njavac --version",p:["Install a current LTS JDK.","Verify both java and javac in the terminal.","Then create and run a small Hello World program."]},
+"Understand JDK":{c:"JDK is the complete development kit. Think of it as the toolkit used to write, compile, debug and run Java applications.",code:"JDK = Development tools + JRE",p:["Explain the difference between JDK and JRE in your own words.","Find where your JDK is installed."]},
+"Understand JRE":{c:"JRE provides the environment required to run Java applications. Modern Java distributions are commonly installed as a JDK rather than separately installing a JRE.",code:"JRE = JVM + runtime libraries",p:["Explain what the JRE provides.","Why does a developer normally install the JDK?"]},
+"Understand JVM":{c:"JVM (Java Virtual Machine) executes Java bytecode. This is the key reason Java programs can run on different operating systems when a compatible JVM is available.",code:"Source Code → javac → Bytecode (.class) → JVM → Machine execution",p:["Explain bytecode.","Why is Java called platform-independent?"]},
+"Understand compile vs run":{c:"Compilation converts Java source code into bytecode. Running starts the JVM, which loads and executes that bytecode.",code:"javac Main.java\njava Main",p:["Compile a program manually.","Change the source, compile again, then run it."]},
+"Java program structure":{c:"A Java program is commonly organized around classes. The entry point of a normal standalone application is the main method.",code:"public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello Java\");\n    }\n}",p:["Write the program without copying.","Explain each part of the class and main method."]},
+"main() method":{c:"main() is the entry point used by the JVM for a standard Java application.",code:"public static void main(String[] args) {\n    // program starts here\n}",p:["Explain public, static, void, String[], and args.","Try changing the printed output."]},
+"Variables":{c:"A variable is a named storage location associated with a type. Java is statically typed, so every variable has a declared type.",code:"int age = 17;\ndouble price = 99.5;\nString name = \"Alex\";",p:["Create variables for age, salary and name.","Print them.","Change their values."]},
+"Data types":{c:"Java has primitive types such as int, double, char and boolean, plus reference types such as String and arrays.",code:"int x = 10;\ndouble d = 10.5;\nchar grade = 'A';\nboolean pass = true;",p:["List the eight primitive types.","Choose a suitable type for 5 real-world values."]},
+"Type casting":{c:"Casting converts a value from one type to another. Widening is generally automatic; narrowing requires an explicit cast and may lose information.",code:"int x = 10;\ndouble d = x;\nint y = (int) 10.8;",p:["Try int to double.","Try double to int.","Observe the lost decimal part."]},
+"Arithmetic operators":{c:"Arithmetic operators perform calculations: +, -, *, / and %. Integer division removes the fractional part.",code:"int a=10, b=3;\nSystem.out.println(a+b);\nSystem.out.println(a/b);\nSystem.out.println(a%b);",p:["Calculate quotient and remainder.","Make a program for area of a rectangle."]},
+"Relational operators":{c:"Relational operators compare values and produce boolean results.",code:"int a=10, b=20;\nSystem.out.println(a < b);\nSystem.out.println(a == b);",p:["Use all comparison operators in small examples."]},
+"Logical operators":{c:"Logical operators combine boolean expressions. && means AND, || means OR, and ! means NOT.",code:"int age=20;\nboolean ok = age>=18 && age<=60;",p:["Build an eligibility condition using &&.","Build an alternative condition using ||."]},
+"Assignment operators":{c:"Assignment stores a value in a variable. Compound assignments combine an operation with assignment.",code:"int x=10;\nx += 5;\nx *= 2;\nSystem.out.println(x);",p:["Practice +=, -=, *=, /= and %= ."]},
+"Increment/decrement":{c:"++ increases a value by one and -- decreases it by one. Prefix and postfix forms differ in when the value is used.",code:"int x=5;\nSystem.out.println(x++);\nSystem.out.println(++x);",p:["Trace x++ and ++x by hand.","Do the same for --."]},
+"Bitwise operators":{c:"Bitwise operators work on the binary representation of integer values. Common operators are &, |, ^, ~, << and >>.",code:"int a=5, b=3;\nSystem.out.println(a & b);\nSystem.out.println(a ^ b);",p:["Convert 5 and 3 to binary.","Calculate &, | and ^ manually."]},
+"Input using Scanner":{c:"Scanner can read typed input from standard input. Always choose the method that matches the expected data type.",code:"import java.util.Scanner;\nScanner sc=new Scanner(System.in);\nint n=sc.nextInt();\nSystem.out.println(n);",p:["Read an integer.","Read a double and a String.","Try nextLine carefully after numeric input."]},
+"if":{c:"if executes a block only when its boolean condition is true.",code:"if (marks >= 40) {\n    System.out.println(\"Pass\");\n}",p:["Write a positive/negative checker.","Write an even/odd checker."]},
+"if-else":{c:"if-else chooses between two paths depending on a condition.",code:"if (n % 2 == 0) {\n    System.out.println(\"Even\");\n} else {\n    System.out.println(\"Odd\");\n}",p:["Create a pass/fail program."]},
+"else-if":{c:"else-if lets you test multiple mutually exclusive conditions in order.",code:"if (marks >= 90) grade='A';\nelse if (marks >= 75) grade='B';\nelse grade='C';",p:["Create a grade calculator with 4 or 5 ranges."]},
+"Nested if":{c:"A nested if is an if statement inside another conditional. Use it when one decision depends on another.",code:"if (age >= 18) {\n    if (hasId) {\n        System.out.println(\"Allowed\");\n    }\n}",p:["Build an ATM withdrawal eligibility check."]},
+"switch":{c:"switch selects a branch based on a value. Modern Java also supports switch expressions.",code:"switch(day) {\n    case 1 -> System.out.println(\"Monday\");\n    case 2 -> System.out.println(\"Tuesday\");\n    default -> System.out.println(\"Invalid\");\n}",p:["Make a simple calculator using switch.","Try a menu-driven program."]},
+"for loop":{c:"A for loop is useful when the iteration structure is known: initialization, condition and update.",code:"for(int i=1;i<=5;i++) {\n    System.out.println(i);\n}",p:["Print 1–100.","Print a multiplication table."]},
+"while loop":{c:"while repeats as long as its condition remains true. It is useful when the number of iterations is not known in advance.",code:"int i=1;\nwhile(i<=5) {\n    System.out.println(i);\n    i++;\n}",p:["Reverse a number using while.","Count digits in a number."]},
+"do-while":{c:"do-while executes the body at least once before checking the condition.",code:"int choice;\ndo {\n    System.out.println(\"Menu\");\n    choice=sc.nextInt();\n} while(choice!=0);",p:["Build a menu that repeats until the user selects Exit."]},
+"break":{c:"break immediately exits the nearest loop or switch.",code:"for(int i=1;i<=10;i++) {\n    if(i==5) break;\n    System.out.println(i);\n}",p:["Find the first number divisible by 7 in a range."]},
+"continue":{c:"continue skips the rest of the current loop iteration and moves to the next iteration.",code:"for(int i=1;i<=10;i++) {\n    if(i%2==0) continue;\n    System.out.println(i);\n}",p:["Print only odd numbers using continue."]},
+"Create methods":{c:"Methods package reusable behavior into named blocks. They improve readability and reduce duplication.",code:"static void greet() {\n    System.out.println(\"Hello\");\n}",p:["Create three small methods for a calculator."]},
+"Parameters":{c:"Parameters allow a method to receive input values from its caller.",code:"static int add(int a, int b) {\n    return a+b;\n}",p:["Write methods taking two and three parameters."]},
+"Return values":{c:"A method can return a value using return. Its declared return type must match the returned value.",code:"static int square(int n) {\n    return n*n;\n}",p:["Write methods for max, min and square."]},
+"void":{c:"void means the method does not return a value.",code:"static void printName(String name) {\n    System.out.println(name);\n}",p:["Convert one returning method into a void method and compare."]},
+"Method overloading":{c:"Overloading means multiple methods share a name but have different parameter lists.",code:"static int add(int a,int b){return a+b;}\nstatic double add(double a,double b){return a+b;}",p:["Create overloaded area methods."]},
+"Scope":{c:"Scope determines where a variable can be accessed. Local variables are limited to their block or method.",code:"static void test(){\n    int x=10;\n    System.out.println(x);\n}",p:["Try accessing a local variable outside its block and observe the compiler error."]},
+"Recursion":{c:"Recursion is when a method calls itself on a smaller subproblem and has a base case to stop.",code:"static int fact(int n){\n    if(n<=1) return 1;\n    return n*fact(n-1);\n}",p:["Trace factorial for 5.","Write a recursive countdown."]},
+"1D arrays":{c:"A 1D array stores multiple values of the same type in indexed positions. Indexing starts at 0.",code:"int[] a={10,20,30};\nSystem.out.println(a[0]);",p:["Create an array of 5 numbers.","Find its sum and maximum."]},
+"2D arrays":{c:"A 2D array is an array of arrays, commonly used to represent matrices or grids.",code:"int[][] m={{1,2},{3,4}};\nSystem.out.println(m[1][0]);",p:["Print a 3×3 matrix.","Calculate matrix sum."]},
+"Array traversal":{c:"Traversal means visiting each array element, commonly with a for loop or enhanced for loop.",code:"for(int x : a) {\n    System.out.println(x);\n}",p:["Print all elements.","Find sum, min and max in one traversal."]},
+"Searching arrays":{c:"Linear search checks elements one by one. It works even when the array is unsorted.",code:"for(int i=0;i<a.length;i++){\n    if(a[i]==target){ System.out.println(i); break; }\n}",p:["Return the index of a target.","Handle the target-not-found case."]},
+"Basic sorting":{c:"Sorting arranges data in an order. Learn simple algorithms first so you understand comparisons and swaps.",code:"// Example: selection sort idea\nfor(int i=0;i<a.length-1;i++){\n    int min=i;\n    for(int j=i+1;j<a.length;j++) if(a[j]<a[min]) min=j;\n}",p:["Implement bubble sort.","Implement selection sort.","Compare their time complexity."]},
+"String":{c:"String represents immutable text. String literals can be reused through the string pool.",code:"String name=\"Java\";\nSystem.out.println(name.length());\nSystem.out.println(name.charAt(0));",p:["Practice length, charAt, substring, equals and contains."]},
+"StringBuilder":{c:"StringBuilder is useful for repeatedly modifying text because it is mutable and avoids creating many intermediate String objects.",code:"StringBuilder sb=new StringBuilder(\"Java\");\nsb.append(\" Programming\");\nsb.reverse();",p:["Build a string from a loop.","Reverse a string using StringBuilder."]},
+"StringBuffer":{c:"StringBuffer is a mutable character sequence similar to StringBuilder, with synchronized methods. StringBuilder is usually preferred when thread safety is not required.",code:"StringBuffer sb=new StringBuffer(\"Hello\");\nsb.append(\" Java\");",p:["Compare String, StringBuilder and StringBuffer."]},
+"Common String methods":{c:"Important methods include length, charAt, substring, equals, equalsIgnoreCase, contains, indexOf, replace, split, trim and toLowerCase/toUpperCase.",code:"String s=\"Java Programming\";\nSystem.out.println(s.contains(\"Java\"));\nSystem.out.println(s.substring(0,4));",p:["Create examples for at least 10 common String methods."]},
+"Character manipulation":{c:"Character processing is common in coding problems. Use Character methods to classify and transform characters.",code:"char c='A';\nSystem.out.println(Character.isLetter(c));\nSystem.out.println(Character.toLowerCase(c));",p:["Count vowels.","Count digits and letters in a String."]}
+};
+
+const key="javaRoadmapProV2";
+let state=JSON.parse(localStorage.getItem(key)||"{}");
+state.checks=state.checks||{}; state.notes=state.notes||{}; state.dsa=state.dsa||0;
+state.streak=state.streak||0; state.lastDay=state.lastDay||"";
+let timerSeconds=state.timerSeconds||0, timerInterval=null;
+
+function save(){localStorage.setItem(key,JSON.stringify(state))}
+function today(){return new Date().toISOString().slice(0,10)}
+function updateStreak(){
+  const t=today();
+  if(state.lastDay!==t){
+    const prev=new Date(); prev.setDate(prev.getDate()-1);
+    const p=prev.toISOString().slice(0,10);
+    state.streak = state.lastDay===p ? state.streak+1 : 1;
+    state.lastDay=t; save();
+  }
+}
+function difficulty(text){
+  const hard=["Dynamic Programming","Dijkstra","Kafka","Sharding","Microservices","Java Memory Model","CompletableFuture","System Design","Garbage Collection","JIT"];
+  const medium=["Binary Search","Merge Sort","Quick Sort","HashMap","Streams","Hibernate","JWT","Docker","SQL","Git","Spring"];
+  if(hard.some(x=>text.includes(x))) return ["Hard","hard"];
+  if(medium.some(x=>text.includes(x))) return ["Medium","medium"];
+  return ["Easy","easy"];
+}
+function render(){
+  updateStreak();
+  renderHome();
+  update();
+}
+function renderHome(){
+  const grid=document.getElementById("phaseGrid"); grid.innerHTML="";
+  phases.forEach((phase,pi)=>{
+    let total=0,done=0;
+    phase[1].forEach(g=>g[1].forEach(()=>total++));
+    let idx=0;
+    phase[1].forEach(g=>g[1].forEach(()=>{
+      const uid=`${pi}-${idx++}`; if(state.checks[uid])done++;
+    }));
+    const pct=total?Math.round(done/total*100):0;
+    const card=document.createElement("div"); card.className="phase-card";
+    card.innerHTML=`<h4>${phase[0]}</h4>
+      <div class="pc-meta"><span>${done} / ${total} topics</span><b>${pct}%</b></div>
+      <div class="pc-bar"><span style="width:${pct}%"></span></div>`;
+    card.onclick=()=>showPhase(pi);
+    grid.appendChild(card);
+  });
+}
+
+let currentPhase=0,currentUid="",currentTopic="",currentTab="concept";
+function openStudy(pi,uid,item){
+  currentPhase=pi; currentUid=uid; currentTopic=item; currentTab="concept";
+  document.getElementById("phaseView").hidden=true;
+  document.getElementById("homeView").hidden=true;
+  document.getElementById("studyView").hidden=false;
+  document.getElementById("studyTitle").textContent="📚 "+item;
+  document.getElementById("topicNotes").value=state.notes[uid]||"";
+  updateStudyStatus();
+  updateTopicNavigation();
+  showStudyTab("concept");
+}
+
+function updateTopicNavigation(){
+  const list=getPhaseTopicList(currentPhase);
+  const pos=list.findIndex(x=>x.uid===currentUid);
+  const prev=document.getElementById("prevTopicBtn");
+  const next=document.getElementById("nextTopicBtn");
+  const position=document.getElementById("topicPosition");
+  position.textContent=`Topic ${pos+1} of ${list.length}`;
+  prev.disabled=pos<=0;
+  next.disabled=pos>=list.length-1;
+  next.textContent=pos>=list.length-1?"✓ Phase Complete":"Next Topic →";
+}
+function updateStudyStatus(){
+  const done=!!state.checks[currentUid];
+  document.getElementById("studyStatus").textContent=done?"✅ Completed":"📘 Not completed";
+  const b=document.getElementById("studyComplete");
+  b.textContent=done?"✓ Completed — Click to Undo":"Mark Complete";
+}
+
+function getPhaseTopicList(pi){
+  const list=[];
+  let idx=0;
+  phases[pi][1].forEach(group=>{
+    group[1].forEach(item=>{
+      list.push({uid:`${pi}-${idx++}`,item,group:group[0]});
+    });
+  });
+  return list;
+}
+function navigateTopic(direction){
+  const list=getPhaseTopicList(currentPhase);
+  const pos=list.findIndex(x=>x.uid===currentUid);
+  const nextPos=pos+direction;
+  if(nextPos<0 || nextPos>=list.length) return;
+  const next=list[nextPos];
+  openStudy(currentPhase,next.uid,next.item);
+}
+function backToPhase(){showPhase(currentPhase)}
+function saveTopicNote(){
+  state.notes[currentUid]=document.getElementById("topicNotes").value;
+  save();
+  const b=document.querySelector("#studyView .good"); b.textContent="Saved ✓";
+  setTimeout(()=>b.textContent="Save Notes",900);
+}
+function toggleStudyComplete(){
+  state.checks[currentUid]=!state.checks[currentUid];
+  save(); updateStudyStatus(); update(); 
+}
+function showStudyTab(tab){
+  currentTab=tab;
+  const d=studyData[currentTopic]||{
+    c:`This is the ${currentTopic} topic. Learn the core definition, syntax, common use cases, edge cases and time/space complexity where relevant.`,
+    code:`// Practice ${currentTopic}\n// Write the example yourself here.`,
+    p:[`Explain ${currentTopic} in your own words.`,`Write one small program using ${currentTopic}.`,`Solve 2–3 related coding problems.`]
+  };
+  const content=document.getElementById("studyContent");
+  if(tab==="concept"){
+    content.innerHTML=`<h2>📖 Concept</h2><p>${d.c}</p><h3>💡 Important Points</h3><ul>${(d.p||[]).map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  }else if(tab==="code"){
+    content.innerHTML=`<h2>💻 Example</h2><p class="muted">Type it yourself after understanding it—don't just copy it.</p><pre class="codebox">${escapeHtml(d.code||"No example yet.")}</pre>`;
+  }else{
+    content.innerHTML=`<h2>🧠 Practice</h2><ol>${(d.p||["Practice this topic."]).map(x=>`<li>${x}</li>`).join("")}</ol>`;
+  }
+}
+function escapeHtml(s){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")}
+function showHome(){
+  document.getElementById("studyView").hidden=true;
+  document.getElementById("phaseView").hidden=true;
+  document.getElementById("homeView").hidden=false;
+  document.getElementById("search").value="";
+  document.getElementById("statusFilter").value="all";
+}
+function showPhase(pi){
+  document.getElementById("homeView").hidden=true;
+  document.getElementById("phaseView").hidden=false;
+  const phase=phases[pi];
+  document.getElementById("detailTitle").textContent=phase[0];
+  let total=0,done=0,id=0;
+  phase[1].forEach(g=>g[1].forEach(()=>{
+    const uid=`${pi}-${id++}`; total++; if(state.checks[uid])done++;
+  }));
+  document.getElementById("detailProgress").textContent=`${done} / ${total} topics completed • ${total?Math.round(done/total*100):0}%`;
+  const root=document.getElementById("detailGroups"); root.innerHTML="";
+  let globalId=0;
+  phase[1].forEach(group=>{
+    const box=document.createElement("div"); box.className="detail-group";
+    const head=document.createElement("div"); head.className="detail-group-head";
+    const body=document.createElement("div"); body.className="detail-group-body";
+    let gd=0;
+    group[1].forEach(()=>{const uid=`${pi}-${globalId++}`;if(state.checks[uid])gd++});
+    globalId-=group[1].length;
+    head.innerHTML=`<h3>${group[0]}</h3><span class="group-progress">${gd}/${group[1].length}</span>`;
+    group[1].forEach(item=>{
+      const uid=`${pi}-${globalId++}`;
+      const topic=document.createElement("div"); topic.className="detail-topic";
+      const label=document.createElement("label");
+      const input=document.createElement("input"); input.type="checkbox"; input.dataset.id=uid;
+      const span=document.createElement("span"); span.textContent=item;
+      if(state.checks[uid]){input.checked=true;label.classList.add("done")}
+      input.addEventListener("change",()=>{
+        state.checks[uid]=input.checked;
+        label.classList.toggle("done",input.checked);
+        save(); update();
+        showPhase(pi);
+      });
+      label.append(input,span);
+      label.addEventListener("dblclick",()=>openStudy(pi,uid,item));
+      span.addEventListener("click",(e)=>{e.preventDefault();openStudy(pi,uid,item)});
+      const meta=document.createElement("div"); meta.className="topic-meta";
+      const d=difficulty(item); meta.innerHTML=`<span class="pill ${d[1]}">${d[0]}</span>`;
+      const note=document.createElement("input"); note.className="note-input";
+      note.placeholder="Add a personal note...";
+      note.value=state.notes[uid]||"";
+      note.addEventListener("input",()=>{state.notes[uid]=note.value;save()});
+      const studyBtn=document.createElement("button"); studyBtn.className="secondary"; studyBtn.textContent="📖 Study"; studyBtn.style.cssText="margin:0 0 8px 34px;padding:7px 10px;font-size:11px"; studyBtn.onclick=()=>openStudy(pi,uid,item);
+      topic.append(label,meta,note,studyBtn); body.appendChild(topic);
+    });
+    head.onclick=()=>body.hidden=!body.hidden;
+    box.append(head,body); root.appendChild(box);
+  });
+}
+function update(){
+  const allTopicIds=[];
+  phases.forEach((phase,pi)=>{
+    let idx=0;
+    phase[1].forEach(g=>g[1].forEach(()=>{
+      allTopicIds.push(`${pi}-${idx++}`);
+    }));
+  });
+  const done=allTopicIds.filter(id=>state.checks[id]).length, total=allTopicIds.length;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById("done").textContent=done;
+  document.getElementById("total").textContent=total;
+  document.getElementById("percent").textContent=pct+"%";
+  document.getElementById("bar").style.width=pct+"%";
+  let completedPhases=0;
+  phases.forEach((phase,pi)=>{
+    let totalP=0,doneP=0,idx=0;
+    phase[1].forEach(g=>g[1].forEach(()=>{
+      const uid=`${pi}-${idx++}`; totalP++; if(state.checks[uid])doneP++;
+    }));
+    if(totalP&&doneP===totalP)completedPhases++;
+  });
+  document.getElementById("phaseDone").textContent=completedPhases;
+  document.getElementById("streak").textContent=(state.streak||0)+" 🔥";
+  let next=null;
+  phases.some((phase,pi)=>{
+    let idx=0;
+    return phase[1].some(g=>g[1].some(item=>{
+      const uid=`${pi}-${idx++}`;
+      if(!state.checks[uid]){next={pi,item,phase:phase[0]};return true}
+      return false;
+    }));
+  });
+  if(next){
+    document.getElementById("nextMilestone").textContent=next.item;
+    document.getElementById("nextInfo").textContent=`${next.phase} • Click the phase card to continue.`;
+  }else{
+    document.getElementById("nextMilestone").textContent="🏆 Roadmap Complete!";
+    document.getElementById("nextInfo").textContent="You completed every tracked topic. Time to build and ship.";
+  }
+  renderHome(); renderMilestones();
+}
+function renderMilestones(){
+  const box=document.getElementById("milestones"); if(!box)return;
+  const done=Object.values(state.checks).filter(Boolean).length;
+  const ds=Number(state.dsa)||0;
+  const ms=[
+    ["First Step",done>=1,"Complete 1 topic"],
+    ["Getting Serious",done>=25,"Complete 25 topics"],
+    ["DSA Warrior",ds>=50,"Solve 50 DSA problems"],
+    ["Halfway",done>=Math.ceil(document.querySelectorAll('input[type="checkbox"]').length/2),"Reach 50% roadmap"],
+    ["100 Problems",ds>=100,"Solve 100 DSA problems"],
+    ["Roadmap Master",done>=document.querySelectorAll('input[type="checkbox"]').length,"Complete all topics"]
+  ];
+  box.innerHTML=ms.map(m=>`<div class="milestone ${m[1]?'unlocked':''}"><b>${m[1]?'🏆':'🔒'} ${m[0]}</b>${m[2]}</div>`).join("");
+}
+function globalSearch(){
+  const q=(document.getElementById("search").value||"").toLowerCase().trim();
+  const status=document.getElementById("statusFilter").value;
+  if(!q){return}
+  for(let pi=0;pi<phases.length;pi++){
+    let idx=0;
+    for(const group of phases[pi][1]){
+      for(const item of group[1]){
+        const uid=`${pi}-${idx++}`;
+        const text=(item+" "+group[0]+" "+phases[pi][0]).toLowerCase();
+        const statusOk=status==="all"||(status==="done"&&state.checks[uid])||(status==="pending"&&!state.checks[uid]);
+        if(text.includes(q)&&statusOk){showPhase(pi);return}
+      }
+    }
+  }
+}
+function clearSearch(){document.getElementById("search").value="";document.getElementById("statusFilter").value="all"}
+function expandAll(){document.querySelectorAll(".detail-group-body").forEach(x=>x.hidden=false)}
+function collapseAll(){document.querySelectorAll(".detail-group-body").forEach(x=>x.hidden=true)}
+
+function exportProgress(){
+  save();
+  const backup = {
+    app: "Java Software Engineer Roadmap",
+    formatVersion: 1,
+    exportedAt: new Date().toISOString(),
+    data: {
+      checks: state.checks || {},
+      notes: state.notes || {},
+      dsa: Number(state.dsa) || 0,
+      streak: Number(state.streak) || 0,
+      lastDay: state.lastDay || "",
+      timerSeconds: Number(state.timerSeconds) || 0
+    }
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "java-roadmap-progress-" + new Date().toISOString().slice(0,10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function importProgress(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try{
+      const payload = JSON.parse(reader.result);
+      const incoming = payload.data || payload;
+      if(!incoming || typeof incoming !== "object" || !incoming.checks){
+        throw new Error("Invalid backup");
+      }
+      state = {
+        checks: incoming.checks || {},
+        notes: incoming.notes || {},
+        dsa: Number(incoming.dsa) || 0,
+        streak: Number(incoming.streak) || 0,
+        lastDay: incoming.lastDay || "",
+        timerSeconds: Number(incoming.timerSeconds) || 0
+      };
+      timerSeconds = state.timerSeconds;
+      save();
+      render();
+      const dsaBox = document.getElementById("dsaCount");
+      if(dsaBox) dsaBox.value = state.dsa;
+      updateTimer();
+      alert("Progress restored successfully! ✅");
+    }catch(err){
+      alert("Invalid roadmap backup file. Please select a JSON exported from this dashboard.");
+    }
+    event.target.value = "";
+  };
+  reader.readAsText(file);
+}
+
+function resetProgress(){
+  if(confirm("Reset all roadmap progress, notes, streak, DSA count and timer?")){
+    state={checks:{},notes:{},dsa:0,streak:0,lastDay:"",timerSeconds:0}; timerSeconds=0; save(); render(); updateTimer();
+  }
+}
+function saveExtras(){state.dsa=Number(document.getElementById("dsaCount").value)||0;save();renderMilestones()}
+function updateTimer(){
+  const h=String(Math.floor(timerSeconds/3600)).padStart(2,"0");
+  const m=String(Math.floor(timerSeconds%3600/60)).padStart(2,"0");
+  const s=String(timerSeconds%60).padStart(2,"0");
+  document.getElementById("timer").textContent=`${h}:${m}:${s}`;
+}
+function toggleTimer(){
+  if(timerInterval){
+    clearInterval(timerInterval);timerInterval=null;
+    document.getElementById("timerBtn").textContent="Resume";
+  }else{
+    updateStreak();
+    timerInterval=setInterval(()=>{timerSeconds++;state.timerSeconds=timerSeconds;if(timerSeconds%10===0)save();updateTimer()},1000);
+    document.getElementById("timerBtn").textContent="Pause";
+  }
+}
+function resetTimer(){clearInterval(timerInterval);timerInterval=null;timerSeconds=0;state.timerSeconds=0;save();updateTimer();document.getElementById("timerBtn").textContent="Start"}
+
+render();
+document.getElementById("dsaCount").value=state.dsa||0;
+updateTimer();
+</script>
+</body>
+</html>
