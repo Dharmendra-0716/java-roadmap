@@ -1348,10 +1348,37 @@ let timerInterval = null;
 function save(){
     localStorage.setItem("javaRoadmapState", JSON.stringify(state));
 }
+async function syncProgressToServer(){
 
+    if(!state.user || !state.user.email) return;
+
+    try{
+
+        await fetch(
+            `https://java-roadmap-backend-production.up.railway.app/api/progress/${encodeURIComponent(state.user.email)}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    completed: state.completed,
+                    notes: state.notes,
+                    streak: state.streak
+                })
+            }
+        );
+
+    }catch(error){
+
+        console.error("Progress sync failed:", error);
+
+    }
+}
 function getTotalTopics(){
     return phases.reduce((total, phase) => total + phase.topics.length, 0);
 }
+
 
 function getCompletedCount(){
     return Object.values(state.completed).filter(Boolean).length;
@@ -1729,14 +1756,20 @@ function practiceForTopic(topic){
     return `Explain “${topic.title}” in your own words and write one small Java example that demonstrates it.`;
 }
 
-function toggleCurrentTopicComplete(){
+async function toggleCurrentTopicComplete(){
+
     if(!currentPhase) return;
+
     const key = `${currentPhase.id}-${currentTopicIndex}`;
+
     state.completed[key] = !state.completed[key];
+
     save();
     updateDashboard();
     renderPhases();
     showCurrentTopic();
+
+    await syncProgressToServer();
 }
 
 function saveCurrentTopicNotes(){
