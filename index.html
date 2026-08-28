@@ -1806,12 +1806,21 @@ async function toggleCurrentTopicComplete(){
     await syncProgressToServer();
 }
 
-function saveCurrentTopicNotes(){
+async function saveCurrentTopicNotes(){
+
     if(!currentPhase) return;
+
     const key = `${currentPhase.id}-${currentTopicIndex}`;
-    state.notes[key] = document.getElementById("readerNotes").value;
+
+    state.notes[key] =
+        document.getElementById("readerNotes").value;
+
     save();
-    document.getElementById("notesSaved").textContent = "✓ Notes saved";
+
+    document.getElementById("notesSaved").textContent =
+        "✓ Notes saved";
+
+    await syncProgressToServer();
 }
 
 function nextTopic(){
