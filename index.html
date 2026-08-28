@@ -1354,12 +1354,15 @@ async function syncProgressToServer(){
 
     try{
 
+        const token = localStorage.getItem("jwtToken");
+
         await fetch(
             `https://java-roadmap-backend-production.up.railway.app/api/progress/${encodeURIComponent(state.user.email)}`,
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     completed: state.completed,
@@ -1375,15 +1378,22 @@ async function syncProgressToServer(){
 
     }
 }
-
 async function loadProgressFromServer(){
 
     if(!state.user || !state.user.email) return;
 
     try{
 
+        const token = localStorage.getItem("jwtToken");
+
         const response = await fetch(
-            `https://java-roadmap-backend-production.up.railway.app/api/progress/${encodeURIComponent(state.user.email)}`
+            `https://java-roadmap-backend-production.up.railway.app/api/progress/${encodeURIComponent(state.user.email)}`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
         );
 
         if(!response.ok) return;
@@ -1977,35 +1987,41 @@ async function demoAuth(mode){
             return;
         }
 
-        if(mode === "login"){
+       if(mode === "login"){
 
-            if(result === "Login successful"){
+    const token = result;
 
-                state.user = {
-                    name:
-                        state.user?.email === email
-                            ? state.user.name
-                            : (name || email.split("@")[0]),
-                    email:email
-                };
+    if(token){
 
-                save();
-                await loadProgressFromServer();
-                loadUser();
-                closeAuth();
+        localStorage.setItem("jwtToken", token);
 
-                const target = pendingPhaseId;
-                pendingPhaseId = null;
+        state.user = {
+            name:
+                state.user?.email === email
+                    ? state.user.name
+                    : (name || email.split("@")[0]),
+            email: email
+        };
 
-                if(target){
-                    setTimeout(() => openPhase(target), 150);
-                }
+        save();
+        await loadProgressFromServer();
+        loadUser();
+        closeAuth();
 
-            }else{
-                msg.textContent = result;
-            }
+        const target = pendingPhaseId;
+        pendingPhaseId = null;
 
-        }else{
+        if(target){
+            setTimeout(() => openPhase(target), 150);
+        }
+
+    }else{
+
+        msg.textContent = "Login failed.";
+
+    }
+
+}else{
 
             state.user = {
                 name:name,
