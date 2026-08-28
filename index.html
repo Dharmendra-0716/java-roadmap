@@ -1400,18 +1400,23 @@ async function loadProgressFromServer(){
 
         const data = await response.json();
 
-        if(data.progress){
+       if(data.progress){
 
-            const serverProgress = JSON.parse(data.progress);
+    // User may have logged out while request was running
+    if(!state.user || !state.user.email){
+        return;
+    }
 
-            state.completed = serverProgress.completed || {};
-            state.notes = serverProgress.notes || {};
-            state.streak = serverProgress.streak || 1;
+    const serverProgress = JSON.parse(data.progress);
 
-            save();
-            updateDashboard();
-            renderPhases();
-        }
+    state.completed = serverProgress.completed || {};
+    state.notes = serverProgress.notes || {};
+    state.streak = serverProgress.streak || 1;
+
+    save();
+    updateDashboard();
+    renderPhases();
+}
 
     }catch(error){
 
@@ -2122,14 +2127,22 @@ function loadProfile(){
 
 function logout(){
 
+    // Remove current login session
     state.user = null;
     pendingPhaseId = null;
 
-    // Remove JWT token from browser
+    // Clear progress from local browser
+    state.completed = {};
+    state.notes = {};
+    state.streak = 1;
+
+    // Remove JWT token
     localStorage.removeItem("jwtToken");
 
     save();
     loadUser();
+    updateDashboard();
+    renderPhases();
     closeSettings();
 
     alert("You have been logged out.");
