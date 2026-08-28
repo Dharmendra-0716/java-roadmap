@@ -3,844 +3,2269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Java to Software Engineer personal learning roadmap">
 <title>Java → Software Engineer Roadmap</title>
+
 <style>
-*{box-sizing:border-box}
-:root{--bg:#070b14;--panel:#0f172a;--panel2:#111c31;--line:#23304a;--text:#eef2ff;--muted:#94a3b8;--accent:#818cf8;--accent2:#38bdf8;--good:#34d399;--warn:#fbbf24}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 15% 0%,#17255455,transparent 35%),radial-gradient(circle at 90% 10%,#312e8150,transparent 30%),var(--bg);color:var(--text)}
-.wrap{max-width:1180px;margin:auto;padding:24px 18px 70px}
-header{background:linear-gradient(135deg,#111c3b,#251b57 60%,#102b46);padding:28px;border-radius:22px;margin-bottom:16px;border:1px solid #ffffff14;box-shadow:0 18px 55px #0008}
-.brand{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
-h1{margin:0 0 8px;font-size:clamp(27px,5vw,43px);letter-spacing:-.03em}
-.sub{color:#c7d2fe;margin:0}
-.badge{padding:8px 11px;border-radius:999px;background:#ffffff12;border:1px solid #ffffff18;color:#c4b5fd;font-size:12px;font-weight:800;white-space:nowrap}
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:22px}
-.stat{background:#ffffff09;border:1px solid #ffffff13;border-radius:14px;padding:14px}
-.stat b{display:block;font-size:22px;margin-bottom:3px}
-.stat span{font-size:12px;color:#aebbd1}
-.progress{height:12px;background:#ffffff14;border-radius:99px;overflow:hidden;margin-top:18px}
-.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.35s}
-.dashboard{display:grid;grid-template-columns:1.35fr .8fr;gap:14px;margin:14px 0}
-.card{background:linear-gradient(180deg,#111827,#0d1524);border:1px solid var(--line);border-radius:17px;padding:18px}
-.card h3{margin:0 0 12px;font-size:14px;color:#cbd5e1}
-.next{font-size:18px;font-weight:800;margin-bottom:5px}
-.muted{color:var(--muted);font-size:13px}
-.controls{display:grid;grid-template-columns:1fr 170px 170px;gap:10px;margin:14px 0}
-input[type="search"],select,.note-input{width:100%;background:#0b1220;color:var(--text);border:1px solid #293753;border-radius:10px;padding:11px 12px;outline:none}
-input[type="search"]:focus,select:focus,.note-input:focus{border-color:var(--accent)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
-button{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:#6366f1;color:white}
-button:hover{filter:brightness(1.1)}
-button.secondary{background:#172033;color:#e5e7eb;border:1px solid #2c3a55}
-button.good{background:#087f5b}
-.timer{font-size:28px;font-variant-numeric:tabular-nums;font-weight:900;margin:4px 0 12px}
-.dsa-row{display:flex;align-items:center;gap:10px}
-.dsa-row input{width:90px}
-.milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.milestone{padding:11px;border-radius:12px;background:#ffffff06;border:1px solid #25324a;color:#94a3b8;font-size:12px}
-.milestone.unlocked{border-color:#276749;background:#064e3b33;color:#a7f3d0}
-.milestone b{display:block;color:#e2e8f0;margin-bottom:4px}
-section{background:#0e1727;border:1px solid var(--line);border-radius:16px;margin:12px 0;overflow:hidden;transition:.2s}
-section.hidden-by-filter{display:none}
-.phase-head{padding:17px 19px;display:flex;justify-content:space-between;gap:15px;align-items:center;cursor:pointer;background:linear-gradient(90deg,#111b2d,#101827)}
-.phase-head:hover{background:#172238}
-.phase-head h2{font-size:18px;margin:0}
-.phase-head small{color:#a5b4fc;white-space:nowrap}
-.phase-mini{height:5px;background:#ffffff0d;border-radius:9px;margin-top:8px;width:150px;overflow:hidden}
-.phase-mini span{display:block;height:100%;width:0;background:var(--good)}
-.items{padding:9px 19px 18px}
-.group{margin-top:14px}
-.group h3{font-size:12px;color:#7dd3fc;margin:12px 0 7px;text-transform:uppercase;letter-spacing:.08em}
-.topic{display:block}
-.topic label{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;border-radius:8px;cursor:pointer;color:#dbe4f0}
-.topic label:hover{background:#ffffff08}
-.topic input{width:18px;height:18px;accent-color:#818cf8;margin-top:1px;flex:none}
-.topic label.done span{text-decoration:line-through;color:#64748b}
-.topic-meta{display:flex;gap:7px;align-items:center;margin:-2px 0 7px 34px}
-.pill{font-size:10px;padding:3px 7px;border-radius:99px;border:1px solid #2b3954;color:#94a3b8}
-.pill.easy{color:#86efac}.pill.medium{color:#fde68a}.pill.hard{color:#fca5a5}
-.note-input{margin:0 0 8px 34px;width:calc(100% - 34px);font-size:12px;padding:8px}
-.topic.is-filtered{display:none}
-.tip{color:#64748b;font-size:12px;margin-top:14px;text-align:center}
-@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.dashboard{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.milestones{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:650px){.stats{grid-template-columns:1fr 1fr}.brand{flex-direction:column}.controls{grid-template-columns:1fr}.phase-head{align-items:flex-start;flex-direction:column}.items{padding-left:10px;padding-right:10px}.milestones{grid-template-columns:1fr 1fr}}
+/* =========================================================
+   1. GLOBAL DESIGN SYSTEM
+   Change colors, spacing and typography here.
+   ========================================================= */
+:root{
+    --bg:#070b18;
+    --bg-soft:#0b1120;
+    --card:#111a2d;
+    --card-2:#151f36;
+    --card-3:#0d1629;
+    --border:#273653;
+    --text:#f4f7ff;
+    --muted:#9aa9c6;
+    --primary:#6366f1;
+    --primary-2:#8b5cf6;
+    --green:#22c55e;
+    --yellow:#f59e0b;
+    --red:#ef4444;
+    --shadow:0 22px 70px rgba(0,0,0,.35);
+    --radius:20px;
+}
 
-.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.phase-card{background:linear-gradient(145deg,#111c30,#0d1524);border:1px solid #263653;border-radius:15px;padding:16px;cursor:pointer;transition:.2s}
-.phase-card:hover{transform:translateY(-2px);border-color:#5865d9;background:#17233b}
-.phase-card h4{margin:0 0 7px;font-size:14px;line-height:1.35}
-.phase-card .pc-meta{display:flex;justify-content:space-between;color:#94a3b8;font-size:11px;margin-bottom:8px}
-.pc-bar{height:5px;background:#ffffff0c;border-radius:99px;overflow:hidden}
-.pc-bar span{display:block;height:100%;background:linear-gradient(90deg,#818cf8,#38bdf8);width:0}
-.detail-top{display:flex;align-items:center;gap:16px;margin:14px 0}
-.detail-title{font-size:20px;font-weight:900}
-.detail-group{background:#0e1727;border:1px solid #23304a;border-radius:15px;margin:10px 0;overflow:hidden}
-.detail-group-head{padding:15px 17px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#111b2d}
-.detail-group-head h3{margin:0;color:#7dd3fc;font-size:14px}
-.detail-group-body{padding:8px 14px 14px}
-.group-progress{font-size:11px;color:#94a3b8}
-.detail-topic{display:block}
-@media(max-width:900px){.phase-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.phase-grid{grid-template-columns:1fr}.detail-top{align-items:flex-start;flex-direction:column}}
+body.light{
+    --bg:#eef2ff;
+    --bg-soft:#f8fafc;
+    --card:#ffffff;
+    --card-2:#f5f7ff;
+    --card-3:#eef2ff;
+    --border:#d5ddec;
+    --text:#111827;
+    --muted:#64748b;
+    --shadow:0 18px 50px rgba(30,41,59,.12);
+}
 
-.study-layout{display:grid;grid-template-columns:1.6fr .75fr;gap:14px}
-.study-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.study-tabs button{font-size:12px}
-.study-content h2,.study-main h2{margin-top:0}
-.study-main p{color:#cbd5e1;line-height:1.7}
-.study-main li{color:#cbd5e1;margin:7px 0;line-height:1.5}
-.codebox{background:#070b14;border:1px solid #263653;border-radius:12px;padding:15px;overflow:auto;color:#dbeafe;font-family:Consolas,monospace;font-size:13px;line-height:1.55;white-space:pre}
-.notes-area{width:100%;min-height:260px;resize:vertical;background:#0b1220;color:#eef2ff;border:1px solid #293753;border-radius:10px;padding:12px;font:13px Inter,Segoe UI,sans-serif;line-height:1.5;outline:none}
-.notes-area:focus{border-color:#818cf8}
-.study-check{color:#86efac;font-weight:800}
-@media(max-width:850px){.study-layout{grid-template-columns:1fr}}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-.study-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}
-.study-nav-center{color:#94a3b8;font-size:12px;font-weight:700;text-align:center}.study-nav button:disabled{opacity:.45;cursor:not-allowed}
-@media(max-width:600px){.study-nav{flex-wrap:wrap}.study-nav button{flex:1}.study-nav-center{width:100%;order:-1}}
+html{
+    scroll-behavior:smooth;
+}
 
-/* ===== PRO UPGRADE ===== */
-:root{--accent:#7c3aed;--accent2:#06b6d4;--glass:#ffffff08;--shadow:0 20px 70px #0007}
-body{transition:background .35s,color .35s;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 20%,#7c3aed18,transparent 28%),radial-gradient(circle at 80% 0%,#06b6d418,transparent 25%);z-index:-1}
-body.light{--bg:#f5f7ff;--panel:#fff;--panel2:#eef2ff;--line:#dbe2f0;--text:#172033;--muted:#64748b;background:linear-gradient(135deg,#f8fafc,#eef2ff);color:var(--text)}
-body.light .card,body.light section,body.light .phase-card,body.light .detail-group{background:#ffffffdd;border-color:#dbe2f0;box-shadow:0 10px 35px #64748b18}
-body.light input,body.light select,body.light .note-input,body.light .notes-area{background:#f8fafc;color:#172033;border-color:#cbd5e1}
-body.light .phase-head,body.light .detail-group-head{background:#f8fafc}
-.top-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.icon-btn{background:#ffffff12;border:1px solid #ffffff20;color:var(--text);padding:9px 12px;border-radius:11px}
-body.light .icon-btn{background:#fff;color:#172033;border-color:#dbe2f0}
-.reveal{animation:rise .55s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.card,.phase-card,section{transition:transform .25s,box-shadow .25s,border-color .25s}
-.card:hover{box-shadow:0 15px 45px #0003}
-.phase-card:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 15px 40px #0004}
-.progress-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) var(--p,0%),#ffffff14 0);position:relative}
-.progress-ring::after{content:"";position:absolute;width:70px;height:70px;border-radius:50%;background:var(--panel)}
-.progress-ring b{position:relative;z-index:1}
-.profile{display:flex;align-items:center;gap:10px}.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent2));font-weight:900}
-.modal-backdrop{position:fixed;inset:0;background:#020617aa;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
-.modal-backdrop.show{display:flex}.modal{width:min(430px,100%);background:#101827;border:1px solid #334155;border-radius:20px;padding:22px;box-shadow:var(--shadow);animation:rise .25s ease}
-body.light .modal{background:#fff;border-color:#dbe2f0;color:#172033}.modal h2{margin-top:0}.modal input{width:100%;margin:6px 0;padding:12px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#fff}.modal .row{display:flex;gap:8px}.modal .row>*{flex:1}.close{float:right;background:transparent;padding:3px 8px;font-size:20px}.auth-msg{min-height:20px;color:#fbbf24;font-size:12px}.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.feature{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--glass)}.feature b{display:block;margin-bottom:5px}.feature span{font-size:12px;color:var(--muted)}
-@media(max-width:800px){.feature-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.feature-grid{grid-template-columns:1fr}.top-actions button{flex:1}}
+body{
+    min-height:100vh;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 0%,rgba(99,102,241,.18),transparent 30%),
+        radial-gradient(circle at 90% 10%,rgba(139,92,246,.14),transparent 28%),
+        var(--bg);
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    line-height:1.5;
+    transition:.25s ease;
+}
+
+button,input,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:0 auto;
+}
+
+/* =========================================================
+   2. TOP BAR
+   ========================================================= */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:20px 0 10px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
+}
+
+.brand-mark{
+    width:44px;
+    height:44px;
+    display:grid;
+    place-items:center;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+    box-shadow:0 10px 30px rgba(99,102,241,.25);
+    font-size:21px;
+}
+
+.brand-text{
+    font-weight:900;
+    letter-spacing:-.3px;
+}
+
+.brand-sub{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+/* =========================================================
+   3. BUTTONS
+   ========================================================= */
+.btn{
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:800;
+    transition:.2s ease;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    border-color:var(--primary);
+}
+
+.btn.primary{
+    border:0;
+    color:#fff;
+    background:linear-gradient(135deg,var(--primary),var(--primary-2));
+}
+
+.btn.danger{
+    color:#ff9b9b;
+}
+
+.icon-btn{
+    width:42px;
+    height:42px;
+    padding:0;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--card);
+    color:var(--text);
+}
+
+/* =========================================================
+   4. HERO / DASHBOARD
+   ========================================================= */
+.hero{
+    margin-top:10px;
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:26px;
+    background:
+        linear-gradient(135deg,rgba(99,102,241,.17),rgba(139,92,246,.07)),
+        var(--card);
+    box-shadow:var(--shadow);
+}
+
+.hero-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:25px;
+}
+
+.hero-title{
+    font-size:clamp(30px,5vw,52px);
+    line-height:1.05;
+    font-weight:950;
+    letter-spacing:-2px;
+}
+
+.hero-subtitle{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:16px;
+}
+
+.hero-badge{
+    padding:8px 13px;
+    border-radius:999px;
+    border:1px solid rgba(99,102,241,.35);
+    background:rgba(99,102,241,.12);
+    color:#c3c2ff;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:10px;
+    margin-top:24px;
+}
+
+.stat{
+    padding:16px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(255,255,255,.025);
+}
+
+.stat-number{
+    font-size:24px;
+    font-weight:950;
+}
+
+.stat-label{
+    color:var(--muted);
+    font-size:12px;
+    margin-top:3px;
+}
+
+.progress-bar{
+    height:10px;
+    margin-top:20px;
+    overflow:hidden;
+    border-radius:999px;
+    background:rgba(148,163,184,.13);
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    transition:width .35s ease;
+}
+
+/* =========================================================
+   5. MAIN CONTROLS
+   ========================================================= */
+.controls{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin:18px 0;
+}
+
+.controls-left,
+.controls-right{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.search{
+    width:min(330px,100%);
+    padding:11px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    background:var(--card);
+    color:var(--text);
+}
+
+.search:focus{
+    border-color:var(--primary);
+}
+
+/* =========================================================
+   6. SMALL DASHBOARD CARDS
+   These are useful; the old "what the website contains"
+   promotional cards have intentionally been removed.
+   ========================================================= */
+.quick-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:14px;
+    margin-bottom:28px;
+}
+
+.panel{
+    padding:22px;
+    border:1px solid var(--border);
+    border-radius:20px;
+    background:var(--card);
+}
+
+.panel-label{
+    color:var(--muted);
+    font-size:12px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+}
+
+.next-title{
+    margin-top:8px;
+    font-size:24px;
+    font-weight:950;
+}
+
+.next-desc{
+    margin-top:5px;
+    color:var(--muted);
+}
+
+.timer{
+    font-size:34px;
+    font-weight:950;
+    letter-spacing:1px;
+    margin:6px 0 10px;
+}
+
+/* =========================================================
+   7. ROADMAP
+   ========================================================= */
+.roadmap-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:15px;
+    margin:10px 0 14px;
+}
+
+.section-title{
+    font-size:19px;
+    font-weight:950;
+}
+
+.section-desc{
+    color:var(--muted);
+    margin-top:4px;
+    font-size:14px;
+}
+
+.phases{
+    display:grid;
+    gap:11px;
+}
+
+.phase{
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--card);
+    transition:.2s ease;
+}
+
+.phase:hover{
+    border-color:rgba(99,102,241,.65);
+    transform:translateY(-1px);
+}
+
+.phase.locked{
+    opacity:.68;
+}
+
+.phase-head{
+    width:100%;
+    border:0;
+    color:var(--text);
+    background:transparent;
+    text-align:left;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px;
+}
+
+.phase-number{
+    flex:0 0 46px;
+    width:46px;
+    height:46px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:rgba(99,102,241,.12);
+    color:#b8b7ff;
+    font-weight:950;
+}
+
+.phase-info{
+    flex:1;
+    min-width:0;
+}
+
+.phase-title{
+    font-weight:950;
+    font-size:17px;
+}
+
+.phase-desc{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:3px;
+}
+
+.phase-meta{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--muted);
+    font-size:12px;
+    white-space:nowrap;
+}
+
+.status{
+    padding:6px 9px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:950;
+}
+
+.status.open{
+    color:#aeb1ff;
+    background:rgba(99,102,241,.12);
+}
+
+.status.done{
+    color:#4ade80;
+    background:rgba(34,197,94,.12);
+}
+
+.status.lock{
+    color:var(--muted);
+    background:rgba(148,163,184,.09);
+}
+
+.phase-progress{
+    height:4px;
+    background:rgba(148,163,184,.1);
+}
+
+.phase-progress-fill{
+    height:100%;
+    width:0;
+    background:var(--green);
+    transition:.3s;
+}
+
+/* =========================================================
+   8. MODALS
+   ========================================================= */
+.overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(10px);
+}
+
+.overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:min(820px,100%);
+    max-height:92vh;
+    overflow:auto;
+    border:1px solid var(--border);
+    border-radius:22px;
+    background:var(--card);
+    box-shadow:var(--shadow);
+}
+
+.modal.small{
+    width:min(500px,100%);
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    padding:21px;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:2;
+    background:var(--card);
+}
+
+.modal-title{
+    font-size:22px;
+    font-weight:950;
+}
+
+.modal-subtitle{
+    margin-top:3px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.modal-body{
+    padding:21px;
+}
+
+.close-btn{
+    border:0;
+    background:transparent;
+    color:var(--text);
+    font-size:25px;
+    line-height:1;
+}
+
+/* =========================================================
+   9. TOPIC READER
+   ========================================================= */
+.topic-list{
+    display:grid;
+    gap:9px;
+}
+
+.topic-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:var(--card-2);
+    overflow:hidden;
+}
+
+.topic-summary{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--text);
+    padding:15px;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    text-align:left;
+}
+
+.topic-index{
+    flex:0 0 30px;
+    width:30px;
+    height:30px;
+    display:grid;
+    place-items:center;
+    border-radius:9px;
+    background:rgba(99,102,241,.11);
+    color:#b8b7ff;
+    font-size:11px;
+    font-weight:950;
+}
+
+.topic-name{
+    flex:1;
+    font-weight:850;
+}
+
+.topic-chevron{
+    color:var(--muted);
+    transition:.2s;
+}
+
+.topic-card.open .topic-chevron{
+    transform:rotate(180deg);
+}
+
+.topic-content{
+    display:none;
+    padding:0 15px 15px;
+}
+
+.topic-card.open .topic-content{
+    display:block;
+}
+
+.answer{
+    padding:15px;
+    border-left:3px solid var(--primary);
+    border-radius:0 12px 12px 0;
+    background:var(--card-3);
+    color:var(--text);
+}
+
+.answer-label{
+    font-size:11px;
+    color:#aeb1ff;
+    font-weight:950;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.notes-label{
+    display:block;
+    margin-top:13px;
+    margin-bottom:6px;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:900;
+}
+
+.note{
+    width:100%;
+    min-height:82px;
+    resize:vertical;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:11px;
+    outline:none;
+    background:var(--bg-soft);
+    color:var(--text);
+}
+
+.note:focus{
+    border-color:var(--primary);
+}
+
+.reader-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:17px;
+    padding-top:15px;
+    border-top:1px solid var(--border);
+}
+
+/* =========================================================
+   10. AUTH
+   ========================================================= */
+.form{
+    display:grid;
+    gap:11px;
+}
+
+.input{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    background:var(--bg-soft);
+    color:var(--text);
+}
+
+.input:focus{
+    border-color:var(--primary);
+}
+
+.form-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.message{
+    min-height:22px;
+    margin-top:4px;
+    color:#fbbf24;
+    font-size:13px;
+    font-weight:750;
+}
+
+.auth-note{
+    margin-bottom:14px;
+    padding:10px 12px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:var(--card-2);
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* =========================================================
+   11. SETTINGS
+   ========================================================= */
+.settings-grid{
+    display:grid;
+    gap:18px;
+}
+
+.settings-section{
+    padding-bottom:17px;
+    border-bottom:1px solid var(--border);
+}
+
+.settings-section:last-child{
+    border-bottom:0;
+    padding-bottom:0;
+}
+
+.settings-title{
+    font-size:15px;
+    font-weight:950;
+    margin-bottom:9px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+}
+
+.settings-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* =========================================================
+   12. FOOTER
+   ========================================================= */
+footer{
+    padding:35px 0 45px;
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* =========================================================
+   13. RESPONSIVE DESIGN
+   Mobile is treated as a first-class layout.
+   ========================================================= */
+@media(max-width:900px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+    .container{
+        width:min(94%,520px);
+    }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .brand-text{
+        font-size:14px;
+    }
+
+    .brand-sub{
+        font-size:10px;
+    }
+
+    .top-actions .login-label{
+        display:none;
+    }
+
+    .hero{
+        padding:21px;
+        border-radius:20px;
+    }
+
+    .hero-row{
+        flex-direction:column;
+    }
+
+    .hero-title{
+        font-size:34px;
+    }
+
+    .hero-badge{
+        align-self:flex-start;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        padding:13px;
+    }
+
+    .stat-number{
+        font-size:21px;
+    }
+
+    .controls{
+        align-items:stretch;
+    }
+
+    .controls-left,
+    .controls-right{
+        width:100%;
+    }
+
+    .controls .btn{
+        flex:1;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .roadmap-head{
+        align-items:stretch;
+    }
+
+    .phase-head{
+        padding:14px;
+        gap:10px;
+    }
+
+    .phase-number{
+        flex-basis:40px;
+        width:40px;
+        height:40px;
+    }
+
+    .phase-title{
+        font-size:15px;
+    }
+
+    .phase-desc{
+        font-size:12px;
+    }
+
+    .phase-meta{
+        flex-direction:column;
+        gap:4px;
+    }
+
+    .modal{
+        max-height:96vh;
+        border-radius:18px;
+    }
+
+    .modal-head,
+    .modal-body{
+        padding:16px;
+    }
+
+    .form-actions,
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .reader-footer{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .reader-footer .btn{
+        width:100%;
+    }
+}
+
+/* =========================================================
+   9B. DETAILED TOPIC READER
+   ========================================================= */
+.phase-reader-modal{width:min(1120px,100%);max-height:94vh;overflow:auto;}
+.reader-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5;background:var(--card);}
+.reader-topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;padding:16px 24px;border-bottom:1px solid var(--border);}
+.reader-topbar .btn:last-child{justify-self:end;}
+.reader-position{text-align:center;color:#b8b7ff;font-weight:900;font-size:13px;}
+.reader-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;padding:18px 24px;}
+.reader-main,.reader-notes{border:1px solid var(--border);border-radius:18px;background:var(--card-2);}
+.reader-main{padding:22px;}
+.topic-heading{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.topic-heading-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(99,102,241,.16);color:#b8b7ff;font-weight:950;font-size:18px;}
+.topic-heading h2{margin:0;font-size:26px;}
+.topic-status{margin-top:4px;color:var(--muted);font-size:13px;font-weight:800;}
+.reader-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.reader-tab{border:1px solid var(--border);background:var(--card-3);color:var(--text);padding:10px 15px;border-radius:11px;font-weight:900;cursor:pointer;}
+.reader-tab.active{background:var(--primary);border-color:var(--primary);}
+.reader-content{min-height:330px;padding:25px;border-radius:16px;border:1px solid var(--border);background:rgba(5,10,25,.28);font-size:16px;line-height:1.75;}
+.reader-content h3{margin:0 0 14px;font-size:25px;}
+.reader-content h4{margin:22px 0 8px;color:#b8b7ff;}
+.reader-content p{margin:0 0 15px;}
+.reader-content ul{margin:8px 0 18px;padding-left:22px;}
+.reader-example{padding:16px;border:1px solid var(--border);border-radius:12px;background:#080e20;font-family:Consolas,monospace;white-space:pre-wrap;line-height:1.55;}
+.practice-box{padding:18px;border-left:3px solid var(--primary);background:var(--card-3);border-radius:0 12px 12px 0;}
+.reader-actions{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap;}
+.reader-notes{padding:18px;align-self:start;position:sticky;top:92px;}
+.notes-title{font-size:16px;font-weight:950;}
+.notes-subtitle{margin:7px 0 12px;color:var(--muted);font-size:12px;line-height:1.5;}
+.reader-notes-box{width:100%;min-height:350px;resize:vertical;border:1px solid var(--border);border-radius:12px;background:#080e20;color:var(--text);padding:13px;font:inherit;line-height:1.55;box-sizing:border-box;}
+.reader-notes .btn{width:100%;margin-top:10px;}
+.notes-saved{min-height:18px;margin-top:7px;text-align:center;color:#4ade80;font-size:12px;font-weight:800;}
+.reader-footer-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:850;}
+@media(max-width:820px){
+ .reader-topbar{grid-template-columns:1fr 1fr;}
+ .reader-position{grid-column:1/-1;grid-row:1;order:-1;}
+ .reader-topbar .btn:last-child{justify-self:end;}
+ .reader-grid{grid-template-columns:1fr;padding:14px;}
+ .reader-notes{position:static;}
+ .reader-notes-box{min-height:180px;}
+ .reader-content{min-height:260px;padding:18px;}
+ .topic-heading h2{font-size:21px;}
+ .reader-footer-bar{padding:14px;flex-direction:column;align-items:stretch;}
+ .reader-footer-bar .btn{width:100%;}
+}
+@media(max-width:520px){
+ .reader-head{padding:16px;}
+ .reader-topbar{padding:12px 14px;}
+ .reader-main{padding:14px;}
+ .reader-actions .btn{width:100%;}
+ .reader-tab{flex:1;}
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-<header>
-  <div class="brand">
-    <div>
-      <h1>🚀 Java → Software Engineer</h1>
-      <p class="sub">Personal learning dashboard • 19 phases • track your journey</p>
+
+<div class="container">
+
+    <!-- =====================================================
+         TOP BAR
+         Left: brand + settings
+         Right: login/profile
+         ===================================================== -->
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark">🚀</div>
+            <div>
+                <div class="brand-text">Java → Software Engineer</div>
+                <div class="brand-sub">Personal learning roadmap</div>
+            </div>
+            <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
+        </div>
+
+        <div class="top-actions">
+            <button class="btn primary" onclick="openAuth()">
+                👤 <span class="login-label" id="authText">Login / Sign up</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =====================================================
+         MAIN DASHBOARD
+         ===================================================== -->
+    <main>
+
+        <section class="hero">
+            <div class="hero-row">
+                <div>
+                    <div class="hero-title">Build your software engineering career.</div>
+                    <div class="hero-subtitle">
+                        Learn Java from the ground up, practice every phase,
+                        write your own notes and track real progress.
+                    </div>
+                </div>
+                <div class="hero-badge">PRO ROADMAP</div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="completedTopics">0</div>
+                    <div class="stat-label">Topics completed</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number" id="totalTopics">0</div>
+                    <div class="stat-label">Learning topics</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number" id="overallProgress">0%</div>
+                    <div class="stat-label">Overall progress</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number" id="completedPhases">0</div>
+                    <div class="stat-label">Phases completed</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-number" id="streak">1 🔥</div>
+                    <div class="stat-label">Study streak</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="mainProgress"></div>
+            </div>
+        </section>
+
+        <!-- =================================================
+             SIMPLE CONTROLS
+             ================================================= -->
+        <section class="controls">
+            <div class="controls-left">
+                <button class="btn" onclick="toggleTheme()">🌙 Theme</button>
+                <button class="btn" onclick="startStudy()">⏱️ Study</button>
+            </div>
+
+            <div class="controls-right">
+                <input
+                    class="search"
+                    id="roadmapSearch"
+                    name="roadmap_query_unique_2026"
+                    type="search"
+                    autocomplete="off"
+                    name="roadmap-search-field"
+                    autocapitalize="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    data-lpignore="true"
+                    data-1p-ignore="true"
+                    readonly
+                    placeholder="🔎 Search phases or topics..."
+                    onfocus="enableSearch()"
+                    oninput="renderPhases()"
+                >
+            </div>
+        </section>
+
+        <!-- =================================================
+             NEXT MILESTONE + TIMER
+             ================================================= -->
+        <section class="quick-grid">
+            <div class="panel">
+                <div class="panel-label">🎯 Next milestone</div>
+                <div class="next-title" id="nextMilestone">Start Phase 1</div>
+                <div class="next-desc" id="nextMilestoneDesc">
+                    Complete the first phase to unlock Phase 2.
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-label">⏱️ Study session</div>
+                <div class="timer" id="timer">00:00:00</div>
+                <button class="btn primary" id="timerBtn" onclick="startStudy()">Start Session</button>
+            </div>
+        </section>
+
+        <!-- =================================================
+             ROADMAP LIST
+             ================================================= -->
+        <section>
+            <div class="roadmap-head">
+                <div>
+                    <div class="section-title">🗺️ Your Roadmap</div>
+                    <div class="section-desc">
+                        Finish every topic in a phase to unlock the next phase.
+                    </div>
+                </div>
+            </div>
+
+            <div class="phases" id="phases"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        🚀 Java → Software Engineer Roadmap<br><br>
+        Your progress and notes are saved in this browser.
+    </footer>
+</div>
+
+<!-- =========================================================
+     AUTH MODAL
+     ========================================================= -->
+<div class="overlay" id="authModal">
+    <div class="modal small">
+
+        <div class="modal-head">
+            <div>
+                <div class="modal-title">👤 Your Roadmap Account</div>
+                <div class="modal-subtitle">Login or create your account.</div>
+            </div>
+            <button class="close-btn" onclick="closeAuth()">×</button>
+        </div>
+
+        <div class="modal-body">
+
+            <div class="auth-note">
+                🔐 Login uses your Spring Boot backend. Your password is never stored
+                in localStorage by this page.
+            </div>
+
+            <div class="form">
+
+                <input
+                    class="input"
+                    id="authName"
+                    name="name"
+                    autocomplete="name"
+                    placeholder="Your name (required for signup)"
+                >
+
+                <input
+                    class="input"
+                    id="authEmail"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="Email"
+                >
+
+                <input
+                    class="input"
+                    id="authPassword"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Password"
+                >
+
+                <div class="form-actions">
+                    <button class="btn primary" id="loginBtn" onclick="demoAuth('login')">Login</button>
+                    <button class="btn" id="signupBtn" onclick="demoAuth('signup')">Sign up</button>
+                </div>
+
+                <div class="message" id="authMsg"></div>
+            </div>
+        </div>
     </div>
-    <div class="badge">PRO ROADMAP</div>
-  </div>
-  <div class="stats">
-    <div class="stat"><b id="done">0</b><span>Topics completed</span></div>
-    <div class="stat"><b id="total">0</b><span>Total topics</span></div>
-    <div class="stat"><b id="percent">0%</b><span>Overall progress</span></div>
-    <div class="stat"><b id="phaseDone">0</b><span>Phases completed</span></div>
-    <div class="stat"><b id="streak">0 🔥</b><span>Study streak</span></div>
-  </div>
-  <div class="progress"><div class="bar" id="bar"></div></div>
-</header>
-
-
-<div class="top-actions reveal">
-  <button class="icon-btn" onclick="toggleTheme()">🌙 <span id="themeText">Dark mode</span></button>
-  <button class="icon-btn" onclick="openAuth()">👤 <span id="authText">Login / Sign up</span></button>
-  <button class="icon-btn" onclick="showFeatures()">✨ Pro features</button>
-</div>
-<div class="card reveal" style="margin:14px 0">
-  <div style="display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap">
-    <div><h3>⚡ YOUR LEARNING COMMAND CENTER</h3><div class="muted">Your progress is stored locally now and can later sync with a Spring Boot + database backend.</div></div>
-    <div class="progress-ring" id="progressRing" style="--p:0%"><b id="ringText">0%</b></div>
-  </div>
-  <div class="feature-grid" style="margin-top:14px">
-    <div class="feature"><b>🎨 Pro UI</b><span>Animations, glass cards and polished dashboard.</span></div>
-    <div class="feature"><b>📱 Responsive</b><span>Works on desktop, tablet and mobile.</span></div>
-    <div class="feature"><b>🌙 Theme</b><span>Dark/light mode saved on your device.</span></div>
-    <div class="feature"><b>🔐 Account-ready</b><span>Demo auth UI now; real auth comes from backend.</span></div>
-  </div>
 </div>
 
-<div id="authModal" class="modal-backdrop" onclick="if(event.target===this)closeAuth()">
-  <div class="modal">
-    <button class="close" onclick="closeAuth()">×</button>
-    <h2>👤 Your Roadmap Account</h2>
-    <p class="muted">Demo account stored in this browser. Real login will connect to Spring Boot later.</p>
-    <input id="authName" placeholder="Your name">
-    <input id="authEmail" type="email" placeholder="Email">
-    <input id="authPassword" type="password" placeholder="Password">
-    <div class="row"><button onclick="demoAuth('login')">Login</button><button class="secondary" onclick="demoAuth('signup')">Sign up</button></div>
-    <div id="authMsg" class="auth-msg"></div>
-  </div>
-</div>
-<div class="dashboard">
-  <div class="card">
-    <h3>🎯 NEXT MILESTONE</h3>
-    <div class="next" id="nextMilestone">Start Phase 1</div>
-    <div class="muted" id="nextInfo">Tick topics as you learn them. Your dashboard updates automatically.</div>
-  </div>
-  <div class="card">
-    <h3>⏱️ STUDY SESSION</h3>
-    <div class="timer" id="timer">00:00:00</div>
-    <div class="actions" style="margin:0">
-      <button onclick="toggleTimer()" id="timerBtn">Start</button>
-      <button class="secondary" onclick="resetTimer()">Reset</button>
+<!-- =========================================================
+     PHASE READER MODAL
+     ========================================================= -->
+<div class="overlay" id="phaseModal">
+    <div class="modal phase-reader-modal">
+        <div class="reader-head">
+            <div>
+                <div class="modal-title" id="phaseModalTitle">Phase</div>
+                <div class="modal-subtitle" id="phaseModalDesc"></div>
+            </div>
+            <button class="close-btn" onclick="closePhase()">×</button>
+        </div>
+
+        <div class="reader-topbar">
+            <button class="btn" onclick="closePhase()">← Back to Roadmap</button>
+            <div class="reader-position" id="readerPosition">Topic 1 of 20</div>
+            <button class="btn primary" id="nextTopicBtn" onclick="nextTopic()">Next Topic →</button>
+        </div>
+
+        <div class="reader-grid">
+            <main class="reader-main">
+                <div class="topic-heading">
+                    <div class="topic-heading-icon" id="readerTopicNumber">1</div>
+                    <div>
+                        <h2 id="readerTopicTitle">Topic</h2>
+                        <div class="topic-status" id="readerTopicStatus">○ Not completed</div>
+                    </div>
+                </div>
+
+                <div class="reader-tabs">
+                    <button class="reader-tab active" id="tabConcept" onclick="showReaderTab('concept')">📖 Concept</button>
+                    <button class="reader-tab" id="tabExample" onclick="showReaderTab('example')">💻 Example</button>
+                    <button class="reader-tab" id="tabPractice" onclick="showReaderTab('practice')">🧠 Practice</button>
+                </div>
+
+                <section class="reader-content" id="readerContent"></section>
+
+                <div class="reader-actions">
+                    <button class="btn" id="prevTopicBtn" onclick="previousTopic()">← Previous Topic</button>
+                    <button class="btn primary" id="completeTopicBtn" onclick="toggleCurrentTopicComplete()">✓ Mark Topic Complete</button>
+                    <button class="btn primary" id="nextTopicBtnBottom" onclick="nextTopic()">Next Topic →</button>
+                </div>
+            </main>
+
+            <aside class="reader-notes">
+                <div class="notes-title">📝 MY NOTES</div>
+                <div class="notes-subtitle">Write your own notes, examples, doubts or shortcuts.</div>
+                <textarea id="readerNotes" class="reader-notes-box" placeholder="Start writing your notes here..."></textarea>
+                <button class="btn success" onclick="saveCurrentTopicNotes()">Save Notes</button>
+                <div class="notes-saved" id="notesSaved"></div>
+            </aside>
+        </div>
+
+        <div class="reader-footer-bar">
+            <div id="phaseModalInfo">0/20 topics completed</div>
+            <button class="btn" onclick="completeCurrentPhase()">🏁 Complete Phase</button>
+        </div>
     </div>
-  </div>
 </div>
 
-<div class="dashboard">
-  <div class="card">
-    <h3>🏆 MILESTONES</h3>
-    <div class="milestones" id="milestones"></div>
-  </div>
-  <div class="card">
-    <h3>🔥 DSA PROGRESS</h3>
-    <div class="dsa-row">
-      <input id="dsaCount" type="number" min="0" max="9999" value="0" class="note-input" oninput="saveExtras()">
-      <span class="muted">problems solved</span>
+<!-- =========================================================
+     SETTINGS MODAL
+     ========================================================= -->
+<div class="overlay" id="settingsModal">
+    <div class="modal small">
+
+        <div class="modal-head">
+            <div>
+                <div class="modal-title">⚙️ Settings</div>
+                <div class="modal-subtitle">Profile, backup and account controls.</div>
+            </div>
+            <button class="close-btn" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="settings-grid">
+
+                <!-- PROFILE -->
+                <section class="settings-section">
+                    <div class="settings-title">👤 Profile</div>
+
+                    <div class="profile-grid">
+                        <input
+                            class="input"
+                            id="profileName"
+                            name="profileName"
+                            autocomplete="name"
+                            placeholder="Name"
+                        >
+
+                        <input
+                            class="input"
+                            id="profileEmail"
+                            name="profileEmail"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="Email"
+                        >
+                    </div>
+
+                    <div style="margin-top:9px;">
+                        <button class="btn primary" onclick="saveProfile()">Save Profile</button>
+                    </div>
+
+                    <div class="section-desc" id="profileStatus" style="margin-top:7px;"></div>
+                </section>
+
+                <!-- APPEARANCE -->
+                <section class="settings-section">
+                    <div class="settings-title">🎨 Appearance</div>
+                    <button class="btn" onclick="toggleTheme()">Toggle Dark / Light Mode</button>
+                </section>
+
+                <!-- BACKUP -->
+                <section class="settings-section">
+                    <div class="settings-title">💾 Progress Backup</div>
+                    <div class="section-desc" style="margin-bottom:9px;">
+                        Export your progress and notes to a JSON file. Import it later on another browser/device.
+                    </div>
+
+                    <div class="settings-actions">
+                        <button class="btn primary" onclick="exportData()">Export JSON</button>
+                        <button class="btn" onclick="document.getElementById('importFile').click()">Import JSON</button>
+                        <input
+                            id="importFile"
+                            class="hidden"
+                            type="file"
+                            accept=".json,application/json"
+                            onchange="importData(event)"
+                        >
+                    </div>
+                </section>
+
+                <!-- ACCOUNT -->
+                <section class="settings-section">
+                    <div class="settings-title">🔐 Account</div>
+                    <div class="settings-actions">
+                        <button class="btn" onclick="openAuthFromSettings()">Login / Sign up</button>
+                        <button class="btn danger" onclick="logout()">Logout</button>
+                    </div>
+                </section>
+
+                <!-- DANGER -->
+                <section class="settings-section">
+                    <div class="settings-title">⚠️ Reset</div>
+                    <div class="section-desc" style="margin-bottom:9px;">
+                        This removes local progress and notes from this browser.
+                    </div>
+                    <button class="btn danger" onclick="resetAllData()">Reset All Local Data</button>
+                </section>
+
+            </div>
+        </div>
     </div>
-    <div class="muted" style="margin-top:10px">Target: 250+ quality problems</div>
-  </div>
-</div>
-
-
-<div class="card" style="margin:14px 0">
-  <h3>💾 PROGRESS BACKUP</h3>
-  <p class="muted" style="margin-top:0">Backup your ticks, notes, DSA count, streak and study timer. Import the JSON anytime to restore them.</p>
-  <div class="actions" style="margin:0">
-    <button onclick="exportProgress()">⬇ Export Progress</button>
-    <button class="secondary" onclick="document.getElementById('importProgressFile').click()">⬆ Import Progress</button>
-    <input id="importProgressFile" type="file" accept=".json,application/json" hidden onchange="importProgress(event)">
-  </div>
-</div>
-
-<div class="controls">
-  <input type="search" id="search" placeholder="🔎 Search a phase or topic..." oninput="globalSearch()">
-  <select id="statusFilter" onchange="globalSearch()">
-    <option value="all">All topics</option>
-    <option value="pending">Not completed</option>
-    <option value="done">Completed</option>
-  </select>
-  <button class="secondary" onclick="clearSearch()">Clear search</button>
-</div>
-
-<div class="actions">
-  <button onclick="expandAll()">Expand all</button>
-  <button class="secondary" onclick="collapseAll()">Collapse all</button>
-  <button class="secondary" onclick="resetProgress()">Reset progress</button>
-</div>
-
-<div id="homeView">
-  <div class="card" style="margin-bottom:14px">
-    <h3>🧭 ROADMAP PHASES</h3>
-    <div id="phaseGrid" class="phase-grid"></div>
-  </div>
-</div>
-
-<div id="phaseView" hidden>
-  <div class="detail-top">
-    <button class="secondary" onclick="showHome()">← All Phases</button>
-    <div>
-      <div id="detailTitle" class="detail-title"></div>
-      <div id="detailProgress" class="muted"></div>
-    </div>
-  </div>
-  <div id="detailGroups"></div>
-</div>
-
-<div id="studyView" hidden>
-  <div class="detail-top">
-    <button class="secondary" onclick="backToPhase()">← Back to Phase</button>
-    <div>
-      <div id="studyTitle" class="detail-title"></div>
-      <div id="studyStatus" class="muted"></div>
-    </div>
-  </div>
-  
-<div class="study-nav">
-  <button class="secondary" id="prevTopicBtn" onclick="navigateTopic(-1)">← Previous Topic</button>
-  <div class="study-nav-center">
-    <span id="topicPosition"></span>
-  </div>
-  <button id="nextTopicBtn" onclick="navigateTopic(1)">Next Topic →</button>
-</div>
-
-<div class="study-layout">
-    <div class="study-main card">
-      <div class="study-tabs">
-        <button id="tabConcept" onclick="showStudyTab('concept')">📖 Concept</button>
-        <button class="secondary" onclick="showStudyTab('code')">💻 Example</button>
-        <button class="secondary" onclick="showStudyTab('practice')">🧠 Practice</button>
-      </div>
-      <div id="studyContent"></div>
-    </div>
-    <div class="card">
-      <h3>📝 MY NOTES</h3>
-      <textarea id="topicNotes" class="notes-area" placeholder="Write your own notes here..."></textarea>
-      <button class="good" style="width:100%;margin-top:10px" onclick="saveTopicNote()">Save Notes</button>
-      <button id="studyComplete" style="width:100%;margin-top:10px" onclick="toggleStudyComplete()">Mark Complete</button>
-    </div>
-  </div>
-</div>
-
-<p class="tip">💾 Progress, notes, streak, DSA count and study data are saved automatically in this browser.</p>
 </div>
 
 <script>
-const phases = [
-["🟢 PHASE 1 — Programming Fundamentals", [
-["Java Setup",["Install JDK","Install VS Code / IntelliJ IDEA","Understand JDK","Understand JRE","Understand JVM","Understand compile vs run","Java program structure","main() method","Run your first Java program"]],
-["Java Basics",["Variables","Data types","Type casting","Arithmetic operators","Relational operators","Logical operators","Assignment operators","Increment/decrement","Bitwise operators","Input using Scanner","Output using System.out.println()","if","if-else","else-if","Nested if","switch","for loop","while loop","do-while","break","continue"]],
-["Methods",["Create methods","Parameters","Return values","void","Method overloading","Local variables","Scope","Recursion"]],
-["Arrays & Strings",["1D arrays","2D arrays","Array traversal","Searching arrays","Basic sorting","String","StringBuilder","StringBuffer","Common String methods","Character manipulation"]],
-["Projects",["Calculator","Number guessing game","Student marks calculator","ATM simulation","Pattern programs","Number problems","Array problems","String problems"]]
-]],
-["🟢 PHASE 2 — Object-Oriented Programming",[
-["Classes & Objects",["Understand class","Understand object","Fields","Methods inside classes","Create objects","Constructors","this","static","final","Access modifiers"]],
-["OOP Principles",["Encapsulation","Inheritance","Method overriding","Method overloading","Polymorphism","Abstraction","Interfaces","Abstract classes","Composition","Association","Aggregation"]],
-["Java Object Concepts",["Object class","equals()","hashCode()","toString()"]],
-["Projects",["Bank Management System","Library Management System","Student Management System"]]
-]],
-["🟡 PHASE 3 — Collections & Generics",[
-["List",["ArrayList","LinkedList"]],
-["Set",["HashSet","LinkedHashSet","TreeSet"]],
-["Map",["HashMap","LinkedHashMap","TreeMap"]],
-["Queue",["PriorityQueue","Deque"]],
-["Collection Concepts",["Choose correct collection","Time complexity","Iteration","Enhanced for loop","Iterator","Comparable","Comparator"]],
-["Generics",["Generic classes","Generic methods","Generic interfaces","Wildcards","? extends","? super"]]
-]],
-["🟡 PHASE 4 — Exception Handling",[
-["Exception Handling",["Understand exceptions","try","catch","finally","Multiple catch","throw","throws","Checked exceptions","Unchecked exceptions","Custom exceptions","Exception hierarchy","Proper exception handling"]]
-]],
-["🟡 PHASE 5 — Modern Java",[
-["Functional Programming",["Lambda expressions","Functional interfaces","Predicate","Consumer","Supplier","Function"]],
-["Stream API",["Streams","map()","filter()","reduce()","collect()","forEach()","sorted()","distinct()","limit()","findFirst()"]],
-["Modern Features",["Method references","Optional","Records","Enums","var","Date & Time API","Modern switch","Pattern matching concepts"]]
-]],
-["🟠 PHASE 6 — File Handling & I/O",[
-["File & I/O",["File handling basics","File","Path","Files","InputStream","OutputStream","Reader","Writer","BufferedReader","BufferedWriter","Read files","Write files","Serialization basics"]],
-["Project",["File-based Student Management System"]]
-]],
-["🔴 PHASE 7 — DSA",[
-["Complexity",["Big O","Big Ω","Big Θ","Time complexity","Space complexity"]],
-["Arrays & Strings",["Array problems","String problems","Prefix sum","Two pointers","Sliding window"]],
-["Searching",["Linear Search","Binary Search"]],
-["Sorting",["Bubble Sort","Selection Sort","Insertion Sort","Merge Sort","Quick Sort"]],
-["Recursion",["Recursion basics","Recursive arrays","Recursive strings","Backtracking basics"]],
-["Linked List",["Singly Linked List","Doubly Linked List","Circular Linked List","Reverse Linked List","Fast & slow pointers"]],
-["Stack & Queue",["Stack","Queue","Deque","Monotonic Stack","Priority Queue"]],
-["Hashing",["HashMap","HashSet","Frequency counting","Hashing patterns"]],
-["Trees",["Binary Tree","Tree traversal","Preorder","Inorder","Postorder","Level order","BST","BST operations"]],
-["Heap",["Min Heap","Max Heap","Heap operations","Priority Queue problems"]],
-["Graphs",["Graph representation","BFS","DFS","Shortest path","Dijkstra","Topological Sort","Union-Find / DSU"]],
-["Advanced DSA",["Greedy","Backtracking","Dynamic Programming","Memoization","Tabulation"]],
-["Practice Target",["50 problems","100 problems","150 problems","200 problems","250+ quality problems"]]
-]],
-["🔵 PHASE 8 — SQL & Databases",[
-["SQL Basics",["Database basics","Tables","Rows & columns","Primary Key","Foreign Key","Constraints","SELECT","INSERT","UPDATE","DELETE","WHERE","ORDER BY","GROUP BY","HAVING","Aggregate functions","Joins","Subqueries"]],
-["Database Concepts",["Indexes","Views","Transactions","Normalization","ACID","Query optimization","Database design"]],
-["Database",["MySQL","PostgreSQL"]]
-]],
-["🔵 PHASE 9 — Git & GitHub",[
-["Git",["Install Git","git init","git status","git add","git commit","git push","git pull","git clone","git branch","git merge","git checkout"]],
-["GitHub",["GitHub repository","Branches","Pull Requests","Merge conflicts",".gitignore","README","Build GitHub profile","Upload every serious project"]]
-]],
-["🟣 PHASE 10 — Backend Fundamentals",[
-["HTTP",["Client-server architecture","HTTP request","HTTP response","GET","POST","PUT","PATCH","DELETE","HTTP status codes","Headers","JSON"]],
-["REST",["REST API concepts","REST endpoints","CRUD","API design","Postman"]]
-]],
-["🟣 PHASE 11 — Spring Framework",[
-["Spring Core",["IoC","Dependency Injection","Beans","Application Context"]],
-["Spring Boot",["Spring Boot setup","Project structure","Controllers","Services","Repositories","Configuration","application.properties","Profiles"]],
-["Architecture",["Controller layer","Service layer","Repository layer","Database layer"]]
-]],
-["🟣 PHASE 12 — Advanced Spring Boot",[
-["Spring Boot",["REST APIs","Spring Data JPA","Hibernate","Entities","Entity relationships","One-to-One","One-to-Many","Many-to-Many","DTOs","Validation","Global exception handling","Pagination","Sorting","Logging","Configuration","Actuator"]],
-["Security",["Authentication","Authorization","Password hashing","JWT","Spring Security","Role-based authorization","Secure APIs"]]
-]],
-["🔥 PHASE 13 — REAL PROJECTS",[
-["Beginner",["Bank Management System"]],
-["Intermediate",["Library Management System","Student Management System","File-based application"]],
-["Advanced E-Commerce Backend",["User registration","Login","Products","Categories","Cart","Orders","Payment integration","Admin","Authentication","Authorization"]],
-["Final Gaming Platform Backend",["User accounts","Login","Games","Profiles","Friends","Leaderboard","Authentication","Authorization","Database","REST APIs","Admin panel"]]
-]],
-["🟤 PHASE 14 — Testing",[
-["Testing",["Unit testing","Integration testing","JUnit","Mockito","Test-driven basics","API testing","Postman","Write tests for your projects"]]
-]],
-["🟤 PHASE 15 — Docker & Deployment",[
-["Docker",["Docker basics","Images","Containers","Dockerfile","Docker Compose"]],
-["Deployment",["Environment variables","Production configuration","Production logging","Deploy Spring Boot application","Connect deployed app to database"]]
-]],
-["⚫ PHASE 16 — System Design",[
-["Fundamentals",["Client-server architecture","Monolithic architecture","Microservices","REST APIs","Load balancing","Caching","Database scaling","Replication","Sharding","Message queues"]],
-["Technologies",["Redis","Kafka","Docker","Cloud basics"]],
-["System Design Practice",["URL Shortener","Chat Application","YouTube-like system","Instagram-like system","Food Delivery System"]],
-["Core Principles",["Scalability","Reliability","Performance","Security","Availability"]]
-]],
-["🟤 PHASE 17 — Advanced Java Internals",[
-["JVM",["JVM architecture","Bytecode","Class loading","Heap","Stack","Garbage Collection","JIT compilation"]],
-["Multithreading",["Thread","Runnable","ExecutorService","Thread Pool","Synchronization","Locks","volatile","Atomic classes","Concurrent collections","CompletableFuture"]],
-["Advanced",["Race conditions","Deadlocks","Java Memory Model","Performance profiling"]]
-]],
-["🏆 PHASE 18 — Software Engineering",[
-["Software Engineering",["Clean Code","SOLID principles","Design Patterns","Refactoring","Debugging","Code reviews","Documentation","API design","Testing","Security basics","Performance optimization","Agile/Scrum basics"]],
-["Design Patterns",["Singleton","Factory","Builder","Strategy","Observer","Adapter","Repository"]]
-]],
-["💼 PHASE 19 — Placement Preparation",[
-["DSA",["LeetCode","100+ DSA problems","150+ DSA problems","200+ DSA problems","Revise common patterns"]],
-["CS Fundamentals",["OOP","DBMS","Operating Systems","Computer Networks","System Design","Software Engineering"]],
-["Portfolio",["2 strong projects","3 strong projects","GitHub profile","Good README files","Resume","Internship experience","Interview preparation","Mock interviews"]]
-]]
-];;
+/* =========================================================
+   ROADMAP DATA
+   ---------------------------------------------------------
+   Each phase has:
+   - id
+   - title
+   - desc
+   - topics[]
 
+   Each topic has:
+   - title
+   - answer  -> professional explanation shown to learner
+   - noteHint -> short reminder for personal notes
 
-const studyData={
-"Install JDK":{c:"JDK (Java Development Kit) gives you the tools needed to develop Java programs. It includes the compiler and the runtime components.",code:"java --version\njavac --version",p:["Install a current LTS JDK.","Verify both java and javac in the terminal.","Then create and run a small Hello World program."]},
-"Understand JDK":{c:"JDK is the complete development kit. Think of it as the toolkit used to write, compile, debug and run Java applications.",code:"JDK = Development tools + JRE",p:["Explain the difference between JDK and JRE in your own words.","Find where your JDK is installed."]},
-"Understand JRE":{c:"JRE provides the environment required to run Java applications. Modern Java distributions are commonly installed as a JDK rather than separately installing a JRE.",code:"JRE = JVM + runtime libraries",p:["Explain what the JRE provides.","Why does a developer normally install the JDK?"]},
-"Understand JVM":{c:"JVM (Java Virtual Machine) executes Java bytecode. This is the key reason Java programs can run on different operating systems when a compatible JVM is available.",code:"Source Code → javac → Bytecode (.class) → JVM → Machine execution",p:["Explain bytecode.","Why is Java called platform-independent?"]},
-"Understand compile vs run":{c:"Compilation converts Java source code into bytecode. Running starts the JVM, which loads and executes that bytecode.",code:"javac Main.java\njava Main",p:["Compile a program manually.","Change the source, compile again, then run it."]},
-"Java program structure":{c:"A Java program is commonly organized around classes. The entry point of a normal standalone application is the main method.",code:"public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello Java\");\n    }\n}",p:["Write the program without copying.","Explain each part of the class and main method."]},
-"main() method":{c:"main() is the entry point used by the JVM for a standard Java application.",code:"public static void main(String[] args) {\n    // program starts here\n}",p:["Explain public, static, void, String[], and args.","Try changing the printed output."]},
-"Variables":{c:"A variable is a named storage location associated with a type. Java is statically typed, so every variable has a declared type.",code:"int age = 17;\ndouble price = 99.5;\nString name = \"Alex\";",p:["Create variables for age, salary and name.","Print them.","Change their values."]},
-"Data types":{c:"Java has primitive types such as int, double, char and boolean, plus reference types such as String and arrays.",code:"int x = 10;\ndouble d = 10.5;\nchar grade = 'A';\nboolean pass = true;",p:["List the eight primitive types.","Choose a suitable type for 5 real-world values."]},
-"Type casting":{c:"Casting converts a value from one type to another. Widening is generally automatic; narrowing requires an explicit cast and may lose information.",code:"int x = 10;\ndouble d = x;\nint y = (int) 10.8;",p:["Try int to double.","Try double to int.","Observe the lost decimal part."]},
-"Arithmetic operators":{c:"Arithmetic operators perform calculations: +, -, *, / and %. Integer division removes the fractional part.",code:"int a=10, b=3;\nSystem.out.println(a+b);\nSystem.out.println(a/b);\nSystem.out.println(a%b);",p:["Calculate quotient and remainder.","Make a program for area of a rectangle."]},
-"Relational operators":{c:"Relational operators compare values and produce boolean results.",code:"int a=10, b=20;\nSystem.out.println(a < b);\nSystem.out.println(a == b);",p:["Use all comparison operators in small examples."]},
-"Logical operators":{c:"Logical operators combine boolean expressions. && means AND, || means OR, and ! means NOT.",code:"int age=20;\nboolean ok = age>=18 && age<=60;",p:["Build an eligibility condition using &&.","Build an alternative condition using ||."]},
-"Assignment operators":{c:"Assignment stores a value in a variable. Compound assignments combine an operation with assignment.",code:"int x=10;\nx += 5;\nx *= 2;\nSystem.out.println(x);",p:["Practice +=, -=, *=, /= and %= ."]},
-"Increment/decrement":{c:"++ increases a value by one and -- decreases it by one. Prefix and postfix forms differ in when the value is used.",code:"int x=5;\nSystem.out.println(x++);\nSystem.out.println(++x);",p:["Trace x++ and ++x by hand.","Do the same for --."]},
-"Bitwise operators":{c:"Bitwise operators work on the binary representation of integer values. Common operators are &, |, ^, ~, << and >>.",code:"int a=5, b=3;\nSystem.out.println(a & b);\nSystem.out.println(a ^ b);",p:["Convert 5 and 3 to binary.","Calculate &, | and ^ manually."]},
-"Input using Scanner":{c:"Scanner can read typed input from standard input. Always choose the method that matches the expected data type.",code:"import java.util.Scanner;\nScanner sc=new Scanner(System.in);\nint n=sc.nextInt();\nSystem.out.println(n);",p:["Read an integer.","Read a double and a String.","Try nextLine carefully after numeric input."]},
-"if":{c:"if executes a block only when its boolean condition is true.",code:"if (marks >= 40) {\n    System.out.println(\"Pass\");\n}",p:["Write a positive/negative checker.","Write an even/odd checker."]},
-"if-else":{c:"if-else chooses between two paths depending on a condition.",code:"if (n % 2 == 0) {\n    System.out.println(\"Even\");\n} else {\n    System.out.println(\"Odd\");\n}",p:["Create a pass/fail program."]},
-"else-if":{c:"else-if lets you test multiple mutually exclusive conditions in order.",code:"if (marks >= 90) grade='A';\nelse if (marks >= 75) grade='B';\nelse grade='C';",p:["Create a grade calculator with 4 or 5 ranges."]},
-"Nested if":{c:"A nested if is an if statement inside another conditional. Use it when one decision depends on another.",code:"if (age >= 18) {\n    if (hasId) {\n        System.out.println(\"Allowed\");\n    }\n}",p:["Build an ATM withdrawal eligibility check."]},
-"switch":{c:"switch selects a branch based on a value. Modern Java also supports switch expressions.",code:"switch(day) {\n    case 1 -> System.out.println(\"Monday\");\n    case 2 -> System.out.println(\"Tuesday\");\n    default -> System.out.println(\"Invalid\");\n}",p:["Make a simple calculator using switch.","Try a menu-driven program."]},
-"for loop":{c:"A for loop is useful when the iteration structure is known: initialization, condition and update.",code:"for(int i=1;i<=5;i++) {\n    System.out.println(i);\n}",p:["Print 1–100.","Print a multiplication table."]},
-"while loop":{c:"while repeats as long as its condition remains true. It is useful when the number of iterations is not known in advance.",code:"int i=1;\nwhile(i<=5) {\n    System.out.println(i);\n    i++;\n}",p:["Reverse a number using while.","Count digits in a number."]},
-"do-while":{c:"do-while executes the body at least once before checking the condition.",code:"int choice;\ndo {\n    System.out.println(\"Menu\");\n    choice=sc.nextInt();\n} while(choice!=0);",p:["Build a menu that repeats until the user selects Exit."]},
-"break":{c:"break immediately exits the nearest loop or switch.",code:"for(int i=1;i<=10;i++) {\n    if(i==5) break;\n    System.out.println(i);\n}",p:["Find the first number divisible by 7 in a range."]},
-"continue":{c:"continue skips the rest of the current loop iteration and moves to the next iteration.",code:"for(int i=1;i<=10;i++) {\n    if(i%2==0) continue;\n    System.out.println(i);\n}",p:["Print only odd numbers using continue."]},
-"Create methods":{c:"Methods package reusable behavior into named blocks. They improve readability and reduce duplication.",code:"static void greet() {\n    System.out.println(\"Hello\");\n}",p:["Create three small methods for a calculator."]},
-"Parameters":{c:"Parameters allow a method to receive input values from its caller.",code:"static int add(int a, int b) {\n    return a+b;\n}",p:["Write methods taking two and three parameters."]},
-"Return values":{c:"A method can return a value using return. Its declared return type must match the returned value.",code:"static int square(int n) {\n    return n*n;\n}",p:["Write methods for max, min and square."]},
-"void":{c:"void means the method does not return a value.",code:"static void printName(String name) {\n    System.out.println(name);\n}",p:["Convert one returning method into a void method and compare."]},
-"Method overloading":{c:"Overloading means multiple methods share a name but have different parameter lists.",code:"static int add(int a,int b){return a+b;}\nstatic double add(double a,double b){return a+b;}",p:["Create overloaded area methods."]},
-"Scope":{c:"Scope determines where a variable can be accessed. Local variables are limited to their block or method.",code:"static void test(){\n    int x=10;\n    System.out.println(x);\n}",p:["Try accessing a local variable outside its block and observe the compiler error."]},
-"Recursion":{c:"Recursion is when a method calls itself on a smaller subproblem and has a base case to stop.",code:"static int fact(int n){\n    if(n<=1) return 1;\n    return n*fact(n-1);\n}",p:["Trace factorial for 5.","Write a recursive countdown."]},
-"1D arrays":{c:"A 1D array stores multiple values of the same type in indexed positions. Indexing starts at 0.",code:"int[] a={10,20,30};\nSystem.out.println(a[0]);",p:["Create an array of 5 numbers.","Find its sum and maximum."]},
-"2D arrays":{c:"A 2D array is an array of arrays, commonly used to represent matrices or grids.",code:"int[][] m={{1,2},{3,4}};\nSystem.out.println(m[1][0]);",p:["Print a 3×3 matrix.","Calculate matrix sum."]},
-"Array traversal":{c:"Traversal means visiting each array element, commonly with a for loop or enhanced for loop.",code:"for(int x : a) {\n    System.out.println(x);\n}",p:["Print all elements.","Find sum, min and max in one traversal."]},
-"Searching arrays":{c:"Linear search checks elements one by one. It works even when the array is unsorted.",code:"for(int i=0;i<a.length;i++){\n    if(a[i]==target){ System.out.println(i); break; }\n}",p:["Return the index of a target.","Handle the target-not-found case."]},
-"Basic sorting":{c:"Sorting arranges data in an order. Learn simple algorithms first so you understand comparisons and swaps.",code:"// Example: selection sort idea\nfor(int i=0;i<a.length-1;i++){\n    int min=i;\n    for(int j=i+1;j<a.length;j++) if(a[j]<a[min]) min=j;\n}",p:["Implement bubble sort.","Implement selection sort.","Compare their time complexity."]},
-"String":{c:"String represents immutable text. String literals can be reused through the string pool.",code:"String name=\"Java\";\nSystem.out.println(name.length());\nSystem.out.println(name.charAt(0));",p:["Practice length, charAt, substring, equals and contains."]},
-"StringBuilder":{c:"StringBuilder is useful for repeatedly modifying text because it is mutable and avoids creating many intermediate String objects.",code:"StringBuilder sb=new StringBuilder(\"Java\");\nsb.append(\" Programming\");\nsb.reverse();",p:["Build a string from a loop.","Reverse a string using StringBuilder."]},
-"StringBuffer":{c:"StringBuffer is a mutable character sequence similar to StringBuilder, with synchronized methods. StringBuilder is usually preferred when thread safety is not required.",code:"StringBuffer sb=new StringBuffer(\"Hello\");\nsb.append(\" Java\");",p:["Compare String, StringBuilder and StringBuffer."]},
-"Common String methods":{c:"Important methods include length, charAt, substring, equals, equalsIgnoreCase, contains, indexOf, replace, split, trim and toLowerCase/toUpperCase.",code:"String s=\"Java Programming\";\nSystem.out.println(s.contains(\"Java\"));\nSystem.out.println(s.substring(0,4));",p:["Create examples for at least 10 common String methods."]},
-"Character manipulation":{c:"Character processing is common in coding problems. Use Character methods to classify and transform characters.",code:"char c='A';\nSystem.out.println(Character.isLetter(c));\nSystem.out.println(Character.toLowerCase(c));",p:["Count vowels.","Count digits and letters in a String."]}
+   To edit/add learning material later, this is the main
+   section you should edit.
+   ========================================================= */
+
+const phases = [{"id":1,"title":"Programming Fundamentals","desc":"Build the foundation before Java gets serious.","topics":[{"title":"How computers work","answer":"A computer takes input, processes it using the CPU and memory, and produces output. Programs are instructions stored and executed by the system.","noteHint":"Remember: Input → Process → Output."},{"title":"Operating systems basics","answer":"An operating system manages hardware, files, memory, processes, devices and provides services to applications.","noteHint":"Examples: Windows, Linux, macOS."},{"title":"Install JDK","answer":"The JDK is the toolkit required to develop Java programs. It includes the compiler and runtime tools.","noteHint":"Use a current LTS JDK for learning and projects."},{"title":"JDK vs JRE vs JVM","answer":"JVM executes Java bytecode. JRE provides the JVM plus runtime libraries. JDK contains development tools plus the runtime.","noteHint":"Simple chain: JDK → build; JVM → run."},{"title":"First Java program","answer":"A Java application normally starts from a main method: public static void main(String[] args). The compiler turns .java source into bytecode.","noteHint":"Practice changing println output."},{"title":"Variables","answer":"A variable is a named storage location with a declared type. Java is statically typed, so a variable has a known type.","noteHint":"Example: int age = 17;"},{"title":"Primitive data types","answer":"Java has eight primitives: byte, short, int, long, float, double, char and boolean.","noteHint":"Choose the smallest sensible type, but int is the common integer choice."},{"title":"Type casting","answer":"Casting converts a value from one type to another. Widening is generally automatic; narrowing requires an explicit cast.","noteHint":"Example: double d=10; int x=(int)d;"},{"title":"Operators","answer":"Operators perform arithmetic, comparison, logical, assignment and other operations.","noteHint":"Know precedence and use parentheses when clarity matters."},{"title":"Input and output","answer":"System.out prints output. Scanner can read input from the console.","noteHint":"Close resources when appropriate."},{"title":"if / else","answer":"if executes code when a condition is true; else handles the alternative path.","noteHint":"Keep conditions readable."},{"title":"switch","answer":"switch selects one branch based on a value or pattern supported by the Java version.","noteHint":"Use break in traditional switch cases or prefer modern switch expressions when suitable."},{"title":"for loop","answer":"A for loop is useful when initialization, condition and update form a predictable iteration.","noteHint":"Avoid changing the loop counter unexpectedly."},{"title":"while and do-while","answer":"while checks before each iteration; do-while executes the body at least once.","noteHint":"Use while when the number of iterations is not known in advance."},{"title":"Arrays","answer":"An array stores a fixed number of values of the same type and uses zero-based indexes.","noteHint":"Index range is 0 to length-1."},{"title":"do-while loop","answer":"A do-while loop executes its body first and checks the condition afterward, so it always runs at least once.","noteHint":"Use it for menu/input loops that must execute once."},{"title":"Strings","answer":"String represents immutable text. Common operations include length, charAt, substring, equals and contains.","noteHint":"Use equals() for content comparison, not ==."},{"title":"Methods","answer":"A method groups reusable behavior and can accept parameters and return a value.","noteHint":"Prefer small methods with one clear responsibility."},{"title":"Debugging basics","answer":"Debugging means locating and fixing incorrect behavior. Use breakpoints, step execution, variable inspection and logs.","noteHint":"Reproduce the bug first."},{"title":"Basic problem solving","answer":"Solve problems by understanding input/output, writing examples, breaking the problem into steps, implementing, then testing edge cases.","noteHint":"Do not jump directly into code."}]},{"id":2,"title":"Java OOP Mastery","desc":"Build maintainable Java programs with objects and abstractions.","topics":[{"title":"Classes and objects","answer":"A class defines state and behavior; an object is an instance created from that class.","noteHint":"Class = blueprint; object = actual instance."},{"title":"Constructors","answer":"A constructor initializes a new object and has the same name as the class with no return type.","noteHint":"Use constructors to establish valid initial state."},{"title":"this keyword","answer":"this refers to the current object. It can distinguish fields from parameters and call another constructor.","noteHint":"Example: this.name = name;"},{"title":"Encapsulation","answer":"Encapsulation keeps object state controlled behind methods and appropriate access modifiers.","noteHint":"Prefer private fields with validated methods."},{"title":"Access modifiers","answer":"public is broadly accessible; private is limited to the class; protected supports package/subclass access; package-private is the default.","noteHint":"Use the least visibility needed."},{"title":"Static members","answer":"static members belong to the class rather than an individual object.","noteHint":"Do not use static just to avoid creating objects."},{"title":"final keyword","answer":"final can prevent reassignment of variables, overriding of methods, or inheritance of classes.","noteHint":"A final reference cannot point to another object, though the object may still be mutable."},{"title":"Inheritance","answer":"Inheritance lets a subclass reuse and specialize a superclass.","noteHint":"Use inheritance for a genuine is-a relationship."},{"title":"Method overriding","answer":"A subclass can provide a new implementation of an inherited method with the same signature.","noteHint":"Use @Override to let the compiler check it."},{"title":"Polymorphism","answer":"A parent reference can refer to a child object, allowing overridden behavior to be selected at runtime.","noteHint":"Program to abstractions."},{"title":"Abstraction","answer":"Abstraction exposes essential behavior while hiding implementation details.","noteHint":"Interfaces and abstract classes are common tools."},{"title":"Abstract classes","answer":"An abstract class cannot normally be instantiated and may contain abstract and concrete methods.","noteHint":"Use it when related classes share state or implementation."},{"title":"Interfaces","answer":"An interface defines a contract that classes can implement. Modern Java interfaces can also contain default and static methods.","noteHint":"Use interfaces for capabilities/contracts."},{"title":"Multiple interfaces","answer":"A class can implement multiple interfaces, which provides a way to combine capabilities without multiple class inheritance.","noteHint":"Keep interfaces focused."},{"title":"super keyword","answer":"super refers to the superclass and can call superclass constructors or methods.","noteHint":"Use super when subclass behavior needs the parent implementation."},{"title":"Composition","answer":"Composition means an object contains other objects to build behavior.","noteHint":"Often prefer composition over inheritance when relationships are has-a."},{"title":"Association and aggregation","answer":"Association is a general relationship between objects. Aggregation is a weaker whole-part relationship where parts can exist independently.","noteHint":"Focus on ownership and lifecycle."},{"title":"Packages","answer":"Packages organize related classes and help control access.","noteHint":"Use meaningful package names."},{"title":"Object class","answer":"Object is the root superclass of Java classes and provides methods such as toString, equals and hashCode.","noteHint":"Override equals and hashCode consistently."}]},{"id":3,"title":"Java Core Deep Dive","desc":"Move from syntax to reliable, idiomatic Java.","topics":[{"title":"Exception handling","answer":"Exceptions represent abnormal conditions. Java uses try, catch, finally, throw and throws to handle them.","noteHint":"Handle exceptions at the level where recovery is possible."},{"title":"try-catch","answer":"try contains risky code and catch handles a matching exception.","noteHint":"Catch specific exceptions rather than Exception everywhere."},{"title":"finally","answer":"finally is intended for cleanup code that should run after try/catch in normal control flow.","noteHint":"Prefer try-with-resources for closeable resources."},{"title":"throw and throws","answer":"throw explicitly creates/raises an exception; throws declares exceptions a method may propagate.","noteHint":"Understand checked vs unchecked exceptions."},{"title":"Custom exceptions","answer":"Custom exception classes model application-specific failures with meaningful names and messages.","noteHint":"Use them when they communicate domain meaning."},{"title":"Wrapper classes","answer":"Wrapper classes such as Integer and Double represent primitive values as objects and support utility methods.","noteHint":"Autoboxing and unboxing convert between them."},{"title":"StringBuilder","answer":"StringBuilder efficiently builds mutable text, especially in repeated concatenation.","noteHint":"Prefer it in loops or complex string construction."},{"title":"StringBuffer","answer":"StringBuffer is a mutable string class with synchronized methods. It is generally less preferred than StringBuilder when synchronization is unnecessary.","noteHint":"Choose based on actual concurrency needs."},{"title":"Enums","answer":"Enums define a fixed set of named constants and can contain fields and methods.","noteHint":"Great for states, categories and fixed choices."},{"title":"Annotations","answer":"Annotations add metadata to program elements and can be used by the compiler, tools or frameworks.","noteHint":"Common examples include @Override and Spring annotations."},{"title":"Generics","answer":"Generics provide compile-time type safety for classes, methods and collections.","noteHint":"Avoid raw types."},{"title":"Comparable","answer":"Comparable defines a class's natural ordering through compareTo.","noteHint":"Use when the type has one obvious natural order."},{"title":"Comparator","answer":"Comparator defines external/custom ordering without changing the class.","noteHint":"Useful for multiple sorting strategies."},{"title":"Nested and inner classes","answer":"Nested classes are declared inside another class. A non-static inner class holds an association with an outer instance.","noteHint":"Use them when close encapsulation improves design."},{"title":"Nested classes","answer":"A nested class is declared inside another class. Static nested classes do not require an outer object.","noteHint":"Use nesting when the helper type belongs closely to the enclosing class."},{"title":"Lambda expressions","answer":"Lambdas provide concise implementations of functional interfaces.","noteHint":"Example: x -> x * 2."},{"title":"Functional interfaces","answer":"A functional interface has one abstract method and can be targeted by a lambda.","noteHint":"@FunctionalInterface documents the intent."},{"title":"Date and time API","answer":"java.time provides immutable types such as LocalDate, LocalDateTime, Instant and Duration.","noteHint":"Prefer java.time over legacy Date/Calendar APIs."},{"title":"Optional","answer":"Optional represents a value that may be present or absent and can make absence explicit in APIs.","noteHint":"Avoid using Optional as a field everywhere."},{"title":"Java memory basics","answer":"Objects generally live on the heap while stack frames hold method execution data and local references. Garbage collection reclaims unreachable objects.","noteHint":"Think in terms of reachability, not manual free()."}]},{"id":4,"title":"Collections Framework","desc":"Master everyday Java data structures.","topics":[{"title":"Collection hierarchy","answer":"Collection is the base abstraction for groups of objects; List, Set and Queue represent different behaviors. Map is separate.","noteHint":"Choose by required behavior, not by habit."},{"title":"ArrayList","answer":"ArrayList is a resizable array with fast indexed access and efficient append in typical use.","noteHint":"Good default List implementation."},{"title":"LinkedList","answer":"LinkedList is a doubly linked list. Indexed access is slower than ArrayList.","noteHint":"Use it only when its operations fit the workload."},{"title":"HashSet","answer":"HashSet stores unique elements using hashing and does not promise sorted order.","noteHint":"Correct equals/hashCode are essential."},{"title":"TreeSet","answer":"TreeSet stores unique elements in sorted order using a tree-based structure.","noteHint":"Elements need a compatible ordering."},{"title":"LinkedHashSet","answer":"LinkedHashSet keeps insertion order while maintaining set uniqueness.","noteHint":"Useful when uniqueness plus predictable iteration order matters."},{"title":"HashMap","answer":"HashMap stores key-value pairs and provides average constant-time lookup for well-distributed hashes.","noteHint":"Keys should have stable equals/hashCode behavior."},{"title":"LinkedHashMap","answer":"LinkedHashMap preserves a predictable iteration order, commonly insertion order.","noteHint":"Useful for ordered maps and simple caches."},{"title":"TreeMap","answer":"TreeMap stores keys in sorted order and supports ordered-map operations.","noteHint":"Use when sorted navigation is required."},{"title":"Hashtable","answer":"Hashtable is a legacy synchronized map. Modern code usually prefers HashMap or concurrent collections depending on requirements.","noteHint":"Avoid it in new code unless compatibility requires it."},{"title":"Queue","answer":"Queue models elements waiting for processing, usually FIFO.","noteHint":"Use offer/poll/peek rather than relying on exceptions."},{"title":"Deque","answer":"Deque supports insertion/removal at both ends.","noteHint":"ArrayDeque is often a strong general-purpose implementation."},{"title":"PriorityQueue","answer":"PriorityQueue returns the highest-priority element according to its ordering, not insertion order.","noteHint":"Its iteration is not sorted order."},{"title":"Iterator","answer":"Iterator provides controlled traversal and supports safe removal in applicable collections.","noteHint":"Do not structurally modify a collection unexpectedly during iteration."},{"title":"ListIterator","answer":"ListIterator adds bidirectional traversal and indexed-position operations for Lists.","noteHint":"Use only when List-specific traversal is needed."},{"title":"Collections utility","answer":"Collections provides algorithms and helpers such as sort, reverse, shuffle and unmodifiable wrappers.","noteHint":"Know the difference between view/wrapper and copy."},{"title":"Arrays utility","answer":"Arrays provides helpers for sorting, searching, filling and comparing arrays.","noteHint":"Binary search requires the relevant sorted precondition."},{"title":"Hashing","answer":"Hashing maps keys to buckets and enables fast lookup in hash-based structures.","noteHint":"Good hash distribution reduces collisions."},{"title":"Map internals","answer":"A hash map uses a key's hash to locate a bucket and then equality to identify the exact key.","noteHint":"Never mutate fields used by equals/hashCode while a key is in a hash map."},{"title":"Concurrent collections","answer":"Concurrent collections are designed for safe and efficient access from multiple threads, such as ConcurrentHashMap and blocking queues.","noteHint":"Use concurrency utilities instead of manually synchronizing everything."}]},{"id":5,"title":"Modern Java","desc":"Use modern language and library features effectively.","topics":[{"title":"Lambda expressions","answer":"A lambda is an expression that implements a functional interface without boilerplate anonymous-class syntax.","noteHint":"Keep lambdas short and readable."},{"title":"Streams","answer":"Streams process sequences declaratively through operations such as filter, map and collect.","noteHint":"A stream is not a data structure and is normally consumed once."},{"title":"filter","answer":"filter keeps elements matching a predicate.","noteHint":"Use it to express selection clearly."},{"title":"map","answer":"map transforms each element into another value.","noteHint":"Use map for one-to-one transformation."},{"title":"reduce","answer":"reduce combines elements into one result using an accumulator.","noteHint":"Use it for aggregation when it remains readable."},{"title":"collect","answer":"collect gathers stream results into collections or other mutable reduction results.","noteHint":"Know common collectors such as toList and groupingBy."},{"title":"Sorting streams","answer":"sorted orders stream elements using natural ordering or a Comparator.","noteHint":"Sorting is potentially expensive; do it when needed."},{"title":"Grouping","answer":"groupingBy creates a map of groups based on a classifier function.","noteHint":"Useful for reports and aggregation."},{"title":"Partitioning","answer":"partitioningBy splits elements into two groups based on a predicate.","noteHint":"Use when the result is simply true/false categories."},{"title":"Method references","answer":"Method references are concise forms such as String::trim when a method already matches the functional interface shape.","noteHint":"Use only when they improve readability."},{"title":"Predicate","answer":"Predicate<T> represents a boolean-valued test.","noteHint":"Useful with filter and validation."},{"title":"Consumer","answer":"Consumer<T> accepts a value and returns no result.","noteHint":"Useful for actions such as forEach."},{"title":"Supplier","answer":"Supplier<T> produces a value without taking an input.","noteHint":"Useful for lazy creation."},{"title":"Function","answer":"Function<T,R> maps a T to an R.","noteHint":"Core abstraction for transformation."},{"title":"BiFunction","answer":"BiFunction<T,U,R> accepts two inputs and returns a result.","noteHint":"Useful for two-argument transformations."},{"title":"Optional patterns","answer":"Optional can be handled with map, flatMap, filter, orElse and orElseGet.","noteHint":"Use orElseGet when the fallback computation is expensive."},{"title":"Default interface methods","answer":"Default methods let interfaces provide reusable behavior without forcing every implementation to define it.","noteHint":"Use carefully to preserve clear contracts."},{"title":"Parallel streams","answer":"Parallel streams split stream work across threads, but overhead can exceed benefits for small or stateful workloads.","noteHint":"Measure before using them."},{"title":"Modern Java syntax","answer":"Modern Java includes features such as var for local inference, switch expressions, text blocks, records and pattern matching depending on the JDK.","noteHint":"Use features that improve clarity and maintainability."},{"title":"Functional interfaces","answer":"A functional interface has exactly one abstract method and can be implemented with a lambda.","noteHint":"Common examples: Predicate, Function, Consumer and Supplier."}]},{"id":6,"title":"DSA With Java","desc":"Build problem-solving and interview-level algorithm skills.","topics":[{"title":"Time complexity","answer":"Time complexity describes how running time grows with input size, often using Big-O notation.","noteHint":"Learn O(1), O(log n), O(n), O(n log n), O(n²)."},{"title":"Space complexity","answer":"Space complexity describes additional memory growth as input grows.","noteHint":"Separate input storage from auxiliary space when analyzing."},{"title":"Arrays","answer":"Arrays provide constant-time indexed access but fixed size.","noteHint":"Learn traversal, prefix sums and in-place techniques."},{"title":"Strings","answer":"String problems often involve frequency counting, two pointers, windows and pattern matching.","noteHint":"Remember String immutability."},{"title":"Two pointers","answer":"Two pointers maintain two indexes to process a sequence efficiently.","noteHint":"Common in sorted arrays and opposite-end scans."},{"title":"Sliding window","answer":"A sliding window maintains a changing contiguous range while updating its state incrementally.","noteHint":"Great for substring/subarray problems."},{"title":"Prefix sum","answer":"Prefix sums precompute cumulative totals so range sums can be answered quickly.","noteHint":"For sum range [l,r], use prefix[r+1]-prefix[l]."},{"title":"Binary search","answer":"Binary search repeatedly halves a sorted search space.","noteHint":"Be precise about bounds and termination."},{"title":"Recursion","answer":"Recursion solves a problem by calling itself on smaller instances with a base case.","noteHint":"Always identify base case and progress."},{"title":"Backtracking","answer":"Backtracking explores choices and undoes them when a branch cannot lead to a valid solution.","noteHint":"Typical examples: subsets, permutations and N-Queens."},{"title":"Linked lists","answer":"Linked lists connect nodes through references and can support efficient insertion when a node position is known.","noteHint":"Random access is slow."},{"title":"Stacks","answer":"A stack follows LIFO order.","noteHint":"Useful for parentheses, undo operations and monotonic-stack problems."},{"title":"Queues","answer":"A queue follows FIFO order.","noteHint":"Useful in BFS and scheduling."},{"title":"Hashing","answer":"Hash tables provide average fast lookup for keys.","noteHint":"Use HashMap/HashSet to trade memory for speed."},{"title":"Trees","answer":"Trees are hierarchical structures with nodes and edges and no cycles in the basic rooted-tree model.","noteHint":"Know traversal orders."},{"title":"Binary search trees","answer":"A BST maintains ordering so smaller keys go left and larger keys go right.","noteHint":"Unbalanced trees can degrade to O(n)."},{"title":"Heaps","answer":"A heap supports efficient access to a minimum or maximum element.","noteHint":"Java PriorityQueue is a min-heap by default."},{"title":"Graphs","answer":"Graphs model relationships between entities using vertices and edges.","noteHint":"Choose adjacency list or matrix based on density and operations."},{"title":"BFS and DFS","answer":"BFS explores level by level and is useful for unweighted shortest paths. DFS explores deeply and is useful for traversal/backtracking.","noteHint":"Track visited nodes in cyclic graphs."},{"title":"Dynamic programming","answer":"DP solves overlapping subproblems with optimal substructure by storing results.","noteHint":"Define state, transition, base case and answer."},{"title":"Greedy algorithms","answer":"Greedy algorithms make locally optimal choices under a proof-supported structure.","noteHint":"Do not assume greedy works without justification."},{"title":"Sorting algorithms","answer":"Common sorts include insertion, merge, quick and heap sort with different trade-offs.","noteHint":"Know stability, complexity and memory needs."},{"title":"Interview patterns","answer":"Common patterns include two pointers, sliding window, hashing, binary search, BFS/DFS, heap and DP.","noteHint":"Recognize the pattern before coding."}]},{"id":7,"title":"SQL & Database Fundamentals","desc":"Store and query application data confidently.","topics":[{"title":"Database basics","answer":"A relational database stores structured data in tables and provides SQL for querying and modifying it.","noteHint":"Think in entities, relationships and constraints."},{"title":"Tables, rows and columns","answer":"A table represents a relation; rows are records and columns represent attributes.","noteHint":"Design columns around meaningful data."},{"title":"Rows and columns","answer":"Rows represent individual records while columns describe attributes of those records.","noteHint":"Keep one meaningful value per column in a normalized relational design."},{"title":"Primary keys","answer":"A primary key uniquely identifies each row and cannot be null.","noteHint":"Prefer stable identifiers."},{"title":"Foreign keys","answer":"A foreign key references a key in another table to enforce relationships.","noteHint":"It protects referential integrity."},{"title":"Constraints","answer":"Constraints such as NOT NULL, UNIQUE, CHECK, PRIMARY KEY and FOREIGN KEY enforce valid data.","noteHint":"Use the database to enforce important invariants."},{"title":"CREATE","answer":"CREATE TABLE defines a table, its columns and constraints.","noteHint":"Design schema before loading large amounts of data."},{"title":"INSERT","answer":"INSERT adds rows to a table.","noteHint":"Specify columns explicitly for maintainable SQL."},{"title":"SELECT","answer":"SELECT retrieves data and can include filtering, grouping, ordering and joins.","noteHint":"Avoid SELECT * in production queries when specific columns are known."},{"title":"UPDATE","answer":"UPDATE changes existing rows.","noteHint":"Always verify the WHERE condition."},{"title":"DELETE","answer":"DELETE removes rows.","noteHint":"Use a WHERE clause unless deleting intentionally."},{"title":"WHERE","answer":"WHERE filters rows before grouping.","noteHint":"Use appropriate operators and indexes."},{"title":"ORDER BY","answer":"ORDER BY sorts query results.","noteHint":"Database result order is not guaranteed without it."},{"title":"GROUP BY","answer":"GROUP BY forms groups so aggregate functions can summarize them.","noteHint":"Every selected non-aggregated column generally needs grouping."},{"title":"HAVING","answer":"HAVING filters groups after aggregation.","noteHint":"WHERE filters rows; HAVING filters groups."},{"title":"JOINs","answer":"JOINs combine related rows across tables. Common forms include INNER, LEFT, RIGHT and FULL depending on the database.","noteHint":"Understand how unmatched rows behave."},{"title":"Subqueries","answer":"A subquery is a query nested inside another query and can be used for filtering, calculation or derived data.","noteHint":"Use joins/CTEs when they make logic clearer."},{"title":"Indexes","answer":"Indexes accelerate lookups but consume storage and can slow writes.","noteHint":"Index columns used frequently in filtering, joins or ordering based on workload."},{"title":"Normalization","answer":"Normalization reduces redundancy and update anomalies by organizing related data into appropriate tables.","noteHint":"Know 1NF, 2NF and 3NF at a practical level."},{"title":"Transactions","answer":"A transaction groups operations so they follow atomicity, consistency, isolation and durability (ACID) expectations.","noteHint":"Commit only when the unit of work is valid."}]},{"id":8,"title":"Git & GitHub","desc":"Work like a professional developer with version control.","topics":[{"title":"Git installation","answer":"Git is a distributed version-control system used to track source changes.","noteHint":"Configure name and email before committing."},{"title":"Repository","answer":"A repository contains project history and configuration.","noteHint":"A Git repository can be local and connected to a remote."},{"title":"git init","answer":"git init creates a new Git repository in a directory.","noteHint":"Run it at the intended project root."},{"title":"git add","answer":"git add stages selected changes for the next commit.","noteHint":"Review staged changes before committing."},{"title":"git commit","answer":"git commit records a snapshot of staged changes with a message.","noteHint":"Commits should represent coherent changes."},{"title":"git status","answer":"git status shows staged, unstaged and untracked files.","noteHint":"Use it constantly."},{"title":"git log","answer":"git log displays commit history.","noteHint":"Useful for understanding how a project evolved."},{"title":"Branches","answer":"Branches provide independent lines of development.","noteHint":"Create short-lived branches for focused work."},{"title":"Merge","answer":"Merge combines histories from branches.","noteHint":"Resolve conflicts carefully and test afterward."},{"title":"Rebase","answer":"Rebase reapplies commits onto a new base to create a cleaner linear history.","noteHint":"Avoid rebasing shared public history without coordination."},{"title":"Remote repositories","answer":"A remote stores a repository on another system such as GitHub.","noteHint":"push sends local commits; pull fetches and integrates remote changes."},{"title":"GitHub","answer":"GitHub hosts Git repositories and provides collaboration features such as issues and pull requests.","noteHint":"Keep the repository organized and documented."},{"title":"Pull requests","answer":"A pull request proposes changes for review before merging.","noteHint":"Use it to discuss design, tests and quality."},{"title":"Merge conflicts","answer":"Conflicts occur when Git cannot automatically combine changes.","noteHint":"Resolve the actual intended code, then test."},{"title":".gitignore","answer":".gitignore specifies files Git should not track.","noteHint":"Never commit secrets or generated build output."},{"title":"README","answer":"A README explains what the project does, how to run it and how to contribute.","noteHint":"Treat it as the project's first documentation."},{"title":"Git workflows","answer":"A workflow defines how branches, reviews, tests and releases are handled.","noteHint":"Choose a simple workflow appropriate to team size."},{"title":"Conventional commits","answer":"Conventional commits use structured prefixes such as feat, fix and docs to make history easier to understand.","noteHint":"Keep messages short and meaningful."}]},{"id":9,"title":"Maven & Project Structure","desc":"Understand Java builds and professional project organization.","topics":[{"title":"Maven basics","answer":"Maven manages dependencies, builds, tests and packaging using project metadata.","noteHint":"The central file is pom.xml."},{"title":"pom.xml","answer":"pom.xml defines project coordinates, dependencies, plugins and build configuration.","noteHint":"Keep configuration understandable."},{"title":"Dependencies","answer":"Dependencies are libraries required by the project.","noteHint":"Use compatible, trusted versions and avoid unnecessary libraries."},{"title":"Plugins","answer":"Maven plugins perform build tasks such as compiling, testing and packaging.","noteHint":"Understand which lifecycle phase invokes each plugin."},{"title":"Maven lifecycle","answer":"Common lifecycle phases include validate, compile, test, package, verify, install and deploy.","noteHint":"You normally invoke a phase rather than individual internal steps."},{"title":"Compile, test, package","answer":"compile builds classes; test runs tests; package creates an artifact such as a JAR.","noteHint":"Use clean when stale build output causes confusion."},{"title":"Clean","answer":"clean removes previous build output, usually the target directory.","noteHint":"Useful after configuration changes."},{"title":"Maven wrapper","answer":"mvnw/mvnw.cmd lets a project use a defined Maven version without requiring a global Maven installation.","noteHint":"Commit the wrapper files."},{"title":"Project structure","answer":"Standard Maven layout uses src/main/java, src/main/resources, src/test/java and related folders.","noteHint":"Follow conventions to reduce tooling friction."},{"title":"Configuration","answer":"Application configuration can live in properties/YAML files and environment variables.","noteHint":"Separate configuration from code."},{"title":"Environment variables","answer":"Environment variables allow deployment-specific values such as database credentials to be supplied externally.","noteHint":"Never hard-code secrets."},{"title":"Build profiles","answer":"Profiles allow alternative build configurations for environments or purposes.","noteHint":"Avoid profile complexity unless it solves a real need."},{"title":"Dependency management","answer":"Dependency management controls versions consistently across modules.","noteHint":"Regularly review dependencies for compatibility and security."}]},{"id":10,"title":"Spring Core","desc":"Understand the foundation behind Spring.","topics":[{"title":"Spring Framework","answer":"Spring provides dependency injection, configuration, web, data and other infrastructure for Java applications.","noteHint":"Its core idea is managing application components and their relationships."},{"title":"Dependency injection","answer":"DI supplies an object's dependencies instead of making it construct them itself.","noteHint":"Constructor injection is usually the clearest approach."},{"title":"Inversion of control","answer":"IoC means framework infrastructure controls object creation and wiring rather than application code doing everything manually.","noteHint":"Spring's container implements this idea."},{"title":"Beans","answer":"A Spring bean is an object managed by the Spring container.","noteHint":"Beans are created and wired according to configuration."},{"title":"Application context","answer":"ApplicationContext is Spring's container abstraction that creates and manages beans and provides framework services.","noteHint":"It is the central runtime container."},{"title":"Component scanning","answer":"Spring can scan packages for annotated components and register them as beans.","noteHint":"Keep scan boundaries intentional."},{"title":"@Component","answer":"@Component marks a class as a Spring-managed component.","noteHint":"Use specialized stereotypes when they communicate role."},{"title":"@Service","answer":"@Service marks a service-layer component that contains application/business logic.","noteHint":"Keep controllers thin."},{"title":"@Repository","answer":"@Repository identifies persistence-layer components and participates in exception translation.","noteHint":"Use it for data access classes."},{"title":"@Configuration","answer":"@Configuration marks a class that declares bean configuration.","noteHint":"Keep infrastructure configuration separated."},{"title":"@Bean","answer":"@Bean registers an object returned by a configuration method as a Spring bean.","noteHint":"Useful for third-party or custom object construction."},{"title":"Constructor injection","answer":"Constructor injection makes required dependencies explicit and supports immutable fields.","noteHint":"It also improves testability."},{"title":"Scopes","answer":"Bean scopes control lifecycle and instance sharing; singleton is the common default.","noteHint":"Use other scopes only when needed."},{"title":"Profiles","answer":"Profiles allow environment-specific bean/configuration choices.","noteHint":"Typical environments include dev and prod."},{"title":"Configuration properties","answer":"Configuration properties map external settings into typed application configuration.","noteHint":"Prefer typed configuration over scattered string lookups."}]},{"id":11,"title":"Spring Boot","desc":"Build REST backends efficiently.","topics":[{"title":"Spring Boot","answer":"Spring Boot simplifies Spring application setup through auto-configuration, starters and embedded servers.","noteHint":"It is designed for production-ready Java applications."},{"title":"Starters","answer":"Starters are dependency bundles for common application capabilities.","noteHint":"For example, web and data starters bring compatible dependencies."},{"title":"Application properties","answer":"application.properties or application.yml holds configurable application settings.","noteHint":"Keep secrets outside source control."},{"title":"REST APIs","answer":"REST APIs expose resources over HTTP using methods such as GET, POST, PUT and DELETE.","noteHint":"Use meaningful resource-oriented URLs."},{"title":"Controllers","answer":"Controllers receive HTTP requests and return responses.","noteHint":"Keep business logic out of controllers."},{"title":"Services","answer":"Services contain application/business logic and coordinate repositories and other components.","noteHint":"They are useful for clean separation of concerns."},{"title":"Repositories","answer":"Repositories encapsulate persistence operations.","noteHint":"Spring Data can generate common implementations."},{"title":"DTOs","answer":"Data Transfer Objects define request/response shapes separate from persistence entities.","noteHint":"DTOs help control exposed data."},{"title":"Request mapping","answer":"Annotations such as @RequestMapping, @GetMapping and @PostMapping connect HTTP requests to methods.","noteHint":"Keep routes predictable."},{"title":"GET","answer":"GET retrieves resources and should normally be safe and idempotent.","noteHint":"Do not use GET for state-changing operations."},{"title":"POST","answer":"POST commonly creates a new resource or triggers an action.","noteHint":"Return an appropriate status and representation."},{"title":"PUT","answer":"PUT commonly replaces a resource and is intended to be idempotent.","noteHint":"Use PATCH when partial updates are appropriate."},{"title":"DELETE","answer":"DELETE removes a resource and is generally idempotent.","noteHint":"Handle missing resources consistently."},{"title":"Path variables and request parameters","answer":"Path variables identify resources in URLs; query parameters modify/filter requests.","noteHint":"Choose the form that best expresses the API contract."},{"title":"Request body","answer":"@RequestBody maps JSON request data into a Java object.","noteHint":"Validate incoming data before processing."},{"title":"Response entities","answer":"ResponseEntity can control HTTP status, headers and body.","noteHint":"Use meaningful HTTP status codes."},{"title":"Validation","answer":"Bean Validation annotations such as @NotBlank and @Email can reject invalid input.","noteHint":"Validate at API boundaries."},{"title":"Exception handling","answer":"Global exception handlers can turn application exceptions into consistent API responses.","noteHint":"Do not expose internal stack traces to clients."},{"title":"API architecture","answer":"A clean API commonly separates controller, service, repository, DTO and entity responsibilities.","noteHint":"Keep each layer focused."},{"title":"HTTP status codes","answer":"HTTP status codes communicate the outcome of an API request, such as 200, 201, 400, 401, 403, 404 and 500.","noteHint":"Use status codes consistently so frontend clients can react correctly."}]},{"id":12,"title":"Spring Data JPA & Hibernate","desc":"Persist Java objects in relational databases.","topics":[{"title":"JPA","answer":"JPA is a Java specification for object-relational persistence.","noteHint":"It defines APIs and mapping concepts."},{"title":"Hibernate","answer":"Hibernate is a popular JPA implementation and ORM framework.","noteHint":"It translates between Java objects and relational data."},{"title":"Entities","answer":"An entity is a persistent Java class mapped to a database table.","noteHint":"Use stable identifiers and clear mappings."},{"title":"Entity relationships","answer":"Relationships map associations between entities.","noteHint":"Define ownership and fetching deliberately."},{"title":"One-to-one","answer":"One entity relates to one other entity.","noteHint":"Use it only when the domain truly requires one-to-one cardinality."},{"title":"One-to-many","answer":"One parent relates to many child records.","noteHint":"Be careful with cascade and orphan-removal semantics."},{"title":"Many-to-many","answer":"Many records on each side relate to many on the other side, typically through a join table.","noteHint":"Often an explicit join entity is clearer when the relationship has attributes."},{"title":"JpaRepository","answer":"JpaRepository provides common CRUD and pagination methods for an entity.","noteHint":"Keep repository methods focused on data access."},{"title":"Queries","answer":"Spring Data can derive queries from method names or use explicit query annotations.","noteHint":"Prefer readable query methods."},{"title":"JPQL","answer":"JPQL queries entity models rather than raw table structures.","noteHint":"Use it when derived methods are insufficient."},{"title":"Pagination","answer":"Pagination returns data in manageable chunks rather than loading everything.","noteHint":"Use page size limits for large datasets."},{"title":"Sorting","answer":"Spring Data supports ordering query results by fields.","noteHint":"Do not accept arbitrary unsanitized sort expressions from clients."},{"title":"Transactions","answer":"Transactions group database operations into a consistent unit of work.","noteHint":"Put transactional boundaries around business operations that require atomicity."},{"title":"Lazy loading","answer":"Lazy associations are loaded when accessed.","noteHint":"Beware accessing lazy data outside the persistence context."},{"title":"Eager loading","answer":"Eager associations are loaded immediately.","noteHint":"Too much eager loading can create performance problems."},{"title":"Entity lifecycle","answer":"Entities move through transient, managed, detached and removed states in a persistence context.","noteHint":"Understand when changes are automatically flushed."},{"title":"Database migrations","answer":"Migration tools such as Flyway or Liquibase track schema changes as versioned scripts.","noteHint":"Do not rely on accidental schema changes in production."},{"title":"Query optimization","answer":"Optimize by examining SQL, indexes, fetch plans, pagination and query counts.","noteHint":"Measure before and after changes."}]},{"id":13,"title":"Authentication & Security","desc":"Build authentication that is safe enough for real applications.","topics":[{"title":"Authentication","answer":"Authentication verifies who a user is, usually using credentials or tokens.","noteHint":"Never store plaintext passwords."},{"title":"Authorization","answer":"Authorization decides what an authenticated user is allowed to do.","noteHint":"Authentication and authorization are different."},{"title":"Password hashing","answer":"Passwords should be stored as slow one-way hashes with a salt.","noteHint":"Use a vetted password hashing algorithm/library."},{"title":"BCrypt","answer":"BCrypt is a password hashing algorithm designed to make brute-force guessing more expensive.","noteHint":"Use the library's secure configuration rather than inventing hashing."},{"title":"Spring Security","answer":"Spring Security provides authentication, authorization, filters, CSRF protection and security integrations.","noteHint":"Configure security explicitly."},{"title":"Security filters","answer":"Security filters inspect requests before controller execution and can authenticate or reject them.","noteHint":"Understand filter order before customizing."},{"title":"Sessions","answer":"Session-based authentication stores server-side authentication state and sends a session identifier to the client.","noteHint":"Protect session cookies and manage expiration."},{"title":"JWT","answer":"JWT is a signed token format that can carry claims.","noteHint":"Signing proves integrity; it does not automatically encrypt the token."},{"title":"Access and refresh tokens","answer":"Short-lived access tokens authorize API requests; refresh tokens can obtain new access tokens.","noteHint":"Protect refresh tokens and rotate/revoke them as appropriate."},{"title":"Roles","answer":"Roles group permissions, such as USER or ADMIN.","noteHint":"Keep role checks centralized."},{"title":"Permissions","answer":"Permissions express specific capabilities such as READ_PROFILE or DELETE_USER.","noteHint":"Fine-grained permissions can be more precise than roles."},{"title":"Refresh tokens","answer":"A refresh token can be exchanged for a new short-lived access token without asking for credentials again.","noteHint":"Store and rotate refresh tokens securely and support revocation."},{"title":"CORS","answer":"CORS controls which browser origins may call a server from frontend JavaScript.","noteHint":"Allow only trusted origins in production."},{"title":"CSRF","answer":"CSRF protection prevents unwanted state-changing requests made with a user's browser credentials.","noteHint":"The correct approach depends on the authentication mechanism."},{"title":"Input validation","answer":"Validate and constrain user input before using it.","noteHint":"Validation is both a correctness and security measure."},{"title":"Secure APIs","answer":"Use HTTPS, authentication, authorization, validation, safe error messages, rate limits and secure secret handling.","noteHint":"Security is a system property, not one feature."},{"title":"Password reset","answer":"Password reset should use short-lived, single-use, unpredictable tokens delivered through a trusted channel.","noteHint":"Never send or reveal the existing password."},{"title":"Account security","answer":"Add sensible protections such as login throttling, secure cookies/tokens, audit logging and account recovery controls.","noteHint":"Avoid leaking whether an account exists."}]},{"id":14,"title":"Frontend Integration","desc":"Connect the web UI to the Java backend.","topics":[{"title":"HTML","answer":"HTML defines the structure and meaning of the web page.","noteHint":"Use semantic elements where possible."},{"title":"CSS","answer":"CSS controls layout, spacing, typography, colors and responsive behavior.","noteHint":"Use reusable classes and variables."},{"title":"JavaScript","answer":"JavaScript adds behavior, state updates and API communication to the page.","noteHint":"Keep functions small and named clearly."},{"title":"DOM","answer":"The DOM is the browser's object representation of HTML that JavaScript can read and modify.","noteHint":"Prefer targeted updates over rebuilding the whole page unnecessarily."},{"title":"Fetch API","answer":"fetch sends HTTP requests from browser JavaScript and returns a Promise.","noteHint":"Handle loading, success and failure states."},{"title":"REST integration","answer":"The frontend should call backend endpoints using the agreed request and response contract.","noteHint":"Keep endpoint URLs centralized when possible."},{"title":"JSON","answer":"JSON is a common text format for API request and response data.","noteHint":"Match property names and types with backend DTOs."},{"title":"Forms","answer":"Forms collect user input and should validate it before sending requests.","noteHint":"Do not trust client-side validation alone."},{"title":"Authentication UI","answer":"Login/signup UI collects credentials and displays backend results.","noteHint":"Never display or store plaintext passwords unnecessarily."},{"title":"Loading states","answer":"Show a clear loading state while an API request is running.","noteHint":"Disable duplicate submissions."},{"title":"Error handling","answer":"Display useful user-facing messages while logging technical details appropriately.","noteHint":"Do not expose sensitive server errors."},{"title":"Local storage","answer":"localStorage stores small browser-side values persistently.","noteHint":"Never treat it as a secure place for secrets."},{"title":"Responsive design","answer":"Responsive layouts adapt to screen width using flexible grids, sizing and media queries.","noteHint":"Test touch targets and text at mobile widths."},{"title":"Frontend validation","answer":"Client-side validation improves user experience but backend validation remains authoritative.","noteHint":"Keep rules aligned."},{"title":"API integration","answer":"A complete integration handles URL, method, headers, body, status codes, parsing and authentication state.","noteHint":"Test both success and failure paths."}]},{"id":15,"title":"Testing & Code Quality","desc":"Learn to verify behavior and maintain quality.","topics":[{"title":"Unit testing","answer":"Unit tests verify small pieces of logic in isolation.","noteHint":"Tests should be fast and deterministic."},{"title":"JUnit","answer":"JUnit is a Java testing framework commonly used for unit and integration tests.","noteHint":"Learn test lifecycle and assertions."},{"title":"Assertions","answer":"Assertions compare actual behavior with expected behavior.","noteHint":"A good test explains what should be true."},{"title":"Mockito","answer":"Mockito creates test doubles such as mocks so a unit can be tested without real dependencies.","noteHint":"Mock behavior, not everything."},{"title":"Integration testing","answer":"Integration tests verify multiple components working together.","noteHint":"Use them for boundaries such as database and HTTP integration."},{"title":"API testing","answer":"API tests send requests and verify status codes and response bodies.","noteHint":"Test validation and error cases too."},{"title":"Test controllers","answer":"Controller tests verify request mapping, validation and response behavior.","noteHint":"Keep business logic tested separately."},{"title":"Test services","answer":"Service tests focus on business rules and interactions with dependencies.","noteHint":"Cover edge cases and important branches."},{"title":"Test repositories","answer":"Repository tests verify queries and persistence behavior.","noteHint":"Use an appropriate test database setup."},{"title":"Mocking","answer":"Mocking replaces a dependency with controlled behavior.","noteHint":"Too many mocks can make tests brittle."},{"title":"Code coverage","answer":"Coverage measures which code was executed by tests.","noteHint":"High coverage does not guarantee good tests."},{"title":"Clean code","answer":"Clean code is readable, focused and easy to change.","noteHint":"Names and structure should communicate intent."},{"title":"SOLID principles","answer":"SOLID is a set of design principles for maintainable object-oriented software.","noteHint":"Apply principles when they solve design problems, not as rituals."},{"title":"Refactoring","answer":"Refactoring changes internal structure without changing intended behavior.","noteHint":"Use tests as a safety net."},{"title":"Code review","answer":"Code review examines correctness, security, readability, tests and maintainability before integration.","noteHint":"Give specific, constructive feedback."}]},{"id":16,"title":"System Design","desc":"Understand how software scales beyond one machine.","topics":[{"title":"Scalability","answer":"Scalability is the ability of a system to handle growth in traffic or data.","noteHint":"Distinguish vertical and horizontal scaling."},{"title":"Availability","answer":"Availability describes how often a service is usable when requested.","noteHint":"Redundancy and failover can improve it."},{"title":"Reliability","answer":"Reliability is the ability to perform correctly over time.","noteHint":"Monitoring, retries and resilient design help."},{"title":"Load balancing","answer":"A load balancer distributes requests across multiple servers.","noteHint":"Health checks prevent routing traffic to unhealthy instances."},{"title":"Caching","answer":"Caching stores frequently used data closer to consumers to reduce latency and load.","noteHint":"Define invalidation and freshness rules."},{"title":"Databases","answer":"Choose relational or non-relational storage based on consistency, relationships, access patterns and scale.","noteHint":"Start with the simplest design that meets requirements."},{"title":"Database indexing","answer":"Indexes accelerate specific query patterns at the cost of storage and write overhead.","noteHint":"Index based on real queries."},{"title":"Replication","answer":"Replication copies data across database nodes for availability and read scaling.","noteHint":"Understand replication lag and consistency."},{"title":"Sharding","answer":"Sharding partitions data across nodes to scale storage and throughput.","noteHint":"Shard-key choice is critical."},{"title":"Message queues","answer":"Queues decouple producers and consumers and absorb traffic spikes.","noteHint":"Design retries and idempotency."},{"title":"Microservices","answer":"Microservices split a system into independently deployable services around business boundaries.","noteHint":"They add operational complexity."},{"title":"API gateways","answer":"An API gateway can provide routing, authentication integration, rate limiting and aggregation.","noteHint":"Avoid turning it into a monolith."},{"title":"Rate limiting","answer":"Rate limiting restricts request frequency to protect services and ensure fair usage.","noteHint":"Choose limits based on client behavior and capacity."},{"title":"CDN","answer":"A content delivery network caches content near users to reduce latency.","noteHint":"Great for static assets and suitable cacheable content."},{"title":"Distributed systems","answer":"Distributed systems coordinate components across networks where latency, failures and partial availability matter.","noteHint":"Design for failure."},{"title":"CAP theorem","answer":"CAP says a distributed system cannot simultaneously guarantee consistency, availability and partition tolerance under a network partition.","noteHint":"Use the theorem to discuss trade-offs, not as a simple database label."}]},{"id":17,"title":"DevOps & Deployment","desc":"Move applications from local development to production.","topics":[{"title":"Linux basics","answer":"Linux provides common command-line tools, permissions, processes and services used in servers.","noteHint":"Learn navigation, files, processes and networking commands."},{"title":"Environment variables","answer":"Environment variables provide deployment-specific configuration outside application code.","noteHint":"Use them for secrets and environment-specific values."},{"title":"Docker","answer":"Docker packages applications and dependencies into portable containers.","noteHint":"Containers isolate processes and make deployments repeatable."},{"title":"Dockerfile","answer":"A Dockerfile defines how a container image is built.","noteHint":"Use small trusted base images and avoid unnecessary layers."},{"title":"Docker Compose","answer":"Compose defines multi-container local environments using a YAML file.","noteHint":"Useful for app + database development."},{"title":"CI/CD","answer":"Continuous integration automatically builds and tests changes; continuous delivery/deployment automates release steps.","noteHint":"Automate repeatable checks."},{"title":"GitHub Actions","answer":"GitHub Actions runs workflows triggered by repository events or schedules.","noteHint":"Use secrets for credentials."},{"title":"Cloud basics","answer":"Cloud platforms provide compute, storage, databases, networking and managed services on demand.","noteHint":"Learn regions, networking, identity and pricing basics."},{"title":"Application deployment","answer":"Deployment publishes a tested build to an environment where users can access it.","noteHint":"Use repeatable deployment processes."},{"title":"Database deployment","answer":"Production databases need controlled migrations, backups and access restrictions.","noteHint":"Never treat production schema as disposable."},{"title":"Logs","answer":"Logs record useful events for debugging and operations.","noteHint":"Use structured, searchable logs and avoid secrets."},{"title":"Monitoring","answer":"Monitoring tracks metrics, logs and traces to detect and diagnose problems.","noteHint":"Monitor user-impacting signals."},{"title":"HTTPS","answer":"HTTPS encrypts HTTP traffic using TLS and authenticates the server through certificates.","noteHint":"Use HTTPS for production applications."},{"title":"Domain","answer":"A domain maps a human-readable name to internet services using DNS.","noteHint":"Understand A, AAAA, CNAME and basic DNS flow."},{"title":"Production configuration","answer":"Production settings should be externalized, secure, versioned where appropriate and different from local defaults.","noteHint":"Use least privilege and safe defaults."}]},{"id":18,"title":"Projects & Portfolio","desc":"Turn your roadmap knowledge into credible engineering work.","topics":[{"title":"Project planning","answer":"Define the problem, users, scope, requirements and milestones before implementation.","noteHint":"Start small and deliver a working slice."},{"title":"Requirements","answer":"Functional requirements describe what the system does; non-functional requirements describe qualities such as performance and security.","noteHint":"Write acceptance criteria."},{"title":"Architecture","answer":"Architecture defines components, responsibilities and communication paths.","noteHint":"Choose a design you can explain."},{"title":"Database design","answer":"Model entities, relationships, constraints and indexes based on real requirements.","noteHint":"Avoid storing everything in one table."},{"title":"API design","answer":"Define resources, endpoints, request/response schemas, validation and errors.","noteHint":"Document the contract."},{"title":"Frontend design","answer":"Design information hierarchy, navigation, responsive layout and feedback states.","noteHint":"Optimize for clarity before decoration."},{"title":"Authentication","answer":"Protect private features with proper identity and authorization.","noteHint":"Do not roll your own cryptography."},{"title":"Testing","answer":"Test important business logic, APIs and critical integration paths.","noteHint":"Include failure cases."},{"title":"GitHub repository","answer":"Keep source code, history and project documentation organized.","noteHint":"A clean repository demonstrates engineering habits."},{"title":"README","answer":"Document features, stack, setup, environment variables, API usage and screenshots.","noteHint":"Make it possible for another person to run the project."},{"title":"Documentation","answer":"Document decisions, architecture and important setup steps.","noteHint":"Good documentation reduces future maintenance cost."},{"title":"Deployment","answer":"Deploy the application to a stable environment and verify it after release.","noteHint":"Keep a rollback path."},{"title":"Portfolio","answer":"Present the problem, solution, architecture, technology and measurable results.","noteHint":"Show what you personally built."},{"title":"Resume projects","answer":"Describe projects using action + technology + outcome rather than generic claims.","noteHint":"Be honest and specific."},{"title":"Project presentation","answer":"Explain the problem, demo the product, show architecture and discuss challenges and future improvements.","noteHint":"Prepare answers for design decisions."}]},{"id":19,"title":"Software Engineer — Job Ready","desc":"Prepare for interviews and professional engineering work.","topics":[{"title":"Java interview questions","answer":"Revise syntax, OOP, collections, exceptions, streams, concurrency basics and JVM concepts.","noteHint":"Explain concepts with examples, not memorized definitions."},{"title":"OOP interview","answer":"Be ready to explain encapsulation, inheritance, polymorphism, abstraction, interfaces and composition.","noteHint":"Compare concepts clearly."},{"title":"DSA interview","answer":"Practice patterns and complexity analysis rather than only memorizing solutions.","noteHint":"Always discuss time and space complexity."},{"title":"SQL interview","answer":"Know joins, grouping, subqueries, indexes, normalization and transactions.","noteHint":"Practice writing queries by hand."},{"title":"Spring Boot interview","answer":"Know dependency injection, REST, validation, JPA, transactions and security basics.","noteHint":"Explain request flow end to end."},{"title":"System design interview","answer":"Clarify requirements, estimate scale, design components, identify bottlenecks and discuss trade-offs.","noteHint":"Start simple, then scale."},{"title":"Backend interview","answer":"Understand APIs, databases, caching, concurrency, security and observability.","noteHint":"Use project examples."},{"title":"Git interview","answer":"Know branching, commits, merge, rebase, conflict resolution and pull requests.","noteHint":"Be able to recover from common mistakes."},{"title":"Resume","answer":"A resume should be concise, truthful and focused on relevant skills and outcomes.","noteHint":"Prefer evidence over buzzwords."},{"title":"GitHub profile","answer":"Pin strong projects and keep repositories readable and active.","noteHint":"Make setup instructions work."},{"title":"LinkedIn profile","answer":"Present a clear professional headline, skills, projects and experience.","noteHint":"Keep claims consistent with your resume."},{"title":"Mock interviews","answer":"Mock interviews simulate pressure and reveal gaps before real interviews.","noteHint":"Review mistakes after each session."},{"title":"Behavioral questions","answer":"Use a structured story format such as situation, task, action and result.","noteHint":"Focus on your actions and learning."},{"title":"Problem solving","answer":"Interviewers often evaluate how you clarify, reason, test and communicate, not just the final answer.","noteHint":"Think aloud in a structured way."},{"title":"Communication","answer":"Good engineers communicate assumptions, trade-offs, risks and decisions clearly.","noteHint":"Ask clarifying questions."},{"title":"Software engineering mindset","answer":"Think about correctness, maintainability, security, testing, users and operational impact—not just making code run.","noteHint":"Build habits, not only knowledge."}]}];
+
+/* =========================================================
+   BACKEND CONFIGURATION
+   ---------------------------------------------------------
+   Change ONLY API_BASE when your Spring Boot backend is
+   deployed online.
+
+   Local:
+   http://localhost:8080/api/users
+
+   Production example later:
+   https://your-backend-domain.com/api/users
+   ========================================================= */
+const API_BASE = "https://java-roadmap-backend-production.up.railway.app/api/users";
+
+/* =========================================================
+   APPLICATION STATE
+   Everything below is local browser state.
+   The password is NEVER saved here.
+   ========================================================= */
+let state = JSON.parse(localStorage.getItem("javaRoadmapState")) || {
+    user: null,
+    completed: {},
+    notes: {},
+    streak: 1,
+    theme: "dark"
 };
 
-const key="javaRoadmapProV2";
-let state=JSON.parse(localStorage.getItem(key)||"{}");
-state.checks=state.checks||{}; state.notes=state.notes||{}; state.dsa=state.dsa||0;
-state.streak=state.streak||0; state.lastDay=state.lastDay||""; state.user=state.user||null;
-let timerSeconds=state.timerSeconds||0, timerInterval=null;
+let currentPhase = null;
+let pendingPhaseId = null;
+let timerSeconds = 0;
+let timerInterval = null;
 
-function save(){localStorage.setItem(key,JSON.stringify(state))}
-function today(){return new Date().toISOString().slice(0,10)}
-function updateStreak(){
-  const t=today();
-  if(state.lastDay!==t){
-    const prev=new Date(); prev.setDate(prev.getDate()-1);
-    const p=prev.toISOString().slice(0,10);
-    state.streak = state.lastDay===p ? state.streak+1 : 1;
-    state.lastDay=t; save();
-  }
-}
-function difficulty(text){
-  const hard=["Dynamic Programming","Dijkstra","Kafka","Sharding","Microservices","Java Memory Model","CompletableFuture","System Design","Garbage Collection","JIT"];
-  const medium=["Binary Search","Merge Sort","Quick Sort","HashMap","Streams","Hibernate","JWT","Docker","SQL","Git","Spring"];
-  if(hard.some(x=>text.includes(x))) return ["Hard","hard"];
-  if(medium.some(x=>text.includes(x))) return ["Medium","medium"];
-  return ["Easy","easy"];
-}
-function render(){
-  updateStreak();
-  renderHome();
-  update();
-}
-function renderHome(){
-  const grid=document.getElementById("phaseGrid"); grid.innerHTML="";
-  phases.forEach((phase,pi)=>{
-    let total=0,done=0;
-    phase[1].forEach(g=>g[1].forEach(()=>total++));
-    let idx=0;
-    phase[1].forEach(g=>g[1].forEach(()=>{
-      const uid=`${pi}-${idx++}`; if(state.checks[uid])done++;
-    }));
-    const pct=total?Math.round(done/total*100):0;
-    const card=document.createElement("div"); card.className="phase-card";
-    card.innerHTML=`<h4>${phase[0]}</h4>
-      <div class="pc-meta"><span>${done} / ${total} topics</span><b>${pct}%</b></div>
-      <div class="pc-bar"><span style="width:${pct}%"></span></div>`;
-    card.onclick=()=>showPhase(pi);
-    grid.appendChild(card);
-  });
+/* =========================================================
+   SMALL HELPERS
+   ========================================================= */
+
+function save(){
+    localStorage.setItem("javaRoadmapState", JSON.stringify(state));
 }
 
-let currentPhase=0,currentUid="",currentTopic="",currentTab="concept";
-function openStudy(pi,uid,item){
-  currentPhase=pi; currentUid=uid; currentTopic=item; currentTab="concept";
-  document.getElementById("phaseView").hidden=true;
-  document.getElementById("homeView").hidden=true;
-  document.getElementById("studyView").hidden=false;
-  document.getElementById("studyTitle").textContent="📚 "+item;
-  document.getElementById("topicNotes").value=state.notes[uid]||"";
-  updateStudyStatus();
-  updateTopicNavigation();
-  showStudyTab("concept");
+function getTotalTopics(){
+    return phases.reduce((total, phase) => total + phase.topics.length, 0);
 }
 
-function updateTopicNavigation(){
-  const list=getPhaseTopicList(currentPhase);
-  const pos=list.findIndex(x=>x.uid===currentUid);
-  const prev=document.getElementById("prevTopicBtn");
-  const next=document.getElementById("nextTopicBtn");
-  const position=document.getElementById("topicPosition");
-  position.textContent=`Topic ${pos+1} of ${list.length}`;
-  prev.disabled=pos<=0;
-  next.disabled=pos>=list.length-1;
-  next.textContent=pos>=list.length-1?"✓ Phase Complete":"Next Topic →";
-}
-function updateStudyStatus(){
-  const done=!!state.checks[currentUid];
-  document.getElementById("studyStatus").textContent=done?"✅ Completed":"📘 Not completed";
-  const b=document.getElementById("studyComplete");
-  b.textContent=done?"✓ Completed — Click to Undo":"Mark Complete";
+function getCompletedCount(){
+    return Object.values(state.completed).filter(Boolean).length;
 }
 
-function getPhaseTopicList(pi){
-  const list=[];
-  let idx=0;
-  phases[pi][1].forEach(group=>{
-    group[1].forEach(item=>{
-      list.push({uid:`${pi}-${idx++}`,item,group:group[0]});
-    });
-  });
-  return list;
-}
-function navigateTopic(direction){
-  const list=getPhaseTopicList(currentPhase);
-  const pos=list.findIndex(x=>x.uid===currentUid);
-  const nextPos=pos+direction;
-  if(nextPos<0 || nextPos>=list.length) return;
-  const next=list[nextPos];
-  openStudy(currentPhase,next.uid,next.item);
-}
-function backToPhase(){showPhase(currentPhase)}
-function saveTopicNote(){
-  state.notes[currentUid]=document.getElementById("topicNotes").value;
-  save();
-  const b=document.querySelector("#studyView .good"); b.textContent="Saved ✓";
-  setTimeout(()=>b.textContent="Save Notes",900);
-}
-function toggleStudyComplete(){
-  state.checks[currentUid]=!state.checks[currentUid];
-  save(); updateStudyStatus(); update(); 
-}
-function showStudyTab(tab){
-  currentTab=tab;
-  const d=studyData[currentTopic]||{
-    c:`This is the ${currentTopic} topic. Learn the core definition, syntax, common use cases, edge cases and time/space complexity where relevant.`,
-    code:`// Practice ${currentTopic}\n// Write the example yourself here.`,
-    p:[`Explain ${currentTopic} in your own words.`,`Write one small program using ${currentTopic}.`,`Solve 2–3 related coding problems.`]
-  };
-  const content=document.getElementById("studyContent");
-  if(tab==="concept"){
-    content.innerHTML=`<h2>📖 Concept</h2><p>${d.c}</p><h3>💡 Important Points</h3><ul>${(d.p||[]).map(x=>`<li>${x}</li>`).join("")}</ul>`;
-  }else if(tab==="code"){
-    content.innerHTML=`<h2>💻 Example</h2><p class="muted">Type it yourself after understanding it—don't just copy it.</p><pre class="codebox">${escapeHtml(d.code||"No example yet.")}</pre>`;
-  }else{
-    content.innerHTML=`<h2>🧠 Practice</h2><ol>${(d.p||["Practice this topic."]).map(x=>`<li>${x}</li>`).join("")}</ol>`;
-  }
-}
-function escapeHtml(s){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")}
-function showHome(){
-  document.getElementById("studyView").hidden=true;
-  document.getElementById("phaseView").hidden=true;
-  document.getElementById("homeView").hidden=false;
-  document.getElementById("search").value="";
-  document.getElementById("statusFilter").value="all";
-}
-function showPhase(pi){
-  document.getElementById("homeView").hidden=true;
-  document.getElementById("phaseView").hidden=false;
-  const phase=phases[pi];
-  document.getElementById("detailTitle").textContent=phase[0];
-  let total=0,done=0,id=0;
-  phase[1].forEach(g=>g[1].forEach(()=>{
-    const uid=`${pi}-${id++}`; total++; if(state.checks[uid])done++;
-  }));
-  document.getElementById("detailProgress").textContent=`${done} / ${total} topics completed • ${total?Math.round(done/total*100):0}%`;
-  const root=document.getElementById("detailGroups"); root.innerHTML="";
-  let globalId=0;
-  phase[1].forEach(group=>{
-    const box=document.createElement("div"); box.className="detail-group";
-    const head=document.createElement("div"); head.className="detail-group-head";
-    const body=document.createElement("div"); body.className="detail-group-body";
-    let gd=0;
-    group[1].forEach(()=>{const uid=`${pi}-${globalId++}`;if(state.checks[uid])gd++});
-    globalId-=group[1].length;
-    head.innerHTML=`<h3>${group[0]}</h3><span class="group-progress">${gd}/${group[1].length}</span>`;
-    group[1].forEach(item=>{
-      const uid=`${pi}-${globalId++}`;
-      const topic=document.createElement("div"); topic.className="detail-topic";
-      const label=document.createElement("label");
-      const input=document.createElement("input"); input.type="checkbox"; input.dataset.id=uid;
-      const span=document.createElement("span"); span.textContent=item;
-      if(state.checks[uid]){input.checked=true;label.classList.add("done")}
-      input.addEventListener("change",()=>{
-        state.checks[uid]=input.checked;
-        label.classList.toggle("done",input.checked);
-        save(); update();
-        showPhase(pi);
-      });
-      label.append(input,span);
-      label.addEventListener("dblclick",()=>openStudy(pi,uid,item));
-      span.addEventListener("click",(e)=>{e.preventDefault();openStudy(pi,uid,item)});
-      const meta=document.createElement("div"); meta.className="topic-meta";
-      const d=difficulty(item); meta.innerHTML=`<span class="pill ${d[1]}">${d[0]}</span>`;
-      const note=document.createElement("input"); note.className="note-input";
-      note.placeholder="Add a personal note...";
-      note.value=state.notes[uid]||"";
-      note.addEventListener("input",()=>{state.notes[uid]=note.value;save()});
-      const studyBtn=document.createElement("button"); studyBtn.className="secondary"; studyBtn.textContent="📖 Study"; studyBtn.style.cssText="margin:0 0 8px 34px;padding:7px 10px;font-size:11px"; studyBtn.onclick=()=>openStudy(pi,uid,item);
-      topic.append(label,meta,note,studyBtn); body.appendChild(topic);
-    });
-    head.onclick=()=>body.hidden=!body.hidden;
-    box.append(head,body); root.appendChild(box);
-  });
-}
-function update(){
-  const allTopicIds=[];
-  phases.forEach((phase,pi)=>{
-    let idx=0;
-    phase[1].forEach(g=>g[1].forEach(()=>{
-      allTopicIds.push(`${pi}-${idx++}`);
-    }));
-  });
-  const done=allTopicIds.filter(id=>state.checks[id]).length, total=allTopicIds.length;
-  const pct=total?Math.round(done/total*100):0;
-  document.getElementById("done").textContent=done;
-  document.getElementById("total").textContent=total;
-  document.getElementById("percent").textContent=pct+"%";
-  document.getElementById("bar").style.width=pct+"%";
-  let completedPhases=0;
-  phases.forEach((phase,pi)=>{
-    let totalP=0,doneP=0,idx=0;
-    phase[1].forEach(g=>g[1].forEach(()=>{
-      const uid=`${pi}-${idx++}`; totalP++; if(state.checks[uid])doneP++;
-    }));
-    if(totalP&&doneP===totalP)completedPhases++;
-  });
-  document.getElementById("phaseDone").textContent=completedPhases;
-  document.getElementById("streak").textContent=(state.streak||0)+" 🔥";
-  let next=null;
-  phases.some((phase,pi)=>{
-    let idx=0;
-    return phase[1].some(g=>g[1].some(item=>{
-      const uid=`${pi}-${idx++}`;
-      if(!state.checks[uid]){next={pi,item,phase:phase[0]};return true}
-      return false;
-    }));
-  });
-  if(next){
-    document.getElementById("nextMilestone").textContent=next.item;
-    document.getElementById("nextInfo").textContent=`${next.phase} • Click the phase card to continue.`;
-  }else{
-    document.getElementById("nextMilestone").textContent="🏆 Roadmap Complete!";
-    document.getElementById("nextInfo").textContent="You completed every tracked topic. Time to build and ship.";
-  }
-  renderHome(); renderMilestones();
-}
-function renderMilestones(){
-  const box=document.getElementById("milestones"); if(!box)return;
-  const done=Object.values(state.checks).filter(Boolean).length;
-  const ds=Number(state.dsa)||0;
-  const ms=[
-    ["First Step",done>=1,"Complete 1 topic"],
-    ["Getting Serious",done>=25,"Complete 25 topics"],
-    ["DSA Warrior",ds>=50,"Solve 50 DSA problems"],
-    ["Halfway",done>=Math.ceil(document.querySelectorAll('input[type="checkbox"]').length/2),"Reach 50% roadmap"],
-    ["100 Problems",ds>=100,"Solve 100 DSA problems"],
-    ["Roadmap Master",done>=document.querySelectorAll('input[type="checkbox"]').length,"Complete all topics"]
-  ];
-  box.innerHTML=ms.map(m=>`<div class="milestone ${m[1]?'unlocked':''}"><b>${m[1]?'🏆':'🔒'} ${m[0]}</b>${m[2]}</div>`).join("");
-}
-function globalSearch(){
-  const q=(document.getElementById("search").value||"").toLowerCase().trim();
-  const status=document.getElementById("statusFilter").value;
-  if(!q){return}
-  for(let pi=0;pi<phases.length;pi++){
-    let idx=0;
-    for(const group of phases[pi][1]){
-      for(const item of group[1]){
-        const uid=`${pi}-${idx++}`;
-        const text=(item+" "+group[0]+" "+phases[pi][0]).toLowerCase();
-        const statusOk=status==="all"||(status==="done"&&state.checks[uid])||(status==="pending"&&!state.checks[uid]);
-        if(text.includes(q)&&statusOk){showPhase(pi);return}
-      }
-    }
-  }
-}
-function clearSearch(){document.getElementById("search").value="";document.getElementById("statusFilter").value="all"}
-function expandAll(){document.querySelectorAll(".detail-group-body").forEach(x=>x.hidden=false)}
-function collapseAll(){document.querySelectorAll(".detail-group-body").forEach(x=>x.hidden=true)}
-
-function exportProgress(){
-  save();
-  const backup = {
-    app: "Java Software Engineer Roadmap",
-    formatVersion: 1,
-    exportedAt: new Date().toISOString(),
-    data: {
-      checks: state.checks || {},
-      notes: state.notes || {},
-      dsa: Number(state.dsa) || 0,
-      streak: Number(state.streak) || 0,
-      lastDay: state.lastDay || "",
-      timerSeconds: Number(state.timerSeconds) || 0
-    }
-  };
-  const blob = new Blob([JSON.stringify(backup, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "java-roadmap-progress-" + new Date().toISOString().slice(0,10) + ".json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+function phaseCompletedCount(phase){
+    return phase.topics.filter((_, index) => {
+        return !!state.completed[`${phase.id}-${index}`];
+    }).length;
 }
 
-function importProgress(event){
-  const file = event.target.files && event.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = function(){
-    try{
-      const payload = JSON.parse(reader.result);
-      const incoming = payload.data || payload;
-      if(!incoming || typeof incoming !== "object" || !incoming.checks){
-        throw new Error("Invalid backup");
-      }
-      state = {
-        checks: incoming.checks || {},
-        notes: incoming.notes || {},
-        dsa: Number(incoming.dsa) || 0,
-        streak: Number(incoming.streak) || 0,
-        lastDay: incoming.lastDay || "",
-        timerSeconds: Number(incoming.timerSeconds) || 0
-      };
-      timerSeconds = state.timerSeconds;
-      save();
-      render();
-      const dsaBox = document.getElementById("dsaCount");
-      if(dsaBox) dsaBox.value = state.dsa;
-      updateTimer();
-      alert("Progress restored successfully! ✅");
-    }catch(err){
-      alert("Invalid roadmap backup file. Please select a JSON exported from this dashboard.");
-    }
-    event.target.value = "";
-  };
-  reader.readAsText(file);
+function isPhaseComplete(phase){
+    return phaseCompletedCount(phase) === phase.topics.length;
 }
 
-function resetProgress(){
-  if(confirm("Reset all roadmap progress, notes, streak, DSA count and timer?")){
-    state={checks:{},notes:{},dsa:0,streak:0,lastDay:"",timerSeconds:0,user:state.user||null}; timerSeconds=0; save(); render(); updateTimer();
-  }
-}
-function saveExtras(){state.dsa=Number(document.getElementById("dsaCount").value)||0;save();renderMilestones()}
-function updateTimer(){
-  const h=String(Math.floor(timerSeconds/3600)).padStart(2,"0");
-  const m=String(Math.floor(timerSeconds%3600/60)).padStart(2,"0");
-  const s=String(timerSeconds%60).padStart(2,"0");
-  document.getElementById("timer").textContent=`${h}:${m}:${s}`;
-}
-function toggleTimer(){
-  if(timerInterval){
-    clearInterval(timerInterval);timerInterval=null;
-    document.getElementById("timerBtn").textContent="Resume";
-  }else{
-    updateStreak();
-    timerInterval=setInterval(()=>{timerSeconds++;state.timerSeconds=timerSeconds;if(timerSeconds%10===0)save();updateTimer()},1000);
-    document.getElementById("timerBtn").textContent="Pause";
-  }
-}
-function resetTimer(){clearInterval(timerInterval);timerInterval=null;timerSeconds=0;state.timerSeconds=0;save();updateTimer();document.getElementById("timerBtn").textContent="Start"}
+function isPhaseUnlocked(index){
+    if(index === 0) return true;
 
-render();
-document.getElementById("dsaCount").value=state.dsa||0;
-updateTimer();
+    const previousPhase = phases[index - 1];
 
-// ===== PRO FRONT-END FEATURES =====
-function toggleTheme(){
-  document.body.classList.toggle('light');
-  const light=document.body.classList.contains('light');
-  localStorage.setItem('javaTheme',light?'light':'dark');
-  document.getElementById('themeText').textContent=light?'Dark mode':'Light mode';
+    return isPhaseComplete(previousPhase);
 }
+
+/* =========================================================
+   THEME
+   ========================================================= */
+
 function loadTheme(){
-  if(localStorage.getItem('javaTheme')==='light'){document.body.classList.add('light');document.getElementById('themeText').textContent='Dark mode';}
+    document.body.classList.toggle("light", state.theme === "light");
 }
-function openAuth(){document.getElementById('authModal').classList.add('show');}
-function closeAuth(){document.getElementById('authModal').classList.remove('show');}
-function demoAuth(mode){
-  const name=document.getElementById('authName').value.trim();
-  const email=document.getElementById('authEmail').value.trim();
-  const password=document.getElementById('authPassword').value;
-  const msg=document.getElementById('authMsg');
-  if(!name||!email||password.length<4){msg.textContent='Please enter name, email and a 4+ character password.';return;}
-  state.user={name,email}; save();
-  document.getElementById('authText').textContent='Hi, '+name.split(' ')[0]+' 👋';
-  msg.textContent=mode==='signup'?'Account created locally!':'Logged in locally!';
-  setTimeout(closeAuth,700);
+
+function toggleTheme(){
+    state.theme =
+        document.body.classList.contains("light")
+            ? "dark"
+            : "light";
+
+    save();
+    loadTheme();
 }
+
+/* =========================================================
+   DASHBOARD UPDATE
+   ========================================================= */
+
+function updateDashboard(){
+
+    const totalTopics = getTotalTopics();
+    const completed = getCompletedCount();
+
+    const progress = totalTopics
+        ? Math.round((completed / totalTopics) * 100)
+        : 0;
+
+    document.getElementById("completedTopics").textContent = completed;
+    document.getElementById("totalTopics").textContent = totalTopics;
+    document.getElementById("overallProgress").textContent = progress + "%";
+    document.getElementById("mainProgress").style.width = progress + "%";
+    document.getElementById("streak").textContent = state.streak + " 🔥";
+
+    const completedPhases = phases.filter(isPhaseComplete).length;
+    document.getElementById("completedPhases").textContent = completedPhases;
+
+    updateMilestone();
+}
+
+function updateMilestone(){
+
+    const nextIndex = phases.findIndex(phase => !isPhaseComplete(phase));
+
+    if(nextIndex === -1){
+        document.getElementById("nextMilestone").textContent =
+            "🏆 Roadmap Complete!";
+
+        document.getElementById("nextMilestoneDesc").textContent =
+            "You completed the complete Java → Software Engineer roadmap.";
+        return;
+    }
+
+    const nextPhase = phases[nextIndex];
+
+    document.getElementById("nextMilestone").textContent =
+        nextPhase.topics[0].title;
+
+    document.getElementById("nextMilestoneDesc").textContent =
+        `Phase ${nextPhase.id} — ${nextPhase.title}`;
+}
+
+/* =========================================================
+   RENDER PHASE CARDS
+   ---------------------------------------------------------
+   Search only changes what is displayed. It never deletes
+   any roadmap data.
+   ========================================================= */
+
+function enableSearch(){
+    const input = document.getElementById("roadmapSearch");
+    if(input) input.readOnly = false;
+}
+
+function clearSearchAutofill(){
+    const input = document.getElementById("roadmapSearch");
+    if(!input) return;
+    // Chrome can restore an old value even with autocomplete=off.
+    // A search field should never inherit the login email.
+    if(input.value.includes("@") || /test2@test\.com/i.test(input.value)) {
+        input.value = "";
+    }
+    input.readOnly = false;
+}
+
+// =========================================================
+// ESCAPE HTML
+// ---------------------------------------------------------
+// This safely displays text inside HTML.
+// Used by the topic reader for answers, examples and titles.
+// =========================================================
+function escapeHtml(value){
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function renderPhases(){
+
+    const container = document.getElementById("phases");
+    const search = document.getElementById("roadmapSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    container.innerHTML = "";
+
+    phases.forEach((phase, index) => {
+
+        const unlocked = isPhaseUnlocked(index);
+        const completed = isPhaseComplete(phase);
+        const completedCount = phaseCompletedCount(phase);
+
+        const percentage = phase.topics.length
+            ? Math.round((completedCount / phase.topics.length) * 100)
+            : 0;
+
+        const matches =
+            phase.title.toLowerCase().includes(search) ||
+            phase.desc.toLowerCase().includes(search) ||
+            phase.topics.some(topic =>
+                topic.title.toLowerCase().includes(search)
+            );
+
+        if(search && !matches) return;
+
+        const card = document.createElement("div");
+
+        card.className = "phase" + (!unlocked ? " locked" : "");
+
+        let statusText = "LOCKED";
+        let statusClass = "lock";
+
+        if(completed){
+            statusText = "COMPLETED";
+            statusClass = "done";
+        }else if(unlocked){
+            statusText = "OPEN";
+            statusClass = "open";
+        }
+
+        card.innerHTML = `
+            <button class="phase-head"
+                    type="button"
+                    onclick="openPhase(${phase.id})">
+
+                <div class="phase-number">
+                    ${completed ? "✓" : phase.id}
+                </div>
+
+                <div class="phase-info">
+                    <div class="phase-title">${phase.title}</div>
+                    <div class="phase-desc">${phase.desc}</div>
+                </div>
+
+                <div class="phase-meta">
+                    <span class="status ${statusClass}">
+                        ${statusText}
+                    </span>
+
+                    <span>${completedCount}/${phase.topics.length}</span>
+
+                    <span>${unlocked ? "→" : "🔒"}</span>
+                </div>
+            </button>
+
+            <div class="phase-progress">
+                <div class="phase-progress-fill"
+                     style="width:${percentage}%"></div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+/* =========================================================
+   PHASE OPEN
+   ---------------------------------------------------------
+   Important:
+   1. User must login first.
+   2. Then phase unlock rules are checked.
+   ========================================================= */
+
+function openPhase(id){
+
+    if(!state.user){
+        pendingPhaseId = id;
+        openAuth();
+        document.getElementById("authMsg").textContent =
+            "Please login or sign up first to start learning.";
+        return;
+    }
+
+    const index = phases.findIndex(phase => phase.id === id);
+
+    if(index < 0) return;
+
+    if(!isPhaseUnlocked(index)){
+        alert(
+            `🔒 Phase ${id} is locked.\n\n` +
+            `Complete Phase ${id - 1} first.`
+        );
+        return;
+    }
+
+    currentPhase = phases[index];
+    currentTopicIndex = 0;
+    currentReaderTab = "concept";
+
+    document.getElementById("phaseModalTitle").textContent =
+        `Phase ${currentPhase.id} — ${currentPhase.title}`;
+
+    document.getElementById("phaseModalDesc").textContent =
+        currentPhase.desc;
+
+    renderTopicReader();
+
+    document.getElementById("phaseModal").classList.add("show");
+}
+
+/* =========================================================
+   TOPIC READER
+   ---------------------------------------------------------
+   Every topic contains:
+   - explanation
+   - personal notes box
+   Notes are saved immediately while typing.
+   ========================================================= */
+
+let currentTopicIndex = 0;
+let currentReaderTab = "concept";
+
+function renderTopicReader(){
+    if(!currentPhase) return;
+    currentTopicIndex = Math.min(Math.max(currentTopicIndex,0), currentPhase.topics.length-1);
+    showCurrentTopic();
+}
+
+function showCurrentTopic(){
+    const topic = currentPhase.topics[currentTopicIndex];
+    if(!topic) return;
+
+    document.getElementById("phaseModalInfo").textContent =
+        `${phaseCompletedCount(currentPhase)}/${currentPhase.topics.length} topics completed`;
+    document.getElementById("readerPosition").textContent =
+        `Topic ${currentTopicIndex + 1} of ${currentPhase.topics.length}`;
+    document.getElementById("readerTopicNumber").textContent = currentTopicIndex + 1;
+    document.getElementById("readerTopicTitle").textContent = topic.title;
+
+    const done = !!state.completed[`${currentPhase.id}-${currentTopicIndex}`];
+    document.getElementById("readerTopicStatus").textContent =
+        done ? "✓ Completed" : "○ Not completed";
+    document.getElementById("readerTopicStatus").style.color = done ? "#4ade80" : "";
+
+    const noteKey = `${currentPhase.id}-${currentTopicIndex}`;
+    document.getElementById("readerNotes").value = state.notes[noteKey] || "";
+    document.getElementById("notesSaved").textContent = "";
+
+    document.getElementById("prevTopicBtn").disabled = currentTopicIndex === 0;
+    document.getElementById("nextTopicBtn").textContent =
+        currentTopicIndex === currentPhase.topics.length - 1 ? "Finish Phase →" : "Next Topic →";
+    document.getElementById("nextTopicBtnBottom").textContent =
+        currentTopicIndex === currentPhase.topics.length - 1 ? "Finish Phase →" : "Next Topic →";
+
+    document.getElementById("completeTopicBtn").textContent = done
+        ? "✓ Completed — Click to Undo"
+        : "✓ Mark Topic Complete";
+
+    showReaderTab(currentReaderTab);
+}
+
+function showReaderTab(tab){
+    currentReaderTab = tab;
+    ["tabConcept","tabExample","tabPractice"].forEach(id =>
+        document.getElementById(id).classList.remove("active")
+    );
+    document.getElementById(
+        tab === "concept" ? "tabConcept" : tab === "example" ? "tabExample" : "tabPractice"
+    ).classList.add("active");
+
+    const topic = currentPhase.topics[currentTopicIndex];
+    const content = document.getElementById("readerContent");
+
+    if(tab === "concept"){
+        content.innerHTML = `
+            <h3>📖 Concept</h3>
+            <p>${escapeHtml(topic.answer)}</p>
+            <h4>💡 Important Points</h4>
+            <ul>
+                <li>Understand the idea before memorizing syntax.</li>
+                <li>Try a small example yourself.</li>
+                <li>Connect this topic with the topics before and after it.</li>
+            </ul>
+            <div class="practice-box"><strong>Remember:</strong> ${escapeHtml(topic.noteHint || "Practice this concept with a small Java example.")}</div>
+        `;
+    } else if(tab === "example"){
+        content.innerHTML = `
+            <h3>💻 Example</h3>
+            <p>Here is a small Java example related to <strong>${escapeHtml(topic.title)}</strong>. Modify it and observe what changes.</p>
+            <div class="reader-example">${escapeHtml(exampleForTopic(topic))}</div>
+            <h4>Try changing it</h4>
+            <p>Change one value, run the program again, and explain the output in your own notes.</p>
+        `;
+    } else {
+        content.innerHTML = `
+            <h3>🧠 Practice</h3>
+            <div class="practice-box">
+                <strong>Practice question</strong>
+                <p style="margin-top:10px">${escapeHtml(practiceForTopic(topic))}</p>
+            </div>
+            <h4>Before moving on</h4>
+            <ul>
+                <li>Write your answer in your own words.</li>
+                <li>Try the problem without copying the example.</li>
+                <li>Use the notes panel to record mistakes or shortcuts.</li>
+            </ul>
+        `;
+    }
+}
+
+function exampleForTopic(topic){
+    const t = topic.title.toLowerCase();
+    if(t.includes("first java") || t.includes("hello")) return `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}`;
+    if(t.includes("variable")) return `int age = 17;\nString name = "Dhoni";\nSystem.out.println(name + " is " + age);`;
+    if(t.includes("array")) return `int[] marks = {80, 90, 75};\nfor (int mark : marks) {\n    System.out.println(mark);\n}`;
+    if(t.includes("if")) return `int age = 17;\nif (age >= 18) {\n    System.out.println("Adult");\n} else {\n    System.out.println("Minor");\n}`;
+    if(t.includes("loop") || t.includes("for")) return `for (int i = 1; i <= 5; i++) {\n    System.out.println(i);\n}`;
+    if(t.includes("method")) return `static int add(int a, int b) {\n    return a + b;\n}\n\nSystem.out.println(add(10, 20));`;
+    if(t.includes("class") || t.includes("object")) return `class Student {\n    String name;\n}\n\nStudent s = new Student();\ns.name = "Dhoni";`;
+    if(t.includes("exception")) return `try {\n    int result = 10 / 0;\n} catch (ArithmeticException e) {\n    System.out.println("Cannot divide by zero");\n}`;
+    if(t.includes("string")) return `String name = "Dhoni";\nSystem.out.println(name.length());\nSystem.out.println(name.equals("Dhoni"));`;
+    if(t.includes("sql") || t.includes("query")) return `SELECT name, email\nFROM users\nWHERE id = 1;`;
+    return `// Start with a small example for: ${topic.title}\n// 1. Create the smallest working program.\n// 2. Run it.\n// 3. Change one thing.\n// 4. Observe and explain the result.`;
+}
+
+function practiceForTopic(topic){
+    const t = topic.title.toLowerCase();
+    if(t.includes("variable")) return "Create variables for your name, age and salary, then print all three values.";
+    if(t.includes("array")) return "Create an integer array of five marks and find the largest value.";
+    if(t.includes("loop")) return "Write a loop that prints numbers from 1 to 10 and then prints their sum.";
+    if(t.includes("method")) return "Write a method that accepts two integers and returns their sum.";
+    if(t.includes("class") || t.includes("object")) return "Create a Student class with name and age fields and create one object.";
+    if(t.includes("exception")) return "Handle a division-by-zero case using try-catch and print a useful message.";
+    if(t.includes("sql")) return "Write a query that selects users whose email matches a given value.";
+    return `Explain “${topic.title}” in your own words and write one small Java example that demonstrates it.`;
+}
+
+function toggleCurrentTopicComplete(){
+    if(!currentPhase) return;
+    const key = `${currentPhase.id}-${currentTopicIndex}`;
+    state.completed[key] = !state.completed[key];
+    save();
+    updateDashboard();
+    renderPhases();
+    showCurrentTopic();
+}
+
+function saveCurrentTopicNotes(){
+    if(!currentPhase) return;
+    const key = `${currentPhase.id}-${currentTopicIndex}`;
+    state.notes[key] = document.getElementById("readerNotes").value;
+    save();
+    document.getElementById("notesSaved").textContent = "✓ Notes saved";
+}
+
+function nextTopic(){
+    if(!currentPhase) return;
+    saveCurrentTopicNotes();
+    if(currentTopicIndex < currentPhase.topics.length - 1){
+        currentTopicIndex++;
+        currentReaderTab = "concept";
+        showCurrentTopic();
+    }else{
+        if(isPhaseComplete(currentPhase)){
+            completeCurrentPhase();
+        }else{
+            alert("Complete all topics in this phase before finishing the phase.");
+        }
+    }
+}
+
+function previousTopic(){
+    if(currentTopicIndex <= 0) return;
+    saveCurrentTopicNotes();
+    currentTopicIndex--;
+    currentReaderTab = "concept";
+    showCurrentTopic();
+}
+
+/* =========================================================
+   COMPLETE PHASE
+   ---------------------------------------------------------
+   Completing a phase checks every topic in that phase.
+   This automatically unlocks the next phase.
+   ========================================================= */
+
+function completeCurrentPhase(){
+
+    if(!currentPhase) return;
+
+    const alreadyComplete = isPhaseComplete(currentPhase);
+
+    if(!alreadyComplete){
+
+        const ok = confirm(
+            `Mark all ${currentPhase.topics.length} topics in ` +
+            `Phase ${currentPhase.id} as completed?`
+        );
+
+        if(!ok) return;
+
+        currentPhase.topics.forEach((_, index) => {
+            state.completed[`${currentPhase.id}-${index}`] = true;
+        });
+
+        save();
+        updateDashboard();
+        renderPhases();
+    }
+
+    const finishedId = currentPhase.id;
+    const nextIndex = phases.findIndex(
+        phase => phase.id === finishedId
+    ) + 1;
+
+    closePhase();
+
+    if(nextIndex < phases.length){
+
+        alert(
+            `🎉 Phase ${finishedId} completed!\n\n` +
+            `🔓 Phase ${nextIndex + 1} is now unlocked!`
+        );
+
+        setTimeout(() => {
+            if(state.user){
+                openPhase(phases[nextIndex].id);
+            }
+        }, 150);
+
+    }else{
+        alert("🏆 BROOOO! You completed the entire roadmap!");
+    }
+}
+
+/* =========================================================
+   AUTH MODAL
+   ========================================================= */
+
+function openAuth(){
+    document.getElementById("authModal").classList.add("show");
+    document.getElementById("authMsg").textContent = "";
+}
+
+function closeAuth(){
+    document.getElementById("authModal").classList.remove("show");
+}
+
+async function demoAuth(mode){
+
+    const name = document.getElementById("authName").value.trim();
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+    const msg = document.getElementById("authMsg");
+
+    if(!email || !password || (mode === "signup" && !name)){
+        msg.textContent = "Please fill all required fields.";
+        return;
+    }
+
+    const loginBtn = document.getElementById("loginBtn");
+    const signupBtn = document.getElementById("signupBtn");
+
+    loginBtn.disabled = true;
+    signupBtn.disabled = true;
+    msg.textContent = "Connecting to Spring Boot...";
+
+    try{
+
+        let response;
+
+        if(mode === "signup"){
+
+            response = await fetch(`${API_BASE}/signup`, {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    name:name,
+                    email:email,
+                    password:password
+                })
+            });
+
+        }else{
+
+            response = await fetch(`${API_BASE}/login`, {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    email:email,
+                    password:password
+                })
+            });
+        }
+
+        const result = await response.text();
+
+        if(!response.ok){
+
+            msg.textContent =
+                result || "Something went wrong.";
+
+            return;
+        }
+
+        if(mode === "login"){
+
+            if(result === "Login successful"){
+
+                state.user = {
+                    name:
+                        state.user?.email === email
+                            ? state.user.name
+                            : (name || email.split("@")[0]),
+                    email:email
+                };
+
+                save();
+                loadUser();
+                closeAuth();
+
+                const target = pendingPhaseId;
+                pendingPhaseId = null;
+
+                if(target){
+                    setTimeout(() => openPhase(target), 150);
+                }
+
+            }else{
+                msg.textContent = result;
+            }
+
+        }else{
+
+            state.user = {
+                name:name,
+                email:email
+            };
+
+            save();
+            loadUser();
+
+            msg.textContent = "Account created successfully! 🎉";
+
+            const target = pendingPhaseId;
+            pendingPhaseId = null;
+
+            setTimeout(() => {
+                closeAuth();
+
+                if(target){
+                    setTimeout(() => openPhase(target), 150);
+                }
+            }, 500);
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        msg.textContent =
+            "❌ Cannot connect to backend. " +
+            "Make sure Spring Boot is running on port 8080.";
+
+    }finally{
+
+        loginBtn.disabled = false;
+        signupBtn.disabled = false;
+    }
+}
+
+/* =========================================================
+   USER / PROFILE
+   ========================================================= */
+
 function loadUser(){
-  if(state.user){document.getElementById('authText').textContent='Hi, '+state.user.name.split(' ')[0]+' 👋';}
-}
-function showFeatures(){
-    alert(`PRO ROADMAP
 
-🎨 Professional UI + animations
-📱 Mobile responsive
-🌙 Dark / light mode
-🔐 Account-ready auth UI
-💾 Local progress storage + JSON backup
-📊 Live progress tracker
-☁️ Spring Boot backend-ready
-🌐 Vercel deployment + custom domain ready
+    const authText = document.getElementById("authText");
 
-Real database/login sync needs the Spring Boot backend to be deployed and connected.`);
+    if(state.user){
+        const firstName =
+            (state.user.name || "User")
+            .trim()
+            .split(/\s+/)[0];
+
+        authText.textContent = `Hi, ${firstName} 👋`;
+    }else{
+        authText.textContent = "Login / Sign up";
+    }
 }
-const oldUpdate=update;
-update=function(){
-  oldUpdate();
-  const pct=parseInt(document.getElementById('percent').textContent)||0;
-  const ring=document.getElementById('progressRing');
-  if(ring) ring.style.setProperty('--p',pct+'%');
-  const rt=document.getElementById('ringText'); if(rt) rt.textContent=pct+'%';
-};
+
+function saveProfile(){
+
+    const name =
+        document.getElementById("profileName").value.trim();
+
+    const email =
+        document.getElementById("profileEmail").value.trim();
+
+    if(!name || !email){
+        document.getElementById("profileStatus").textContent =
+            "Please enter both name and email.";
+        return;
+    }
+
+    state.user = {
+        name:name,
+        email:email
+    };
+
+    save();
+    loadUser();
+
+    document.getElementById("profileStatus").textContent =
+        "Profile saved locally.";
+}
+
+function loadProfile(){
+
+    document.getElementById("profileName").value =
+        state.user?.name || "";
+
+    document.getElementById("profileEmail").value =
+        state.user?.email || "";
+
+    document.getElementById("profileStatus").textContent =
+        state.user
+            ? "Logged-in profile information."
+            : "No local account session.";
+}
+
+function logout(){
+
+    state.user = null;
+    pendingPhaseId = null;
+
+    save();
+    loadUser();
+    closeSettings();
+
+    alert("You have been logged out.");
+}
+
+function openAuthFromSettings(){
+    closeSettings();
+    openAuth();
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function openSettings(){
+    loadProfile();
+    document.getElementById("settingsModal").classList.add("show");
+}
+
+function closeSettings(){
+    document.getElementById("settingsModal").classList.remove("show");
+}
+
+/* =========================================================
+   IMPORT / EXPORT
+   ---------------------------------------------------------
+   Backup contains progress, notes, theme and local profile.
+   It does NOT contain passwords.
+   ========================================================= */
+
+function exportData(){
+
+    const backup = {
+        app:"Java → Software Engineer Roadmap",
+        version:1,
+        exportedAt:new Date().toISOString(),
+        data:{
+            user:state.user,
+            completed:state.completed,
+            notes:state.notes,
+            streak:state.streak,
+            theme:state.theme
+        }
+    };
+
+    const blob = new Blob(
+        [JSON.stringify(backup,null,2)],
+        {type:"application/json"}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "java-roadmap-backup.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function importData(event){
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(){
+
+        try{
+
+            const imported = JSON.parse(reader.result);
+
+            if(!imported.data){
+                throw new Error("Invalid backup format.");
+            }
+
+            const ok = confirm(
+                "Import this backup?\n\n" +
+                "Your current local progress and notes will be replaced."
+            );
+
+            if(!ok) return;
+
+            state = {
+                user:imported.data.user || null,
+                completed:imported.data.completed || {},
+                notes:imported.data.notes || {},
+                streak:Number(imported.data.streak) || 1,
+                theme:imported.data.theme === "light"
+                    ? "light"
+                    : "dark"
+            };
+
+            save();
+            loadTheme();
+            loadUser();
+            updateDashboard();
+            renderPhases();
+            loadProfile();
+
+            alert("✅ Backup imported successfully.");
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "❌ Could not import this file.\n\n" +
+                "Please select a valid roadmap JSON backup."
+            );
+
+        }finally{
+            event.target.value = "";
+        }
+    };
+
+    reader.readAsText(file);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetAllData(){
+
+    const ok = confirm(
+        "⚠️ This will remove ALL local progress, notes, " +
+        "profile and theme settings from this browser.\n\n" +
+        "Continue?"
+    );
+
+    if(!ok) return;
+
+    localStorage.removeItem("javaRoadmapState");
+
+    state = {
+        user:null,
+        completed:{},
+        notes:{},
+        streak:1,
+        theme:"dark"
+    };
+
+    pendingPhaseId = null;
+
+    loadTheme();
+    loadUser();
+    updateDashboard();
+    renderPhases();
+    loadProfile();
+
+    alert("Local roadmap data has been reset.");
+}
+
+/* =========================================================
+   STUDY TIMER
+   ========================================================= */
+
+function startStudy(){
+
+    if(timerInterval){
+
+        clearInterval(timerInterval);
+        timerInterval = null;
+
+        document.getElementById("timerBtn").textContent =
+            "Start Session";
+
+        return;
+    }
+
+    document.getElementById("timerBtn").textContent =
+        "⏹ Stop Session";
+
+    timerInterval = setInterval(() => {
+
+        timerSeconds++;
+
+        const hours =
+            String(Math.floor(timerSeconds / 3600)).padStart(2,"0");
+
+        const minutes =
+            String(Math.floor((timerSeconds % 3600) / 60)).padStart(2,"0");
+
+        const seconds =
+            String(timerSeconds % 60).padStart(2,"0");
+
+        document.getElementById("timer").textContent =
+            `${hours}:${minutes}:${seconds}`;
+
+    },1000);
+}
+
+/* =========================================================
+   CLOSE MODALS WHEN BACKDROP IS CLICKED
+   ========================================================= */
+
+document.getElementById("authModal").addEventListener("click",function(event){
+    if(event.target === this){
+        closeAuth();
+    }
+});
+
+document.getElementById("phaseModal").addEventListener("click",function(event){
+    if(event.target === this){
+        closePhase();
+    }
+});
+
+document.getElementById("settingsModal").addEventListener("click",function(event){
+    if(event.target === this){
+        closeSettings();
+    }
+});
+
+function closePhase(){
+    document.getElementById("phaseModal").classList.remove("show");
+}
+
+/* =========================================================
+   INITIALIZE APPLICATION
+   ========================================================= */
+
 loadTheme();
 loadUser();
+updateDashboard();
+renderPhases();
+setTimeout(clearSearchAutofill, 50);
+setTimeout(clearSearchAutofill, 500);
+
 </script>
 </body>
 </html>
