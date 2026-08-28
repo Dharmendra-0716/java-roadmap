@@ -2125,6 +2125,9 @@ function logout(){
     state.user = null;
     pendingPhaseId = null;
 
+    // Remove JWT token from browser
+    localStorage.removeItem("jwtToken");
+
     save();
     loadUser();
     closeSettings();
