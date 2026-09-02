@@ -47,8 +47,100 @@ body.light{
     padding:0;
 }
 
+
+/* =========================================================
+   SMOOTH UI MOTION
+   Added only for a smoother scrolling/click experience.
+   Existing layout, colors and content remain unchanged.
+   ========================================================= */
+
 html{
     scroll-behavior:smooth;
+    scroll-padding-top:20px;
+}
+
+@media (prefers-reduced-motion: no-preference){
+    .phase,
+    .panel,
+    .stat,
+    .hero,
+    .roadmap-head,
+    .controls{
+        will-change:transform, opacity;
+    }
+
+    .scroll-reveal{
+        opacity:0;
+        transform:translateY(18px);
+        transition:
+            opacity .55s ease,
+            transform .55s cubic-bezier(.22,1,.36,1);
+    }
+
+    .scroll-reveal.is-visible{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    .phase.scroll-reveal:nth-child(2n){
+        transition-delay:.04s;
+    }
+
+    .phase.scroll-reveal:nth-child(3n){
+        transition-delay:.08s;
+    }
+
+    .btn,
+    .icon-btn,
+    .phase-head,
+    .reader-tab,
+    .close-btn{
+        transition:
+            transform .18s ease,
+            border-color .2s ease,
+            background-color .2s ease,
+            color .2s ease,
+            opacity .2s ease;
+    }
+
+    .btn:active,
+    .icon-btn:active,
+    .reader-tab:active{
+        transform:scale(.97);
+    }
+
+    .phase-head:active{
+        transform:scale(.995);
+    }
+
+    .modal{
+        transform:translateY(12px) scale(.985);
+        opacity:.96;
+        transition:
+            transform .28s cubic-bezier(.22,1,.36,1),
+            opacity .22s ease;
+    }
+
+    .overlay.show .modal{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    html{
+        scroll-behavior:auto;
+    }
+
+    .scroll-reveal{
+        opacity:1 !important;
+        transform:none !important;
+    }
+}
+
+
+#roadmapSection{
+    scroll-margin-top:20px;
 }
 
 body{
@@ -79,6 +171,64 @@ button:disabled{
 .container{
     width:min(1180px,92%);
     margin:0 auto;
+}
+
+/* =========================================================
+   2. TOP NAVIGATION
+   Added without changing the existing dashboard design.
+   ========================================================= */
+.site-nav{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-left:auto;
+}
+
+.site-nav button{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    padding:10px 13px;
+    border-radius:10px;
+    font-weight:800;
+    transition:.2s ease;
+}
+
+.site-nav button:hover{
+    color:var(--text);
+    background:rgba(99,102,241,.10);
+}
+
+.site-nav button.active{
+    color:var(--text);
+    background:rgba(99,102,241,.14);
+}
+
+@media(max-width:900px){
+    .site-nav{
+        order:3;
+        width:100%;
+        justify-content:center;
+        margin-left:0;
+        border-top:1px solid var(--border);
+        padding-top:8px;
+    }
+
+    .topbar{
+        flex-wrap:wrap;
+    }
+}
+
+@media(max-width:650px){
+    .site-nav{
+        gap:3px;
+    }
+
+    .site-nav button{
+        flex:1;
+        padding:9px 8px;
+        font-size:12px;
+    }
 }
 
 /* =========================================================
@@ -456,6 +606,141 @@ button:disabled{
     transition:.3s;
 }
 
+
+/* =========================================================
+   QUIZ HUB
+   ========================================================= */
+.quiz-section{
+    display:none;
+    margin-top:38px;
+    padding-top:8px;
+    scroll-margin-top:24px;
+}
+.quiz-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:15px;
+    margin:10px 0 14px;
+}
+.quiz-summary{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    color:var(--muted);
+    font-size:12px;
+}
+.quiz-summary span{
+    padding:7px 10px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    background:rgba(255,255,255,.025);
+}
+.quiz-grid{
+    display:grid;
+    gap:11px;
+}
+.quiz-phase-card{
+    overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--card);
+    transition:.2s ease;
+}
+.quiz-phase-card:hover:not(.locked){
+    border-color:rgba(99,102,241,.65);
+    transform:translateY(-1px);
+}
+.quiz-phase-card.locked{opacity:.62}
+.quiz-card-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:var(--text);
+    text-align:left;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:18px;
+    cursor:pointer;
+}
+.quiz-card-number{
+    flex:0 0 46px;
+    width:46px;
+    height:46px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    background:rgba(99,102,241,.12);
+    color:#b8b7ff;
+    font-weight:950;
+}
+.quiz-card-info{flex:1;min-width:0}
+.quiz-card-title{font-weight:950;font-size:17px}
+.quiz-card-desc{color:var(--muted);font-size:13px;margin-top:3px}
+.quiz-card-meta{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;white-space:nowrap}
+.quiz-status{padding:6px 9px;border-radius:8px;font-size:10px;font-weight:950}
+.quiz-status.open{color:#aeb1ff;background:rgba(99,102,241,.12)}
+.quiz-status.done{color:#4ade80;background:rgba(34,197,94,.12)}
+.quiz-status.lock{color:var(--muted);background:rgba(148,163,184,.09)}
+.quiz-card-progress{height:4px;background:rgba(148,163,184,.1)}
+.quiz-card-progress-fill{height:100%;width:0;background:var(--green);transition:.3s}
+.quiz-best{font-weight:900;color:var(--text)}
+
+/* =========================================================
+   QUIZ MODAL
+   ========================================================= */
+.quiz-modal{width:min(920px,100%)}
+.quiz-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.quiz-question-count{color:var(--muted);font-size:13px;font-weight:900}
+.quiz-difficulty{padding:6px 10px;border-radius:999px;font-size:11px;font-weight:950;letter-spacing:.4px}
+.quiz-difficulty.easy{color:#4ade80;background:rgba(34,197,94,.12)}
+.quiz-difficulty.medium{color:#facc15;background:rgba(250,204,21,.12)}
+.quiz-difficulty.hard{color:#fb7185;background:rgba(244,63,94,.12)}
+.quiz-progress{height:8px;margin:14px 0 22px;overflow:hidden;border-radius:999px;background:rgba(148,163,184,.13)}
+.quiz-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary-2));transition:width .35s ease}
+.quiz-question{font-size:21px;line-height:1.45;font-weight:900;margin-bottom:18px}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quiz-option{
+    width:100%;
+    min-height:56px;
+    padding:14px 16px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    background:rgba(255,255,255,.025);
+    color:var(--text);
+    text-align:left;
+    cursor:pointer;
+    transition:.18s ease;
+    font-size:15px;
+}
+.quiz-option:hover:not(:disabled){border-color:rgba(99,102,241,.65);transform:translateY(-1px)}
+.quiz-option:disabled{cursor:default}
+.quiz-option.correct{border-color:#22c55e;background:rgba(34,197,94,.12);color:#4ade80}
+.quiz-option.wrong{border-color:#ef4444;background:rgba(239,68,68,.12);color:#f87171}
+.quiz-feedback{margin-top:15px;padding:14px 16px;border:1px solid var(--border);border-radius:13px;color:var(--muted);line-height:1.55;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.correct{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08)}
+.quiz-feedback.wrong{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08)}
+.quiz-feedback strong{color:var(--text)}
+.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+.quiz-hint{color:var(--muted);font-size:12px;line-height:1.45}
+.quiz-hint summary{cursor:pointer;color:#b8b7ff;font-weight:800}
+.quiz-result{text-align:center;padding:12px 4px 4px}
+.quiz-score{font-size:52px;font-weight:950;letter-spacing:-2px}
+.quiz-result-title{font-size:24px;font-weight:950;margin-top:4px}
+.quiz-result-desc{color:var(--muted);margin-top:7px;line-height:1.55}
+.quiz-result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
+.quiz-result-stat{padding:15px;border:1px solid var(--border);border-radius:15px;background:rgba(255,255,255,.025)}
+.quiz-result-stat strong{display:block;font-size:21px}.quiz-result-stat span{color:var(--muted);font-size:11px}
+.quiz-empty{padding:22px;border:1px dashed var(--border);border-radius:18px;color:var(--muted);text-align:center}
+@media(max-width:720px){
+    .quiz-options{grid-template-columns:1fr}
+    .quiz-question{font-size:18px}
+    .quiz-result-stats{grid-template-columns:1fr}
+    .quiz-card-meta{font-size:11px}
+}
+
 /* =========================================================
    8. MODALS
    ========================================================= */
@@ -463,16 +748,23 @@ button:disabled{
     position:fixed;
     inset:0;
     z-index:1000;
-    display:none;
+    display:flex;
     align-items:center;
     justify-content:center;
     padding:18px;
     background:rgba(0,0,0,.72);
     backdrop-filter:blur(10px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .24s ease, visibility 0s linear .24s;
 }
 
 .overlay.show{
-    display:flex;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transition:opacity .24s ease;
 }
 
 .modal{
@@ -1111,6 +1403,11 @@ footer{
             <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
         </div>
 
+        <nav class="site-nav" aria-label="Main navigation">
+            <button type="button" id="navRoadmap" class="active" onclick="goToRoadmap()">Roadmap</button>
+            <button type="button" id="navQuiz" onclick="goToQuiz()">Quiz</button>
+        </nav>
+
         <div class="top-actions">
             <button class="btn primary" onclick="openAuth()">
                 👤 <span class="login-label" id="authText">Login / Sign up</span>
@@ -1217,9 +1514,27 @@ footer{
         </section>
 
         <!-- =================================================
+             QUIZ HUB
+             Each phase gets its own 15-question MCQ quiz.
+             A phase quiz unlocks after that phase is completed.
+             ================================================= -->
+        <section id="quizSection" class="quiz-section">
+            <div class="quiz-head">
+                <div>
+                    <div class="section-title">🧠 Phase Quizzes</div>
+                    <div class="section-desc">
+                        Complete a phase to unlock its 15-question quiz. Every quiz goes from Easy → Medium → Hard.
+                    </div>
+                </div>
+                <div class="quiz-summary" id="quizSummary"></div>
+            </div>
+            <div class="quiz-grid" id="quizGrid"></div>
+        </section>
+
+        <!-- =================================================
              ROADMAP LIST
              ================================================= -->
-        <section>
+        <section id="roadmapSection">
             <div class="roadmap-head">
                 <div>
                     <div class="section-title">🗺️ Your Roadmap</div>
@@ -1231,6 +1546,8 @@ footer{
 
             <div class="phases" id="phases"></div>
         </section>
+
+
 
     </main>
 
@@ -1361,6 +1678,43 @@ footer{
 </div>
 
 <!-- =========================================================
+     QUIZ MODAL
+     ========================================================= -->
+<div class="overlay" id="quizModal">
+    <div class="modal quiz-modal">
+        <div class="modal-head">
+            <div>
+                <div class="quiz-topline">
+                    <h2 id="quizModalTitle">Phase Quiz</h2>
+                    <span class="quiz-question-count" id="quizQuestionCount">Question 1 of 15</span>
+                </div>
+                <div class="modal-desc" id="quizModalDesc">Java</div>
+            </div>
+            <button class="icon-btn" type="button" onclick="closeQuiz()" title="Close">✕</button>
+        </div>
+        <div class="modal-body">
+            <div id="quizQuestionArea">
+                <div class="quiz-progress"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+                <div class="quiz-topline" style="margin-bottom:12px;">
+                    <span></span>
+                    <span class="quiz-difficulty easy" id="quizDifficulty">Easy</span>
+                </div>
+                <div class="quiz-question" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback"></div>
+                <div class="quiz-actions">
+                    <details class="quiz-hint" id="quizHintWrap">
+                        <summary>💡 Show hint</summary>
+                        <div id="quizHint" style="margin-top:6px;"></div>
+                    </details>
+                    <button class="btn primary" id="quizNextBtn" type="button" onclick="nextQuizQuestion()" style="display:none;">Next Question →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
      SETTINGS MODAL
      ========================================================= -->
 <div class="overlay" id="settingsModal">
@@ -1457,6 +1811,173 @@ footer{
 </div>
 
 <script>
+/* =========================================================
+   MAIN NAVIGATION
+   Roadmap scrolls smoothly to the phases.
+   Quiz is reserved for the next feature update.
+   ========================================================= */
+
+function goToRoadmap(){
+
+    const roadmap = document.getElementById("roadmapSection");
+    const quiz = document.getElementById("quizSection");
+
+    if(quiz) quiz.style.display = "none";
+    if(roadmap) roadmap.style.display = "block";
+    if(!roadmap) return;
+
+    roadmap.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+    document.getElementById("navRoadmap")?.classList.add("active");
+    document.getElementById("navQuiz")?.classList.remove("active");
+}
+
+/* =========================================================
+   SCROLL + CLICK MOTION
+   Only adds visual smoothness; no roadmap logic is changed.
+   ========================================================= */
+
+function setupSmoothAnimations(){
+
+    const prefersReducedMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if(prefersReducedMotion) return;
+
+    const revealTargets = [
+        ".hero",
+        ".controls",
+        ".quick-grid .panel",
+        ".roadmap-head",
+        ".phase",
+        "footer"
+    ];
+
+    const observer = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("is-visible");
+
+                observer.unobserve(entry.target);
+            }
+
+        });
+
+    }, {
+        threshold:0.08,
+        rootMargin:"0px 0px -35px 0px"
+    });
+
+    revealTargets.forEach(selector => {
+
+        document.querySelectorAll(selector).forEach(element => {
+
+            element.classList.add("scroll-reveal");
+            observer.observe(element);
+
+        });
+
+    });
+}
+
+/* Start after the existing page has rendered its roadmap cards. */
+window.addEventListener("load", () => {
+
+    requestAnimationFrame(() => {
+        setupSmoothAnimations();
+    });
+
+});
+
+/* RenderPhases() creates the phase cards dynamically.
+   Watch only the phases container so the animation also works after search/filter updates. */
+window.addEventListener("load", () => {
+
+    const phasesRoot = document.getElementById("phases");
+
+    if(!phasesRoot) return;
+
+    const prefersReducedMotion =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if(prefersReducedMotion) return;
+
+    const phaseObserver = new IntersectionObserver((entries) => {
+
+        entries.forEach(entry => {
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("is-visible");
+                phaseObserver.unobserve(entry.target);
+
+            }
+
+        });
+
+    }, {
+        threshold:0.06,
+        rootMargin:"0px 0px -25px 0px"
+    });
+
+    const observePhaseCards = () => {
+
+        phasesRoot.querySelectorAll(".phase:not(.scroll-reveal)").forEach(phase => {
+
+            phase.classList.add("scroll-reveal");
+            phaseObserver.observe(phase);
+
+        });
+
+        phasesRoot.querySelectorAll(".phase.scroll-reveal:not(.is-visible)").forEach(phase => {
+            phaseObserver.observe(phase);
+        });
+    };
+
+    observePhaseCards();
+
+    const mutationObserver = new MutationObserver(() => {
+
+        requestAnimationFrame(observePhaseCards);
+
+    });
+
+    mutationObserver.observe(phasesRoot, {
+        childList:true
+    });
+
+});
+
+
+
+function goToQuiz(){
+    const quiz = document.getElementById("quizSection");
+    const roadmap = document.getElementById("roadmapSection");
+    if(!quiz) return;
+
+    // Quiz is a separate tab/view, not a section below the roadmap.
+    if(roadmap) roadmap.style.display = "none";
+    quiz.style.display = "block";
+
+    requestAnimationFrame(() => {
+        quiz.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    });
+
+    document.getElementById("navQuiz")?.classList.add("active");
+    document.getElementById("navRoadmap")?.classList.remove("active");
+}
+
 /* =========================================================
    ROADMAP DATA
    ---------------------------------------------------------
@@ -3391,9 +3912,12 @@ let state = JSON.parse(localStorage.getItem("javaRoadmapState")) || {
     user: null,
     completed: {},
     notes: {},
+    quizResults: {},
     streak: 1,
     theme: "dark"
 };
+
+state.quizResults = state.quizResults || {};
 
 let currentPhase = null;
 let pendingPhaseId = null;
@@ -3426,6 +3950,7 @@ async function syncProgressToServer(){
                 body: JSON.stringify({
                     completed: state.completed,
                     notes: state.notes,
+                    quizResults: state.quizResults,
                     streak: state.streak
                 })
             }
@@ -3470,6 +3995,7 @@ async function loadProgressFromServer(){
 
     state.completed = serverProgress.completed || {};
     state.notes = serverProgress.notes || {};
+    state.quizResults = serverProgress.quizResults || {};
     state.streak = serverProgress.streak || 1;
 
     save();
@@ -3690,6 +4216,409 @@ function renderPhases(){
 
         container.appendChild(card);
     });
+
+    renderQuizHub();
+}
+
+
+/* =========================================================
+   QUIZ SYSTEM
+   ---------------------------------------------------------
+   19 phase quizzes × 15 MCQs each.
+   Questions are generated from phase-specific concepts so
+   every phase has Easy → Medium → Hard progression.
+   ========================================================= */
+
+const quizConcepts = {
+1:[
+ ["Variables","store values using a declared data type","changing a value during program execution","a variable can hold a value while the program runs"],
+ ["Data types","define what kind of value a variable can represent","choosing int, double, boolean or another suitable type","the type determines the kind of data a variable is designed to hold"],
+ ["Operators","perform calculations, comparisons or logical operations","combining values into expressions","operators act on operands to produce an expression result"],
+ ["Conditionals","choose which block executes based on a condition","making decisions with if, else if and else","a conditional controls execution based on a boolean expression"],
+ ["Loops","repeat a block of code while a repetition rule is satisfied","processing repeated input or counting iterations","a loop repeatedly executes code according to its control condition"]
+],
+2:[
+ ["Classes and objects","define a blueprint and create instances from it","modeling entities with state and behavior","a class is a type definition while an object is an instance"],
+ ["Constructors","initialize a newly created object","setting initial field values when new is used","a constructor has the same name as its class and no return type"],
+ ["Encapsulation","control access to internal state through a class interface","using private fields with methods","encapsulation hides implementation details behind controlled access"],
+ ["Inheritance","derive a class from another class","reusing and specializing parent behavior","a subclass inherits accessible members from its superclass"],
+ ["Polymorphism","allow one interface or reference to represent different concrete behavior","overriding methods and using superclass references","the same method call can produce different behavior for different runtime objects"]
+],
+3:[
+ ["String","represent immutable sequences of characters","building and processing text values","String operations produce new values rather than changing the original String"],
+ ["Arrays","store a fixed-size ordered collection of elements of one type","indexed access to a known-size collection","an array's length is fixed after creation"],
+ ["Exceptions","represent abnormal conditions that disrupt normal execution","handling failures with try, catch and finally","exceptions can be caught and handled without making the program crash immediately"],
+ ["Packages","organize related classes and control naming","grouping classes under a namespace","a package helps organize classes and avoid naming conflicts"],
+ ["Generics","provide compile-time type parameters for reusable code","creating type-safe collections and classes","generics reduce unsafe casts by expressing types in the code"]
+],
+4:[
+ ["List","represent an ordered collection that can contain duplicates","maintaining sequence with indexed elements","List preserves element order and permits duplicate values"],
+ ["Set","represent a collection designed for unique elements","removing duplicates from a collection","Set does not permit duplicate elements according to its equality rules"],
+ ["Map","associate keys with values","looking up a value using a key","a Map stores key-value associations rather than positional elements"],
+ ["Queue","model elements waiting to be processed","FIFO task processing","a typical queue processes the earliest inserted element first"],
+ ["Collections utilities","provide reusable algorithms and helper operations for collections","sorting, searching and transforming collection data","utility methods complement collection interfaces and implementations"]
+],
+5:[
+ ["Lambda expressions","represent compact behavior that can be passed as a value","supplying implementations for functional interfaces","a lambda provides behavior without declaring a full named method"],
+ ["Functional interfaces","define a contract with one abstract method","using lambdas as implementations","a functional interface can be targeted by a lambda expression"],
+ ["Streams","process sequences of data through declarative operations","filtering, mapping and reducing collection data","a Stream describes a data-processing pipeline rather than storing data itself"],
+ ["Optional","represent a value that may be present or absent","reducing direct null handling in APIs","Optional makes possible absence explicit in the type"],
+ ["Method references","refer to an existing method using concise syntax","simplifying a lambda that only calls an existing method","a method reference reuses an existing method as behavior"]
+],
+6:[
+ ["Big-O notation","describe how algorithm resource usage grows with input size","comparing scalability of algorithms","Big-O focuses on asymptotic growth rather than exact machine time"],
+ ["Arrays","provide constant-time indexed access when the index is known","random access in an indexed sequence","reading an array element by index is typically O(1)"],
+ ["Linked lists","connect nodes through references","frequent insertions or deletions when node position is known","a linked list does not require contiguous storage for its nodes"],
+ ["Stacks","follow last-in-first-out ordering","undo operations and recursive-style processing","the most recently pushed item is removed first"],
+ ["Trees and graphs","represent hierarchical or network relationships","searching paths, dependencies and connected structures","trees are hierarchical structures while graphs can model general relationships"]
+],
+7:[
+ ["Tables","store related records in rows and columns","representing entities in a relational database","a table organizes records using columns that describe attributes"],
+ ["Primary keys","uniquely identify rows in a table","giving each record a stable identifier","a primary key identifies each row and cannot contain duplicate values"],
+ ["SQL SELECT","retrieve data from one or more tables","reading records with filtering and projection","SELECT is used to query data"],
+ ["JOINs","combine related rows from multiple tables","retrieving data across related entities","a JOIN connects rows using a relationship condition"],
+ ["Transactions","group database operations into a controlled unit of work","keeping related updates consistent","a transaction can be committed or rolled back as a unit"]
+],
+8:[
+ ["Repository","store a project's Git history and metadata","tracking versions of source files","a Git repository contains version history and related metadata"],
+ ["Commit","record a snapshot of staged changes","saving a meaningful version of project work","a commit records changes in the repository history"],
+ ["Branch","provide an independent line of development","working on a feature without changing the main line immediately","a branch is a movable reference to a line of commits"],
+ ["Merge","combine histories from different branches","bringing completed feature work into another branch","a merge creates a commit or history state that combines branch histories"],
+ ["Remote","refer to a repository hosted or referenced outside the local repository","sharing and synchronizing work with GitHub","a remote is a named reference to another repository"]
+],
+9:[
+ ["Maven","automate Java builds and dependency management","standardizing project builds","Maven uses a project configuration to manage builds and dependencies"],
+ ["pom.xml","define Maven project metadata, dependencies and build configuration","declaring libraries a project needs","pom.xml is Maven's main project configuration file"],
+ ["Dependencies","provide external libraries required by a project","adding Spring or testing libraries to a build","a dependency tells the build system which external artifact the project needs"],
+ ["Lifecycle","define standard phases of a Maven build","running validate, compile, test, package and later phases","Maven lifecycle phases run build steps in a defined order"],
+ ["Project structure","organize source code, resources and tests consistently","keeping a Maven project maintainable","standard directories make Maven projects predictable to build and navigate"]
+],
+10:[
+ ["IoC","let a framework control object creation and wiring","reducing manual object construction in an application","Inversion of Control shifts responsibility for creating and connecting objects"],
+ ["Dependency Injection","provide an object's dependencies from outside the object","constructor injection in Spring components","DI supplies required collaborators instead of the class constructing them itself"],
+ ["Beans","represent objects managed by the Spring container","registering application services and repositories","a Spring bean is an object created and managed by the container"],
+ ["Component scanning","discover annotated classes and register eligible beans","automatically finding application components","component scanning searches configured packages for component annotations"],
+ ["ApplicationContext","provide the Spring container and application configuration environment","retrieving beans and coordinating application infrastructure","ApplicationContext is a central Spring container interface"]
+],
+11:[
+ ["Spring Boot","simplify creation and configuration of Spring applications","building stand-alone Java web applications quickly","Spring Boot provides conventions and auto-configuration to reduce setup"],
+ ["Starters","bundle common dependency sets for a use case","adding web or data capabilities with one dependency","a starter provides a convenient curated dependency set"],
+ ["Auto-configuration","configure common beans based on classpath and application conditions","reducing manual configuration for common setups","auto-configuration applies conditional defaults when appropriate"],
+ ["REST controllers","expose HTTP endpoints from Java classes","building JSON APIs with request mappings","a REST controller handles HTTP requests and commonly returns data representations"],
+ ["application.properties","configure application settings","setting server ports, datasource properties and custom values","Spring Boot reads configuration from supported application configuration files"]
+],
+12:[
+ ["JPA","define a standard object-relational persistence API for Java","mapping Java entities to relational data","JPA describes persistence concepts and APIs rather than being a database itself"],
+ ["Hibernate","provide an ORM implementation commonly used with JPA","persisting Java objects to relational tables","Hibernate is an ORM framework and a common JPA provider"],
+ ["Entity","map a Java class to persistent database data","representing a database record as a Java object","an entity is a persistent domain object managed by a persistence context"],
+ ["Repository","provide data-access operations for entities","saving and querying persistent objects","a Spring Data repository can generate common data-access methods"],
+ ["Relationships","map associations between entities","representing one-to-many or many-to-one data","JPA relationship mappings describe associations between persistent entities"]
+],
+13:[
+ ["Authentication","verify who a user is","checking login credentials","authentication answers the question of identity"],
+ ["Authorization","decide what an authenticated user is allowed to do","restricting endpoints by roles or permissions","authorization answers the question of allowed actions"],
+ ["Password hashing","store passwords using one-way password hashing","protecting stored credentials if the database is exposed","secure password storage uses a password hashing function rather than plaintext"],
+ ["JWT","carry signed claims between a client and server","stateless API authentication","a JWT can carry claims and be verified by the server"],
+ ["Spring Security","provide authentication and authorization infrastructure for Spring applications","protecting routes and processing security filters","Spring Security integrates security controls into Spring applications"]
+],
+14:[
+ ["HTTP","define the protocol used for web requests and responses","communicating between frontend and backend","HTTP defines methods, headers, status codes and message semantics"],
+ ["JSON","represent structured data as text","sending API request and response bodies","JSON represents objects, arrays and primitive values in a text format"],
+ ["Fetch API","make HTTP requests from browser JavaScript","calling a backend API from a web page","fetch returns a Promise for an HTTP response"],
+ ["CORS","control which origins may make browser requests to a server","allowing a frontend origin to call an API on another origin","CORS is a browser security mechanism based on response headers"],
+ ["Frontend state","track UI data that changes during use","updating login status, progress or displayed results","state represents values the interface needs to remember and render"]
+],
+15:[
+ ["Unit tests","test a small unit of behavior in isolation","checking a method's expected result","a unit test targets a focused piece of code"],
+ ["Assertions","express expected conditions in tests","verifying that an actual value matches an expected value","an assertion fails when the tested condition is not satisfied"],
+ ["Mocking","replace a real dependency with a controlled test double","testing a service without calling a real external system","a mock can control and verify interactions with a dependency"],
+ ["Code quality","improve readability, maintainability and reliability","using clear names, small methods and consistent structure","quality includes characteristics beyond whether code merely runs"],
+ ["Refactoring","change internal code structure without changing intended behavior","removing duplication safely","refactoring improves design while preserving observable behavior"]
+],
+16:[
+ ["Scalability","describe a system's ability to handle increased load","planning for more users or requests","a scalable design can accommodate growth in workload"],
+ ["Caching","store reusable data closer to where it is needed","reducing repeated expensive reads","a cache can reduce latency and backend load for reusable data"],
+ ["Load balancing","distribute requests across multiple servers or instances","sharing traffic across application nodes","a load balancer distributes incoming work among available targets"],
+ ["Database indexing","create structures that speed selected database lookups","improving query performance for indexed columns","an index can accelerate reads but also adds storage and write overhead"],
+ ["CAP theorem","describe a trade-off among consistency, availability and partition tolerance in distributed systems","reasoning about distributed database behavior during partitions","CAP concerns guarantees a distributed system can provide when a network partition occurs"]
+],
+17:[
+ ["CI/CD","automate building, testing and delivery of software","running checks on every change and deploying safely","CI/CD pipelines automate repeatable software delivery steps"],
+ ["Docker","package an application and its environment into a container image","running the same application setup across environments","Docker containers isolate processes using an image-defined environment"],
+ ["Environment variables","provide configuration outside application source code","supplying database URLs or secrets at deployment time","environment variables allow deployment-specific configuration without changing code"],
+ ["Deployment","release an application to a target environment","publishing a backend to a cloud platform","deployment moves a built application into an environment where it can run"],
+ ["Monitoring","observe application health and behavior after release","tracking errors, latency and resource usage","monitoring provides operational visibility into a running system"]
+],
+18:[
+ ["Project scope","define what a project should accomplish","choosing a realistic feature set for a portfolio project","scope keeps a project focused on a clear outcome"],
+ ["README","explain how to understand and run a project","documenting setup, features and usage on GitHub","a good README helps another developer use and evaluate the project"],
+ ["Portfolio","present selected work and engineering evidence","showing projects, skills and technical decisions","a portfolio communicates practical ability through concrete work"],
+ ["Demo","show the project working from a user's perspective","recording or hosting a short walkthrough","a demo makes functionality easier to evaluate than source code alone"],
+ ["Technical decisions","explain why particular tools or architectures were chosen","documenting trade-offs in a project","technical decisions should connect requirements, constraints and trade-offs"]
+],
+19:[
+ ["Resume","summarize relevant skills, experience and projects for employers","tailoring evidence to a software engineering role","a resume should present concise evidence relevant to the target role"],
+ ["DSA interview","test algorithmic reasoning and problem solving","solving coding problems under constraints","DSA interviews often evaluate correctness, complexity and reasoning"],
+ ["System design interview","evaluate architectural reasoning for larger systems","discussing APIs, storage, scaling and trade-offs","system design focuses on components, constraints and trade-offs"],
+ ["Behavioral interview","evaluate communication, collaboration and past behavior","answering experience questions with structured examples","behavioral interviews assess how candidates communicate and handle situations"],
+ ["Continuous learning","keep skills current after entering the industry","studying new tools while strengthening fundamentals","software engineering requires ongoing learning because tools and practices evolve"]
+]
+};
+
+function buildQuizQuestion(concepts, conceptIndex, variant, difficulty){
+    const c = concepts[conceptIndex];
+    const others = concepts.filter((_,i)=>i!==conceptIndex);
+    let question, options, answerIndex;
+
+    if(variant === 0){
+        question = `Which option best describes ${c[0]}?`;
+        options = [c[1], others[0][1], others[1][1], others[2][1]];
+        answerIndex = 0;
+    }else if(variant === 1){
+        question = `Which situation is a typical use of ${c[0]}?`;
+        options = [others[1][2], c[2], others[2][2], others[0][2]];
+        answerIndex = 1;
+    }else{
+        question = `Which statement about ${c[0]} is most accurate?`;
+        options = [others[2][3], others[0][3], c[3], others[1][3]];
+        answerIndex = 2;
+    }
+
+    // Rotate answer position deterministically so it is not always the same.
+    const shift = (conceptIndex * 3 + variant) % 4;
+    const rotated = Array(4);
+    for(let i=0;i<4;i++) rotated[(i + shift) % 4] = options[i];
+    answerIndex = (answerIndex + shift) % 4;
+
+    return {
+        id:`q-${conceptIndex}-${variant}`,
+        difficulty,
+        question,
+        options:rotated,
+        correct:answerIndex,
+        explanation:c[variant === 0 ? 1 : variant === 1 ? 2 : 3]
+    };
+}
+
+function getQuizQuestions(phaseId){
+    const concepts = quizConcepts[phaseId] || [];
+    const questions = [];
+
+    // Exactly 5 Easy, then 5 Medium, then 5 Hard.
+    // Each difficulty focuses on a different reasoning level.
+    for(let i=0;i<5;i++) questions.push(buildQuizQuestion(concepts,i,0,"Easy"));
+    for(let i=0;i<5;i++) questions.push(buildQuizQuestion(concepts,i,1,"Medium"));
+    for(let i=0;i<5;i++) questions.push(buildQuizQuestion(concepts,i,2,"Hard"));
+
+    return questions;
+}
+
+let currentQuizPhase = null;
+let currentQuizQuestions = [];
+let currentQuizIndex = 0;
+let currentQuizScore = 0;
+let currentQuizAnswered = false;
+let currentQuizStartTime = 0;
+
+function getQuizResult(phaseId){
+    return state.quizResults?.[phaseId] || null;
+}
+
+function isQuizUnlocked(phaseId){
+    const phase = phases.find(p => p.id === phaseId);
+    return !!phase && isPhaseComplete(phase);
+}
+
+function renderQuizHub(){
+    const grid = document.getElementById("quizGrid");
+    const summary = document.getElementById("quizSummary");
+    if(!grid) return;
+
+    let unlocked = 0;
+    let completed = 0;
+
+    grid.innerHTML = phases.map(phase => {
+        const unlockedQuiz = isQuizUnlocked(phase.id);
+        const result = getQuizResult(phase.id);
+        if(unlockedQuiz) unlocked++;
+        if(result?.completed) completed++;
+
+        const status = result?.completed ? "COMPLETED" : unlockedQuiz ? "UNLOCKED" : "LOCKED";
+        const statusClass = result?.completed ? "done" : unlockedQuiz ? "open" : "lock";
+        const progress = result?.completed ? 100 : 0;
+        const scoreText = result?.completed ? `${result.score}/15` : "Not attempted";
+        const bestText = result?.completed ? `Best ${scoreText}` : "Complete the phase first";
+
+        return `
+            <div class="quiz-phase-card ${!unlockedQuiz ? "locked" : ""}">
+                <button class="quiz-card-btn" type="button" onclick="openQuiz(${phase.id})" ${!unlockedQuiz ? "disabled" : ""}>
+                    <div class="quiz-card-number">${result?.completed ? "✓" : phase.id}</div>
+                    <div class="quiz-card-info">
+                        <div class="quiz-card-title">Phase ${phase.id} — ${escapeHtml(phase.title)}</div>
+                        <div class="quiz-card-desc">15 MCQs · 5 Easy · 5 Medium · 5 Hard · ${escapeHtml(bestText)}</div>
+                    </div>
+                    <div class="quiz-card-meta">
+                        <span class="quiz-status ${statusClass}">${status}</span>
+                        <span class="quiz-best">${scoreText}</span>
+                        <span>${unlockedQuiz ? "→" : "🔒"}</span>
+                    </div>
+                </button>
+                <div class="quiz-card-progress"><div class="quiz-card-progress-fill" style="width:${progress}%"></div></div>
+            </div>
+        `;
+    }).join("");
+
+    if(summary){
+        summary.innerHTML = `
+            <span>${unlocked}/19 unlocked</span>
+            <span>${completed}/19 completed</span>
+            <span>15 questions each</span>
+        `;
+    }
+}
+
+function openQuiz(phaseId){
+    if(!state.user){
+        pendingPhaseId = null;
+        openAuth();
+        document.getElementById("authMsg").textContent = "Please login or sign up first to take quizzes.";
+        return;
+    }
+
+    if(!isQuizUnlocked(phaseId)){
+        const phase = phases.find(p=>p.id===phaseId);
+        alert(`🔒 Phase ${phaseId} Quiz is locked.\n\nComplete Phase ${phaseId} first to unlock its quiz.`);
+        return;
+    }
+
+    currentQuizPhase = phases.find(p=>p.id===phaseId);
+    currentQuizQuestions = getQuizQuestions(phaseId);
+    currentQuizIndex = 0;
+    currentQuizScore = 0;
+    currentQuizAnswered = false;
+    currentQuizStartTime = Date.now();
+
+    document.getElementById("quizModalTitle").textContent = `Phase ${phaseId} Quiz`;
+    document.getElementById("quizModalDesc").textContent = currentQuizPhase.title;
+    document.getElementById("quizModal").classList.add("show");
+    renderQuizQuestion();
+}
+
+function renderQuizQuestion(){
+    const q = currentQuizQuestions[currentQuizIndex];
+    if(!q) return finishQuiz();
+
+    currentQuizAnswered = false;
+    document.getElementById("quizQuestionCount").textContent = `Question ${currentQuizIndex+1} of ${currentQuizQuestions.length}`;
+    document.getElementById("quizDifficulty").textContent = q.difficulty;
+    document.getElementById("quizDifficulty").className = `quiz-difficulty ${q.difficulty.toLowerCase()}`;
+    document.getElementById("quizProgressFill").style.width = `${((currentQuizIndex)/currentQuizQuestions.length)*100}%`;
+    document.getElementById("quizQuestion").textContent = q.question;
+
+    const options = document.getElementById("quizOptions");
+    options.innerHTML = q.options.map((option,index)=>`
+        <button type="button" class="quiz-option" onclick="answerQuiz(${index})">
+            ${String.fromCharCode(65+index)}. ${escapeHtml(option)}
+        </button>
+    `).join("");
+
+    const feedback = document.getElementById("quizFeedback");
+    feedback.className = "quiz-feedback";
+    feedback.innerHTML = "";
+    document.getElementById("quizHintWrap").open = false;
+    document.getElementById("quizHint").textContent = "Identify what the question asks and compare each option with the stated condition.";
+    document.getElementById("quizNextBtn").style.display = "none";
+    document.getElementById("quizNextBtn").textContent = currentQuizIndex === currentQuizQuestions.length-1 ? "See Result →" : "Next Question →";
+}
+
+function answerQuiz(selectedIndex){
+    if(currentQuizAnswered) return;
+
+    const q = currentQuizQuestions[currentQuizIndex];
+    if(!q) return;
+
+    currentQuizAnswered = true;
+    const buttons = [...document.querySelectorAll("#quizOptions .quiz-option")];
+    buttons.forEach(button => button.disabled = true);
+
+    const selected = buttons[selectedIndex];
+    const correct = buttons[q.correct];
+    const feedback = document.getElementById("quizFeedback");
+
+    if(selectedIndex === q.correct){
+        currentQuizScore++;
+        selected.classList.add("correct");
+        feedback.className = "quiz-feedback show correct";
+        feedback.innerHTML = `<strong>✓ Correct!</strong> ${escapeHtml(q.explanation)}`;
+    }else{
+        selected.classList.add("wrong");
+        correct.classList.add("correct");
+        feedback.className = "quiz-feedback show wrong";
+        feedback.innerHTML = `<strong>✕ Wrong.</strong> ${escapeHtml(q.explanation)}<br><span style="display:inline-block;margin-top:5px;">The correct option is highlighted in green.</span>`;
+    }
+
+    document.getElementById("quizProgressFill").style.width = `${((currentQuizIndex+1)/currentQuizQuestions.length)*100}%`;
+    document.getElementById("quizNextBtn").style.display = "inline-flex";
+}
+
+function nextQuizQuestion(){
+    if(!currentQuizAnswered) return;
+    if(currentQuizIndex >= currentQuizQuestions.length-1){
+        finishQuiz();
+        return;
+    }
+    currentQuizIndex++;
+    renderQuizQuestion();
+}
+
+function finishQuiz(){
+    const phaseId = currentQuizPhase.id;
+    const previous = getQuizResult(phaseId);
+    const bestScore = Math.max(previous?.bestScore || 0, currentQuizScore);
+    const percentage = Math.round((currentQuizScore / currentQuizQuestions.length) * 100);
+    const duration = Math.max(1, Math.round((Date.now() - currentQuizStartTime)/1000));
+
+    state.quizResults[phaseId] = {
+        completed:true,
+        score:currentQuizScore,
+        bestScore,
+        percentage,
+        duration,
+        completedAt:new Date().toISOString()
+    };
+    save();
+    syncProgressToServer();
+    updateDashboard();
+    renderQuizHub();
+
+    const passed = percentage >= 60;
+    document.getElementById("quizQuestionArea").innerHTML = `
+        <div class="quiz-result">
+            <div class="quiz-score">${currentQuizScore}/15</div>
+            <div class="quiz-result-title">${passed ? "Quiz Complete! 🎉" : "Quiz Complete — Keep Practicing 💪"}</div>
+            <div class="quiz-result-desc">
+                ${passed ? "Great work. Your quiz result has been saved." : "Your result is saved. Review the phase topics and try again to improve your score."}
+            </div>
+            <div class="quiz-result-stats">
+                <div class="quiz-result-stat"><strong>${percentage}%</strong><span>Score</span></div>
+                <div class="quiz-result-stat"><strong>${bestScore}/15</strong><span>Best Score</span></div>
+                <div class="quiz-result-stat"><strong>${Math.floor(duration/60)}:${String(duration%60).padStart(2,"0")}</strong><span>Time</span></div>
+            </div>
+            <div class="quiz-actions">
+                <button class="btn" type="button" onclick="closeQuiz()">Back to Quizzes</button>
+                <button class="btn primary" type="button" onclick="restartQuiz()">Try Again →</button>
+            </div>
+        </div>
+    `;
+}
+
+function restartQuiz(){
+    if(!currentQuizPhase) return;
+    openQuiz(currentQuizPhase.id);
+}
+
+function closeQuiz(){
+    document.getElementById("quizModal").classList.remove("show");
 }
 
 /* =========================================================
@@ -4448,6 +5377,7 @@ function completeCurrentPhase(){
 
         alert(
             `🎉 Phase ${finishedId} completed!\n\n` +
+            `🧠 Phase ${finishedId} Quiz is now unlocked!\n` +
             `🔓 Phase ${nextIndex + 1} is now unlocked!`
         );
 
@@ -4678,6 +5608,7 @@ function logout(){
     // Clear progress from local browser
     state.completed = {};
     state.notes = {};
+    state.quizResults = {};
     state.streak = 1;
 
     // Remove JWT token
@@ -4727,6 +5658,7 @@ function exportData(){
             user:state.user,
             completed:state.completed,
             notes:state.notes,
+            quizResults:state.quizResults,
             streak:state.streak,
             theme:state.theme
         }
@@ -4776,6 +5708,7 @@ function importData(event){
                 user:imported.data.user || null,
                 completed:imported.data.completed || {},
                 notes:imported.data.notes || {},
+                quizResults:imported.data.quizResults || {},
                 streak:Number(imported.data.streak) || 1,
                 theme:imported.data.theme === "light"
                     ? "light"
@@ -4828,6 +5761,7 @@ function resetAllData(){
         user:null,
         completed:{},
         notes:{},
+        quizResults:{},
         streak:1,
         theme:"dark"
     };
@@ -4904,6 +5838,12 @@ document.getElementById("settingsModal").addEventListener("click",function(event
     }
 });
 
+document.getElementById("quizModal").addEventListener("click",function(event){
+    if(event.target === this){
+        closeQuiz();
+    }
+});
+
 function closePhase(){
     document.getElementById("phaseModal").classList.remove("show");
 }
@@ -4916,8 +5856,18 @@ loadTheme();
 loadUser();
 updateDashboard();
 renderPhases();
+renderQuizHub();
 setTimeout(clearSearchAutofill, 50);
 setTimeout(clearSearchAutofill, 500);
+
+
+// Start in Roadmap view. Quiz is shown only after clicking the Quiz tab.
+(function initRoadmapQuizTabs(){
+    const roadmap = document.getElementById("roadmapSection");
+    const quiz = document.getElementById("quizSection");
+    if(roadmap) roadmap.style.display = "block";
+    if(quiz) quiz.style.display = "none";
+})();
 
 </script>
 </body>
