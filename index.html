@@ -3913,11 +3913,13 @@ let state = JSON.parse(localStorage.getItem("javaRoadmapState")) || {
     completed: {},
     notes: {},
     quizResults: {},
-    streak: 1,
+    streak: 0,
+    studyDates: [],
     theme: "dark"
 };
 
 state.quizResults = state.quizResults || {};
+state.studyDates = Array.isArray(state.studyDates) ? state.studyDates : [];
 
 let currentPhase = null;
 let pendingPhaseId = null;
@@ -3931,6 +3933,78 @@ let timerInterval = null;
 function save(){
     localStorage.setItem("javaRoadmapState", JSON.stringify(state));
 }
+
+/* =========================================================
+   STUDY STREAK
+   A study day is counted when the user starts a study session
+   or completes a roadmap topic / quiz. One calendar day counts
+   only once. Missing a day resets the current streak to 1 on
+   the next study day.
+   ========================================================= */
+function todayKey(){
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+}
+
+function dateFromKey(key){
+    const [y,m,d] = key.split("-").map(Number);
+    return new Date(y, m - 1, d);
+}
+
+function refreshStudyStreak(){
+    const dates = [...new Set((state.studyDates || []).filter(Boolean))].sort();
+    state.studyDates = dates;
+
+    if(!dates.length){
+        state.streak = 0;
+        return;
+    }
+
+    const today = dateFromKey(todayKey());
+    const latest = dateFromKey(dates[dates.length - 1]);
+    const daysSinceLatest = Math.round((today - latest) / 86400000);
+
+    // No study today yet: keep the existing streak only if the last
+    // study was yesterday; otherwise the displayed active streak is 0.
+    if(daysSinceLatest === 0){
+        let streak = 1;
+        for(let i = dates.length - 1; i > 0; i--){
+            const newer = dateFromKey(dates[i]);
+            const older = dateFromKey(dates[i - 1]);
+            const diff = Math.round((newer - older) / 86400000);
+            if(diff === 1) streak++;
+            else break;
+        }
+        state.streak = streak;
+    }else if(daysSinceLatest === 1){
+        let streak = 1;
+        for(let i = dates.length - 1; i > 0; i--){
+            const newer = dateFromKey(dates[i]);
+            const older = dateFromKey(dates[i - 1]);
+            if(Math.round((newer - older) / 86400000) === 1) streak++;
+            else break;
+        }
+        state.streak = streak;
+    }else{
+        state.streak = 0;
+    }
+}
+
+function recordStudyActivity(){
+    const key = todayKey();
+    state.studyDates = Array.isArray(state.studyDates) ? state.studyDates : [];
+    if(!state.studyDates.includes(key)){
+        state.studyDates.push(key);
+    }
+    refreshStudyStreak();
+    save();
+    updateDashboard();
+    syncProgressToServer();
+}
+
 async function syncProgressToServer(){
 
     if(!state.user || !state.user.email) return;
@@ -3951,7 +4025,8 @@ async function syncProgressToServer(){
                     completed: state.completed,
                     notes: state.notes,
                     quizResults: state.quizResults,
-                    streak: state.streak
+                    streak: state.streak,
+                    studyDates: state.studyDates
                 })
             }
         );
@@ -3996,7 +4071,9 @@ async function loadProgressFromServer(){
     state.completed = serverProgress.completed || {};
     state.notes = serverProgress.notes || {};
     state.quizResults = serverProgress.quizResults || {};
-    state.streak = serverProgress.streak || 1;
+    state.streak = Number.isFinite(Number(serverProgress.streak)) ? Number(serverProgress.streak) : 0;
+    state.studyDates = Array.isArray(serverProgress.studyDates) ? serverProgress.studyDates : [];
+    refreshStudyStreak();
 
     save();
     updateDashboard();
@@ -4577,6 +4654,8 @@ function finishQuiz(){
     const bestScore = Math.max(previous?.bestScore || 0, currentQuizScore);
     const percentage = Math.round((currentQuizScore / currentQuizQuestions.length) * 100);
     const duration = Math.max(1, Math.round((Date.now() - currentQuizStartTime)/1000));
+
+    recordStudyActivity();
 
     state.quizResults[phaseId] = {
         completed:true,
@@ -5286,6 +5365,10 @@ async function toggleCurrentTopicComplete(){
 
     state.completed[key] = !state.completed[key];
 
+    if(state.completed[key]){
+        recordStudyActivity();
+    }
+
     save();
     updateDashboard();
     renderPhases();
@@ -5361,6 +5444,7 @@ function completeCurrentPhase(){
             state.completed[`${currentPhase.id}-${index}`] = true;
         });
 
+        recordStudyActivity();
         save();
         updateDashboard();
         renderPhases();
@@ -5709,7 +5793,8 @@ function importData(event){
                 completed:imported.data.completed || {},
                 notes:imported.data.notes || {},
                 quizResults:imported.data.quizResults || {},
-                streak:Number(imported.data.streak) || 1,
+                streak:Number(imported.data.streak) || 0,
+                studyDates:Array.isArray(imported.data.studyDates) ? imported.data.studyDates : [],
                 theme:imported.data.theme === "light"
                     ? "light"
                     : "dark"
@@ -5762,7 +5847,8 @@ function resetAllData(){
         completed:{},
         notes:{},
         quizResults:{},
-        streak:1,
+        streak:0,
+        studyDates:[],
         theme:"dark"
     };
 
@@ -5793,6 +5879,8 @@ function startStudy(){
 
         return;
     }
+
+    recordStudyActivity();
 
     document.getElementById("timerBtn").textContent =
         "⏹ Stop Session";
@@ -5854,6 +5942,7 @@ function closePhase(){
 
 loadTheme();
 loadUser();
+refreshStudyStreak();
 updateDashboard();
 renderPhases();
 renderQuizHub();
