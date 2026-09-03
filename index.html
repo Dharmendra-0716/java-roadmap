@@ -5586,27 +5586,69 @@ async function demoAuth(mode){
 
 }else{
 
-            state.user = {
-                name:name,
-                email:email
-            };
+    // Account created successfully.
+    // Now automatically login to get the JWT token.
 
-            save();
-            loadUser();
+    const loginResponse = await fetch(`${API_BASE}/login`, {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            email:email,
+            password:password
+        })
+    });
 
-            msg.textContent = "Account created successfully! 🎉";
+    const loginResult = await loginResponse.text();
 
-            const target = pendingPhaseId;
-            pendingPhaseId = null;
+    if(!loginResponse.ok){
+        msg.textContent =
+            "Account created, but automatic login failed. Please login manually.";
+        return;
+    }
 
-            setTimeout(() => {
-                closeAuth();
+    const token = loginResult;
 
-                if(target){
-                    setTimeout(() => openPhase(target), 150);
-                }
-            }, 500);
+    if(!token){
+        msg.textContent =
+            "Account created, but login token was not received.";
+        return;
+    }
+
+    // Save JWT token
+    localStorage.setItem("jwtToken", token);
+
+    // Set logged-in user
+    state.user = {
+        name:name,
+        email:email
+    };
+
+    save();
+
+    // Load any existing server progress
+    await loadProgressFromServer();
+
+    // Save current local state
+    await syncProgressToServer();
+
+    loadUser();
+
+    msg.textContent =
+        "Account created and logged in successfully! 🎉";
+
+    const target = pendingPhaseId;
+    pendingPhaseId = null;
+
+    setTimeout(() => {
+        closeAuth();
+
+        if(target){
+            setTimeout(() => openPhase(target), 150);
         }
+    }, 500);
+}
 
     }catch(error){
 
