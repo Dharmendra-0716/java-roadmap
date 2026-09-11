@@ -5386,6 +5386,17 @@ function save(){
     localStorage.setItem("javaRoadmapState", JSON.stringify(state));
 }
 
+// Clear learning data when switching to a different account or creating
+// a brand-new account. Progress is loaded from the logged-in account
+// on the server, so one user's local progress must never leak into another.
+function clearLocalLearningData(){
+    state.completed = {};
+    state.notes = {};
+    state.quizResults = {};
+    state.streak = 0;
+    state.studyDates = [];
+}
+
 /* =========================================================
    STUDY STREAK
    A study day is counted when the user starts a study session
@@ -7196,11 +7207,20 @@ async function demoAuth(mode){
 
     if(token){
 
+        const switchingAccount =
+            !!state.user?.email &&
+            state.user.email.toLowerCase() !== email.toLowerCase();
+
+        // Never carry the previous account's local progress into a new login.
+        if(switchingAccount){
+            clearLocalLearningData();
+        }
+
         localStorage.setItem("jwtToken", token);
 
         state.user = {
             name:
-                state.user?.email === email
+                state.user?.email?.toLowerCase() === email.toLowerCase()
                     ? state.user.name
                     : (name || email.split("@")[0]),
             email: email
@@ -7226,6 +7246,10 @@ async function demoAuth(mode){
 
 }else{
 
+            // A signup is always a brand-new learning account.
+            // Start it with zero progress, zero streak and no old activity.
+            clearLocalLearningData();
+
             state.user = {
                 name:name,
                 email:email
@@ -7233,6 +7257,8 @@ async function demoAuth(mode){
 
             save();
             loadUser();
+            updateDashboard();
+            renderPhases();
 
             msg.textContent = "Account created successfully! 🎉";
 
@@ -7330,10 +7356,7 @@ function logout(){
     pendingPhaseId = null;
 
     // Clear progress from local browser
-    state.completed = {};
-    state.notes = {};
-    state.quizResults = {};
-    state.streak = 1;
+    clearLocalLearningData();
 
     // Remove JWT token
     localStorage.removeItem("jwtToken");
